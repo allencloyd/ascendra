@@ -1,0 +1,3154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly Reflection Journey Map</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap');
+
+    /* ══════════════════════════════════════
+       RESET & TOKENS
+    ══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ui-font: 'Nunito', system-ui, sans-serif;
+      --px-font: 'Press Start 2P', monospace;
+      --radius-card: 18px;
+      --nav-h: 60px;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--ui-font);
+      background: #0a0e1a;
+      color: #e0e8ff;
+      overflow: hidden;
+    }
+
+    /* ══════════════════════════════════════
+       SCREENS
+    ══════════════════════════════════════ */
+    .screen { display: none; width: 100%; height: 100%; position: absolute; inset: 0; }
+    .screen.active { display: flex; }
+
+    /* ══════════════════════════════════════
+       MAP SCREEN — true fullscreen, no scroll
+    ══════════════════════════════════════ */
+    #map-screen {
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 130% 70% at 25% 75%, #0e3d70 0%, transparent 55%),
+        radial-gradient(ellipse 90%  55% at 82% 28%, #0b2d55 0%, transparent 50%),
+        linear-gradient(180deg, #061428 0%, #0a2040 35%, #0d2850 65%, #091e3a 100%);
+    }
+
+    /* Diagonal wave texture across whole ocean */
+    #map-screen::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        repeating-linear-gradient(
+          -6deg,
+          transparent 0px, transparent 40px,
+          rgba(100,180,255,0.014) 40px, rgba(100,180,255,0.014) 42px
+        ),
+        repeating-linear-gradient(
+          9deg,
+          transparent 0px, transparent 58px,
+          rgba(255,255,255,0.010) 58px, rgba(255,255,255,0.010) 60px
+        );
+    }
+
+    /* ── Top HUD bar — fixed, highest layer ── */
+    .map-topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 14px 20px;
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    .map-topbar > * { pointer-events: auto; }
+
+    /* ── Player HUD (top-left) ── */
+    .map-hud {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(5, 10, 22, 0.78);
+      border: 1.5px solid #1e2d50;
+      border-radius: 14px;
+      padding: 10px 14px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+      transition: opacity 0.3s;
+    }
+
+    .hud-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a3066, #0d1a3a);
+      border: 2px solid #4f7fe8;
+      box-shadow: 0 0 12px #4f7fe844;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--px-font);
+      font-size: 0.55rem;
+      color: #7fb3ff;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .hud-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 140px;
+    }
+
+    .hud-name {
+      font-family: var(--ui-font);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #c8d8f8;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .hud-role {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #4a6a9a;
+      line-height: 1;
+    }
+
+    .hud-level-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 3px;
+    }
+
+    .level-badge {
+      font-family: var(--px-font);
+      font-size: 0.38rem;
+      color: #ffcc44;
+      background: rgba(255,180,0,0.12);
+      border: 1px solid rgba(255,180,0,0.35);
+      border-radius: 4px;
+      padding: 3px 6px;
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+    }
+
+    .xp-bar-wrap {
+      flex: 1;
+      height: 7px;
+      background: #0e1828;
+      border-radius: 4px;
+      border: 1px solid #1e2d50;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .xp-bar-fill {
+      height: 100%;
+      width: 30%;
+      background: linear-gradient(90deg, #3a6ecc, #7fb3ff);
+      border-radius: 4px;
+      box-shadow: 0 0 6px #4f7fe8;
+      animation: xp-shimmer 2.5s ease-in-out infinite;
+    }
+
+    @keyframes xp-shimmer {
+      0%, 100% { box-shadow: 0 0 6px #4f7fe8; }
+      50%       { box-shadow: 0 0 12px #7fb3ff; }
+    }
+
+    .xp-fraction {
+      font-family: var(--px-font);
+      font-size: 0.3rem;
+      color: #4a6a9a;
+      margin-top: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Profile button (top-right) ── */
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(5, 10, 22, 0.78);
+      border: 1.5px solid #1e2d50;
+      border-radius: 14px;
+      padding: 10px 16px;
+      color: #7fb3ff;
+      font-family: var(--ui-font);
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      transition: border-color 0.15s, color 0.15s, transform 0.1s;
+      letter-spacing: 0.04em;
+    }
+
+    .profile-btn:hover {
+      border-color: #4f7fe8;
+      color: #aac8ff;
+      transform: translateY(-1px);
+    }
+
+    /* ── Map header — absolute, floats above SVG ── */
+    .map-header {
+      position: absolute;
+      /* Sits just below the fixed HUD bar, centred, in the TOP ocean band */
+      top: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 15;
+      text-align: center;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      filter: drop-shadow(0 2px 24px rgba(0,0,0,0.9));
+      /* Semi-transparent halo so title reads clearly over any background */
+      background: radial-gradient(ellipse 90% 160% at 50% 40%, rgba(5,14,28,0.55) 0%, transparent 70%);
+      padding: 8px 40px 16px;
+    }
+
+    .ascendra-eyebrow {
+      font-family: var(--px-font);
+      font-size: clamp(0.32rem, 0.9vw, 0.44rem);
+      color: #3a5888;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .ascendra-title {
+      font-family: var(--ui-font);
+      font-size: clamp(1.7rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #c8e0ff 0%, #ffffff 35%, #88b8ff 65%, #ffd88a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(100,160,255,0.55)) drop-shadow(0 0 8px rgba(60,120,240,0.3));
+      letter-spacing: 0.01em;
+    }
+
+    .ascendra-colon { -webkit-text-fill-color: #4a6aaa; }
+
+    .ascendra-sub {
+      display: block;
+      font-family: var(--ui-font);
+      font-size: clamp(0.72rem, 1.8vw, 1rem);
+      font-weight: 700;
+      color: #5a90c0;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .map-header-meta {
+      margin-top: 10px;
+      font-size: 0.72rem;
+      color: #2e4466;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── World container — fixed fullscreen layer behind HUD ── */
+    .world-container {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    /* SVG covers exactly the viewport */
+    #world-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Node HTML overlays */
+    .path-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* ── Nodes ── */
+    .node-wrap {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .node-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      border: 3px solid;
+      transition: transform 0.2s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s ease;
+      position: relative;
+      overflow: visible;
+    }
+
+    .node-btn.locked {
+      background: #080d18;
+      border-color: #16213a;
+      box-shadow: 0 0 0 3px #0c1426;
+    }
+
+    .node-btn.unlocked {
+      animation: node-pulse 3s ease-in-out infinite;
+    }
+
+    .node-wrap:hover .node-btn {
+      transform: scale(1.22);
+      animation: none;
+    }
+
+    .node-wrap.locked:hover .node-btn {
+      transform: scale(1.1);
+      box-shadow: 0 0 12px rgba(255,80,80,0.25);
+    }
+
+    @keyframes node-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--glow, #4f7fe866); }
+      50%       { box-shadow: 0 0 0 10px transparent; }
+    }
+
+    /* ── Player Avatar on map ── */
+    .player-avatar-wrap {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      z-index: 15;
+      pointer-events: auto;
+      cursor: default;
+    }
+
+    /* Floating idle animation on the whole assembly */
+    .player-avatar-wrap {
+      animation: avatar-float 3s ease-in-out infinite;
+    }
+
+    @keyframes avatar-float {
+      0%, 100% { transform: translate(-50%, -100%) translateY(0); }
+      50%       { transform: translate(-50%, -100%) translateY(-6px); }
+    }
+
+    .player-avatar-label {
+      font-family: var(--px-font);
+      font-size: 0.3rem;
+      color: #ffdd66;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 8px rgba(255,200,40,0.8), 0 1px 3px rgba(0,0,0,0.9);
+      white-space: nowrap;
+    }
+
+    .player-avatar-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a3a7a, #0d1e4a);
+      border: 2.5px solid #ffcc44;
+      box-shadow:
+        0 0 0 4px rgba(255,200,40,0.18),
+        0 0 18px 6px rgba(255,180,0,0.35),
+        0 0 40px 14px rgba(255,140,0,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--px-font);
+      font-size: 0.44rem;
+      color: #ffdd88;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      animation: avatar-pulse 2.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes avatar-pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 4px rgba(255,200,40,0.18), 0 0 18px 6px rgba(255,180,0,0.35),
+                    0 0 40px 14px rgba(255,140,0,0.15), inset 0 1px 0 rgba(255,255,255,0.12);
+      }
+      50% {
+        box-shadow: 0 0 0 8px rgba(255,200,40,0.08), 0 0 28px 10px rgba(255,180,0,0.5),
+                    0 0 60px 20px rgba(255,140,0,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
+      }
+    }
+
+    .player-avatar-pin {
+      width: 2px;
+      height: 8px;
+      background: linear-gradient(to bottom, #ffcc44, transparent);
+      border-radius: 1px;
+    }
+
+    /* Glowing ring beneath avatar (sits below the pin, at ground level) */
+    .player-avatar-ring {
+      width: 36px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(255,200,40,0.45) 0%, rgba(255,160,0,0.15) 60%, transparent 100%);
+      margin-top: -4px;
+      animation: ring-breathe 2.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes ring-breathe {
+      0%, 100% { opacity: 0.7; transform: scaleX(1); }
+      50%       { opacity: 1;   transform: scaleX(1.18); }
+    }
+
+    /* Hover tooltip */
+    .player-avatar-tooltip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(4,10,24,0.92);
+      border: 1px solid rgba(255,200,40,0.35);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-family: var(--ui-font);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #ffdd88;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+
+    .player-avatar-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid transparent;
+      border-top-color: rgba(255,200,40,0.35);
+    }
+
+    .player-avatar-wrap:hover .player-avatar-tooltip { opacity: 1; }
+
+    .node-num {
+      font-family: var(--px-font);
+      font-size: 0.42rem;
+      line-height: 1;
+    }
+
+    .node-icon { font-size: 1.4rem; line-height: 1; }
+
+    .node-lock-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+      opacity: 0.6;
+    }
+
+    .node-caption {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-align: center;
+      max-width: 80px;
+      line-height: 1.3;
+      text-shadow: 0 1px 4px #000;
+      pointer-events: none;
+    }
+
+    .node-wrap.locked .node-caption { color: #2a3a55; }
+
+    .node-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #000;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════
+       PROFILE PANEL
+    ══════════════════════════════════════ */
+    .profile-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 300px;
+      background: rgba(6, 10, 20, 0.96);
+      border-left: 1.5px solid #1e2d50;
+      box-shadow: -8px 0 40px rgba(0,0,0,0.6);
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(.25,.46,.45,.94);
+      backdrop-filter: blur(16px);
+      overflow-y: auto;
+    }
+
+    .profile-panel.open {
+      transform: translateX(0);
+    }
+
+    .profile-panel-head {
+      padding: 22px 20px 18px;
+      border-bottom: 1px solid #131d30;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .profile-avatar-big {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a3066, #0d1a3a);
+      border: 2.5px solid #4f7fe8;
+      box-shadow: 0 0 18px #4f7fe844;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--px-font);
+      font-size: 0.6rem;
+      color: #7fb3ff;
+      flex-shrink: 0;
+    }
+
+    .profile-identity { flex: 1; }
+
+    .profile-name {
+      font-family: var(--ui-font);
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #c8d8f8;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .profile-role {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #4a6a9a;
+      line-height: 1.4;
+    }
+
+    .profile-close-btn {
+      background: none;
+      border: 1px solid #1e2d50;
+      color: #4a6a9a;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .profile-close-btn:hover { border-color: #4f7fe8; color: #7fb3ff; }
+
+    .profile-section {
+      padding: 18px 20px;
+      border-bottom: 1px solid #0e1828;
+    }
+
+    .profile-section:last-child { border-bottom: none; }
+
+    .profile-section-title {
+      font-family: var(--px-font);
+      font-size: 0.38rem;
+      color: #3a5580;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    /* XP section */
+    .xp-level-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .xp-level-big {
+      font-family: var(--px-font);
+      font-size: 0.55rem;
+      color: #ffcc44;
+    }
+
+    .xp-label-right {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #3a5580;
+    }
+
+    .xp-bar-big {
+      height: 10px;
+      background: #0a1020;
+      border-radius: 5px;
+      border: 1px solid #1e2d50;
+      overflow: hidden;
+    }
+
+    .xp-bar-big-fill {
+      height: 100%;
+      width: 30%;
+      background: linear-gradient(90deg, #2a5aaa, #7fb3ff);
+      border-radius: 5px;
+      box-shadow: 0 0 8px #4f7fe8;
+      animation: xp-shimmer 2.5s ease-in-out infinite;
+    }
+
+    .xp-sublabel {
+      margin-top: 6px;
+      font-size: 0.65rem;
+      color: #2a3d5a;
+      font-weight: 600;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(30,50,90,0.4);
+      border: 1px solid #1e3060;
+      border-radius: 8px;
+      padding: 6px 11px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #88aaee;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .skill-tag:hover { border-color: #4f7fe8; color: #aac8ff; }
+
+    /* Inventory */
+    .inventory-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .inv-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(15, 22, 40, 0.7);
+      border: 1px solid #131d30;
+      border-radius: 10px;
+      padding: 10px 14px;
+      transition: border-color 0.15s;
+    }
+
+    .inv-item:hover { border-color: #2a4070; }
+
+    .inv-icon {
+      font-size: 1.3rem;
+      width: 32px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .inv-info { flex: 1; }
+
+    .inv-name {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #c0cce8;
+      line-height: 1.2;
+    }
+
+    .inv-type {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #2a4060;
+      margin-top: 2px;
+    }
+
+    .inv-rarity {
+      font-family: var(--px-font);
+      font-size: 0.3rem;
+      padding: 3px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .inv-rarity.rare   { color: #66aaff; background: rgba(50,100,200,0.15); border: 1px solid rgba(80,130,240,0.3); }
+    .inv-rarity.uncommon { color: #66cc88; background: rgba(40,140,80,0.15); border: 1px solid rgba(60,180,100,0.3); }
+    .inv-rarity.common { color: #8899aa; background: rgba(60,80,110,0.15); border: 1px solid rgba(80,100,140,0.3); }
+
+    /* ══════════════════════════════════════
+       LOCKED NODE POPUP
+    ══════════════════════════════════════ */
+    .locked-popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      backdrop-filter: blur(4px);
+      transition: opacity 0.25s ease;
+    }
+
+    .locked-popup-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .locked-popup {
+      background: #070d1c;
+      border: 1.5px solid #1e2d50;
+      border-radius: 20px;
+      padding: 36px 32px 28px;
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04);
+      transform: scale(0.92) translateY(10px);
+      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    .locked-popup-overlay.active .locked-popup {
+      transform: scale(1) translateY(0);
+    }
+
+    .locked-popup-env-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 6px;
+      filter: grayscale(0.5) brightness(0.6);
+    }
+
+    .locked-popup-lock {
+      font-size: 1.6rem;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .locked-popup-week-label {
+      font-family: var(--px-font);
+      font-size: 0.42rem;
+      color: #2a4060;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .locked-popup-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #3a5070;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .locked-popup-divider {
+      width: 30px;
+      height: 2px;
+      background: #1e2d50;
+      border-radius: 2px;
+      margin: 0 auto 16px;
+    }
+
+    .locked-popup-msg {
+      font-size: 0.8rem;
+      color: #2a4060;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .locked-popup-close {
+      font-family: var(--px-font);
+      font-size: 0.45rem;
+      background: rgba(30,45,80,0.5);
+      border: 1.5px solid #2a4070;
+      color: #4a6a9a;
+      padding: 12px 28px;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+
+    .locked-popup-close:hover {
+      border-color: #4f7fe8;
+      color: #7fb3ff;
+      background: rgba(30,60,120,0.4);
+    }
+
+    /* ══════════════════════════════════════
+       SCREENSHOT TOGGLE
+    ══════════════════════════════════════ */
+    .screenshot-toggle {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 200;
+      background: rgba(10,14,26,0.85);
+      border: 1.5px solid #2a3a5a;
+      color: #5577aa;
+      font-family: var(--ui-font);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 7px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: color 0.15s, border-color 0.15s, opacity 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .screenshot-toggle:hover { color: #aac4ff; border-color: #4466aa; }
+
+    /* Screenshot mode: hide ALL UI chrome */
+    body.screenshot-mode .screenshot-toggle,
+    body.screenshot-mode .nav-bar,
+    body.screenshot-mode .map-hud,
+    body.screenshot-mode .profile-btn,
+    body.screenshot-mode .profile-panel,
+    body.screenshot-mode .map-header {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* ══════════════════════════════════════
+       DETAIL SCREEN
+    ══════════════════════════════════════ */
+    #detail-screen {
+      flex-direction: column;
+    }
+
+    #detail-screen.entering {
+      animation: screen-in 0.4s cubic-bezier(.25,.46,.45,.94) both;
+    }
+
+    @keyframes screen-in {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: var(--nav-h);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: opacity 0.3s;
+      position: relative;
+      z-index: 10;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
+      font-family: var(--ui-font);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 7px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(255,255,255,0.28);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn:disabled {
+      color: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.07);
+      cursor: not-allowed;
+    }
+
+    .nav-center {
+      font-family: var(--px-font);
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-right { display: flex; gap: 8px; }
+
+    .page-wrapper {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .env-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .env-bg   { z-index: 0; }
+    .env-mid  { z-index: 1; }
+    .env-fore { z-index: 2; }
+
+    .page-content {
+      position: relative;
+      z-index: 5;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 60px;
+    }
+
+    .page-inner { width: 100%; max-width: 720px; margin: 0 auto; }
+
+    /* ══════════════════════════════════════
+       SCENE SUMMARY (top, screenshot area)
+    ══════════════════════════════════════ */
+    .scene-wrap {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      /* Height: ~90vh minus nav, enough for screenshot */
+      min-height: calc(100vh - var(--nav-h) - 60px);
+      max-height: calc(100vh - var(--nav-h));
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      animation: card-in 0.45s cubic-bezier(.25,.46,.45,.94) both;
+    }
+
+    @keyframes card-in {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Scene sky/environment fills the whole scene-wrap */
+    .scene-sky {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* Info panels float over the environment */
+    .scene-info {
+      position: relative;
+      z-index: 10;
+      padding: 20px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Week label + title row at the top of scene */
+    .scene-header {
+      position: absolute;
+      top: 20px;
+      left: 28px;
+      right: 28px;
+      z-index: 10;
+    }
+
+    .scene-eyebrow {
+      font-family: var(--px-font);
+      font-size: 0.38rem;
+      letter-spacing: 0.14em;
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+
+    .scene-title {
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+
+    .scene-subtitle {
+      font-size: 0.8rem;
+      font-weight: 600;
+      opacity: 0.6;
+      margin-top: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ══════════════════════════════════════
+       WEEK 1 — NIGHT PROLOGUE
+    ══════════════════════════════════════ */
+    .scene-w1 .scene-sky {
+      background: linear-gradient(180deg, #01030a 0%, #040c1e 45%, #08142e 100%);
+    }
+
+    /* Stars */
+    .scene-w1 .stars {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1.5px 1.5px at 8%  12%, #cce 0%, transparent 100%),
+        radial-gradient(1px   1px   at 20% 6%,  #aac 0%, transparent 100%),
+        radial-gradient(1px   1px   at 35% 18%, #bbd 0%, transparent 100%),
+        radial-gradient(2px   2px   at 50% 8%,  #dde 0%, transparent 100%),
+        radial-gradient(1px   1px   at 65% 15%, #aac 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 78% 5%,  #ccf 0%, transparent 100%),
+        radial-gradient(1px   1px   at 88% 20%, #bbd 0%, transparent 100%),
+        radial-gradient(1px   1px   at 12% 30%, #99b 0%, transparent 100%),
+        radial-gradient(1px   1px   at 42% 32%, #aac 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 70% 28%, #ccf 0%, transparent 100%),
+        radial-gradient(1px   1px   at 92% 35%, #bbd 0%, transparent 100%);
+      opacity: 0.75;
+    }
+
+    /* Moon */
+    .scene-w1 .moon {
+      position: absolute; top: 28px; right: 12%;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #d8e8ff, #8ab0f0 60%, #4466aa);
+      box-shadow: 0 0 40px 14px rgba(100,160,255,0.22), 0 0 80px 40px rgba(60,100,200,0.1);
+      animation: float-raw 8s ease-in-out infinite;
+    }
+
+    /* Treeline silhouette */
+    .scene-w1 .treeline {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 160px;
+      background: linear-gradient(to top, #01020a, #020510 60%, transparent);
+      clip-path: polygon(0 100%,0 52%,4% 42%,7% 50%,9% 28%,12% 48%,14% 38%,17% 55%,21% 22%,24% 46%,27% 34%,30% 55%,34% 40%,37% 60%,40% 44%,43% 52%,46% 34%,49% 54%,52% 40%,55% 58%,58% 36%,61% 54%,64% 40%,67% 58%,70% 45%,73% 54%,76% 40%,79% 56%,82% 43%,85% 58%,88% 48%,91% 56%,94% 46%,97% 52%,100% 48%,100% 100%);
+    }
+
+    /* W1 info: horizontal ribbon of insight panels above treeline */
+    .scene-w1 .w1-panels {
+      position: absolute;
+      bottom: 155px;
+      left: 0; right: 0;
+      display: flex;
+      gap: 10px;
+      padding: 0 28px;
+      z-index: 5;
+      flex-wrap: wrap;
+    }
+
+    .w1-panel {
+      background: rgba(4,10,28,0.82);
+      border: 1px solid rgba(100,140,255,0.2);
+      border-radius: 10px;
+      padding: 11px 14px;
+      backdrop-filter: blur(8px);
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .w1-panel-label {
+      font-family: var(--px-font);
+      font-size: 0.32rem;
+      color: #3a5888;
+      letter-spacing: 0.12em;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+
+    .w1-panel-items { display: flex; flex-direction: column; gap: 5px; }
+
+    .w1-panel-item {
+      font-size: 0.72rem;
+      color: #8aaccc;
+      line-height: 1.4;
+      display: flex;
+      gap: 6px;
+    }
+
+    .w1-panel-item::before { content: '·'; color: #4a6a9a; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════
+       WEEK 2 — DESERT INTERLUDE
+    ══════════════════════════════════════ */
+    .scene-w2 .scene-sky {
+      background: linear-gradient(180deg, #200c00 0%, #5a2800 35%, #8a4400 60%, #3a1800 100%);
+    }
+
+    .scene-w2 .sun {
+      position: absolute; top: 22px; left: 50%;
+      transform: translateX(-50%);
+      width: 96px; height: 96px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #fff8e8, #ffb830 50%, #e07000);
+      box-shadow: 0 0 60px 22px rgba(255,160,0,0.35), 0 0 120px 60px rgba(255,80,0,0.15);
+      animation: float-center 6s ease-in-out infinite;
+    }
+
+    .scene-w2 .dune-far {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+      background: linear-gradient(to top, #1a0e00, #3a1c00 40%, transparent);
+      clip-path: polygon(0 100%,0 62%,6% 45%,12% 68%,20% 38%,28% 65%,36% 42%,46% 72%,56% 48%,66% 70%,74% 44%,82% 68%,90% 48%,96% 62%,100% 55%,100% 100%);
+    }
+
+    .scene-w2 .dune-near {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+      background: linear-gradient(to top, #0e0700, #1e1000 60%, transparent);
+      clip-path: polygon(0 100%,0 78%,10% 55%,22% 80%,34% 52%,48% 82%,60% 58%,72% 78%,82% 55%,92% 74%,100% 60%,100% 100%);
+    }
+
+    /* W2 scroll panels — like parchment notes on sand -->  */
+    .scene-w2 .w2-panels {
+      position: absolute;
+      bottom: 110px;
+      left: 0; right: 0;
+      display: flex;
+      gap: 10px;
+      padding: 0 28px;
+      z-index: 5;
+      flex-wrap: wrap;
+    }
+
+    .w2-panel {
+      background: rgba(30,15,0,0.85);
+      border: 1px solid rgba(200,130,40,0.25);
+      border-radius: 8px;
+      padding: 11px 14px;
+      backdrop-filter: blur(6px);
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .w2-panel-label {
+      font-family: var(--px-font);
+      font-size: 0.32rem;
+      color: #7a4a1a;
+      letter-spacing: 0.1em;
+      margin-bottom: 7px;
+    }
+
+    .w2-panel-item {
+      font-size: 0.72rem;
+      color: #c09060;
+      line-height: 1.4;
+      display: flex;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .w2-panel-item::before { content: '·'; color: #8a5a28; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════
+       WEEK 3 — CITY OF INSIGHT (Blade Runner)
+    ══════════════════════════════════════ */
+
+    .scene-w3 .scene-sky {
+      background:
+        radial-gradient(ellipse 100% 45% at 50% 100%, rgba(0,80,120,0.4)  0%, transparent 65%),
+        radial-gradient(ellipse  70% 35% at 18%  95%, rgba(80,0,130,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse  55% 30% at 84%  90%, rgba(0,60,110,0.22) 0%, transparent 55%),
+        linear-gradient(180deg, #000206 0%, #010508 25%, #010a18 60%, #010d1e 100%);
+    }
+
+    /* Layered haze pools */
+    .scene-w3 .city-haze {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 110% 28% at 50% 100%, rgba(0,120,200,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse  60% 18% at 14% 100%, rgba(90,0,150,0.11)  0%, transparent 50%),
+        radial-gradient(ellipse  55% 18% at 86% 100%, rgba(0,80,180,0.11)  0%, transparent 50%);
+    }
+
+    /* Sweep line */
+    @keyframes scan { from { top:-2px; } to { top:100%; } }
+    .scene-w3 .scan-line {
+      position: absolute; left:0; right:0; height:1.5px;
+      background: linear-gradient(90deg, transparent, rgba(0,220,255,0.09) 50%, transparent);
+      animation: scan 16s linear infinite;
+      z-index: 8; pointer-events: none;
+    }
+
+    /* Neon flicker keyframe */
+    @keyframes neon-flicker {
+      0%,100%{opacity:1;} 90%{opacity:1;} 91%{opacity:0.45;} 92%{opacity:1;} 95%{opacity:0.7;} 96%{opacity:1;}
+    }
+
+    /* Slow pulse for key buildings */
+    @keyframes bldg-pulse {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(0,200,255,0.35)); }
+      50%      { filter: drop-shadow(0 0 18px rgba(0,200,255,0.65)); }
+    }
+
+    /* Window blink */
+    @keyframes win-blink {
+      0%,100%{ opacity:0.55; } 48%{ opacity:0.55; } 50%{ opacity:0.2; } 52%{ opacity:0.55; }
+    }
+
+    /* ── CITY TITLE — skyline-anchored ── */
+    .w3-skyline-title {
+      position: absolute;
+      bottom: 36%;         /* sits just above the skyline */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 22;
+      text-align: center;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .w3-skyline-main {
+      font-family: var(--ui-font);
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #ffffff 0%, #90e0ff 45%, #2ab0e0 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(0,200,255,0.9)) drop-shadow(0 0 56px rgba(0,140,220,0.5));
+    }
+    .w3-skyline-rule {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(0,200,255,0.5), transparent);
+      margin: 6px auto 0;
+    }
+    .w3-skyline-sub {
+      font-family: var(--px-font);
+      font-size: 0.3rem;
+      color: rgba(0,200,255,0.45);
+      letter-spacing: 0.24em;
+      margin-top: 5px;
+    }
+
+    /* ── BILLBOARD tags — no box borders ── */
+    .w3-bb-tag {
+      position: absolute;
+      z-index: 18;
+      pointer-events: none;
+    }
+    .w3-bb-cat {
+      font-family: var(--px-font);
+      font-size: 0.27rem;
+      letter-spacing: 0.14em;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .w3-bb-item {
+      font-size: 0.8rem;
+      font-weight: 800;
+      line-height: 1.25;
+      padding-left: 8px;
+      border-left: 2px solid;
+      margin-bottom: 4px;
+      white-space: nowrap;
+    }
+    .w3-bb-item:last-child { margin-bottom: 0; }
+
+    /* ── NEON SIGN labels ── */
+    .w3-ns-tag {
+      position: absolute;
+      z-index: 18;
+      pointer-events: none;
+      animation: neon-flicker 6s ease-in-out infinite;
+    }
+    .w3-ns-cat {
+      font-family: var(--px-font);
+      font-size: 0.27rem;
+      letter-spacing: 0.14em;
+      margin-bottom: 4px;
+    }
+    .w3-ns-item {
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 3px;
+      white-space: nowrap;
+    }
+    .w3-ns-item:last-child { margin-bottom: 0; }
+
+    /* ── SUPPORT label near tower ── */
+    .w3-sup-tag {
+      position: absolute;
+      z-index: 18;
+      pointer-events: none;
+      text-align: center;
+    }
+    .w3-sup-cat {
+      font-family: var(--px-font);
+      font-size: 0.27rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+    .w3-sup-item {
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 3px;
+      white-space: nowrap;
+    }
+
+    /* ── FOCUS road ── */
+    .w3-road-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 58px;
+      z-index: 20;
+      background: linear-gradient(to top, #000608 55%, transparent);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 0;
+      overflow: hidden;
+    }
+    .w3-road-bar::after {
+      content: '';
+      position: absolute; left: 0; right: 0; top: 34px; height: 2px;
+      background: repeating-linear-gradient(90deg,
+        transparent 0, transparent 22px,
+        rgba(255,200,30,0.16) 22px, rgba(255,200,30,0.16) 40px);
+    }
+    .w3-road-lbl {
+      font-family: var(--px-font);
+      font-size: 0.25rem;
+      color: #163848;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+      margin-right: 14px;
+      flex-shrink: 0; z-index: 1;
+    }
+    .w3-wp { display: flex; align-items: center; gap: 5px; flex-shrink: 0; z-index: 1; }
+    .w3-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(0,90,130,0.5);
+      box-shadow: 0 0 5px rgba(0,150,190,0.25);
+      flex-shrink: 0;
+    }
+    .w3-dot.on {
+      background: #00e5ff;
+      box-shadow: 0 0 8px #00e5ff, 0 0 18px rgba(0,200,255,0.45);
+    }
+    .w3-wt { font-size: 0.68rem; font-weight: 700; color: #234858; white-space: nowrap; }
+    .w3-wt.on { color: #00e5ff; }
+    .w3-arr { color: #102838; font-size: 0.65rem; margin: 0 4px; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════
+       REFLECTION SECTION (below scene)
+       Styled per theme
+    ══════════════════════════════════════ */
+    .reflection-wrap {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+      animation: card-in 0.5s 0.15s cubic-bezier(.25,.46,.45,.94) both;
+    }
+
+    /* Reflection divider */
+    .ref-divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 24px 0 20px;
+    }
+
+    .ref-divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+
+    .ref-divider-label {
+      font-family: var(--px-font);
+      font-size: 0.34rem;
+      letter-spacing: 0.14em;
+      opacity: 0.35;
+    }
+
+    /* ── City reflection (W3) ── */
+    .refl-w3 .ref-section {
+      background: rgba(0,6,18,0.75);
+      border: 1px solid rgba(0,180,255,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .refl-w3 .ref-section:last-child { margin-bottom: 0; }
+
+    .refl-w3 .ref-section-head {
+      background: rgba(0,20,40,0.7);
+      border-bottom: 1px solid rgba(0,180,255,0.1);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .refl-w3 .ref-section-icon { font-size: 0.85rem; }
+
+    .refl-w3 .ref-section-title {
+      font-family: var(--px-font);
+      font-size: 0.36rem;
+      color: #00a8cc;
+      letter-spacing: 0.1em;
+    }
+
+    .refl-w3 .ref-section-body {
+      padding: 14px 18px;
+    }
+
+    /* ── Night reflection (W1) ── */
+    .refl-w1 .prose {
+      color: #8899cc;
+      font-size: 0.95rem;
+      line-height: 1.85;
+      background: rgba(2,5,18,0.7);
+      border: 1px solid rgba(80,100,180,0.15);
+      border-radius: 12px;
+      padding: 28px 32px;
+    }
+
+    .refl-w1 .prose p { margin-bottom: 1.15em; }
+    .refl-w1 .prose p:last-child { margin-bottom: 0; }
+    .refl-w1 .prose em { color: #5566aa; font-style: italic; }
+
+    /* ── Desert reflection (W2) ── */
+    .refl-w2 .prose {
+      color: #c09060;
+      font-size: 0.95rem;
+      line-height: 1.85;
+      background: rgba(20,10,0,0.75);
+      border: 1px solid rgba(180,120,40,0.18);
+      border-radius: 10px;
+      padding: 28px 32px;
+    }
+
+    .refl-w2 .prose p { margin-bottom: 1.15em; }
+    .refl-w2 .prose p:last-child { margin-bottom: 0; }
+    .refl-w2 .prose em { color: #7a5030; font-style: italic; }
+
+    /* ── Locked page ── */
+    .locked-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      gap: 18px;
+      padding: 60px 24px;
+    }
+
+    .locked-icon-big { font-size: 3.5rem; opacity: 0.3; }
+
+    .locked-page h2 {
+      font-family: var(--px-font);
+      font-size: 0.6rem;
+      opacity: 0.35;
+      letter-spacing: 0.08em;
+    }
+
+    .locked-page p {
+      font-size: 0.88rem;
+      opacity: 0.35;
+      max-width: 280px;
+      line-height: 1.65;
+    }
+
+    @keyframes float-raw {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    @keyframes float-center {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    @keyframes haze { from { opacity: 0.6; } to { opacity: 1; } }
+
+    @keyframes neon-flicker {
+      0%,100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.6; }
+      94% { opacity: 1; } 97% { opacity: 0.8; } 98% { opacity: 1; }
+    }
+
+    /* ══════════════════════════════════════
+       REFLECTION SECTION CARDS (Week 3+)
+    ══════════════════════════════════════ */
+    .ref-section {
+      margin-bottom: 20px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .ref-section:last-child { margin-bottom: 0; }
+
+    .ref-section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(0,229,255,0.08);
+      background: rgba(0,229,255,0.04);
+    }
+
+    .ref-section-icon { font-size: 1rem; line-height: 1; }
+
+    .ref-section-title {
+      font-family: var(--px-font);
+      font-size: 0.4rem;
+      letter-spacing: 0.1em;
+      color: #00e5ff;
+      text-transform: uppercase;
+    }
+
+    .ref-section-body { padding: 18px 20px; }
+
+    /* Highlight bullets */
+    .ref-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .ref-bullets li {
+      display: flex;
+      gap: 10px;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: #a0c8d8;
+    }
+
+    .ref-bullets li::before {
+      content: '▸';
+      color: #00c8e0;
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 0.75rem;
+    }
+
+    /* Key learnings — slightly warmer */
+    .ref-learnings li { color: #b8d8c0; }
+    .ref-learnings li::before { color: #44cc88; }
+
+    /* Focus list */
+    .ref-focus li { color: #c0d8f8; }
+    .ref-focus li::before { content: '→'; color: #66aaff; }
+
+    /* Support list */
+    .ref-support li { color: #d0c0e8; }
+    .ref-support li::before { content: '◈'; color: #aa88ff; font-size: 0.65rem; margin-top: 2px; }
+
+    /* Progress skill rows */
+    .ref-progress-items { display: flex; flex-direction: column; gap: 18px; }
+
+
+    .progress-item-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .progress-item-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #b0f0ff;
+      line-height: 1.3;
+    }
+
+    .star-row {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .star { font-size: 0.75rem; line-height: 1; }
+    .star.filled { filter: none; }
+    .star.empty  { opacity: 0.2; }
+
+    .progress-item-note {
+      font-size: 0.77rem;
+      color: #4a8898;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    /* Completed tasks mini-list inside progress */
+    .completed-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0,229,255,0.08);
+    }
+
+    .completed-tasks-label {
+      font-family: var(--px-font);
+      font-size: 0.32rem;
+      color: #2a5566;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .task-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: #4a8090;
+      line-height: 1.5;
+    }
+
+    .task-check {
+      color: #00aa66;
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 0.75rem;
+    }
+
+    /* Date badge in week card header */
+    .week-date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #007799;
+      background: rgba(0,229,255,0.06);
+      border: 1px solid rgba(0,229,255,0.12);
+      border-radius: 6px;
+      padding: 3px 10px;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       MAP SCREEN
+  ══════════════════════════════════════ -->
+  <div id="map-screen" class="screen active">
+
+    <!-- Top HUD bar -->
+    <div class="map-topbar">
+      <!-- Player HUD (left) -->
+      <div class="map-hud" id="map-hud">
+        <div class="hud-avatar">ACM</div>
+        <div class="hud-info">
+          <div class="hud-name">Allen Cloyd Malayo</div>
+          <div class="hud-role">CS Academy Associate</div>
+          <div class="hud-level-row">
+            <span class="level-badge">LV 3</span>
+            <div class="xp-bar-wrap">
+              <div class="xp-bar-fill"></div>
+            </div>
+            <span class="xp-fraction">3/10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile panel button (right) -->
+      <button class="profile-btn" id="profile-btn">⚔️ Profile</button>
+    </div>
+
+    <div class="map-header">
+      <div class="ascendra-eyebrow">Field Experience · Season I</div>
+      <h1 class="ascendra-title">Ascendra<span class="ascendra-colon">:</span> <span class="ascendra-sub">The Field Experience Realms</span></h1>
+    </div>
+
+    <div class="world-container" id="world-container">
+      <!--
+        Ascendra World Map SVG
+        ViewBox: 960 × 560
+        Coordinate reference used by buildMap() for node placement.
+      -->
+      <svg id="world-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <!-- Ocean gradients -->
+          <radialGradient id="ocean-deep" cx="50%" cy="60%" r="75%">
+            <stop offset="0%"   stop-color="#0e3866"/>
+            <stop offset="45%"  stop-color="#093058"/>
+            <stop offset="100%" stop-color="#050f22"/>
+          </radialGradient>
+          <radialGradient id="ocean-light" cx="35%" cy="30%" r="55%">
+            <stop offset="0%"   stop-color="#1a5a9a" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#0e3866" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Land fills -->
+          <linearGradient id="land-green" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#4a9a50"/>
+            <stop offset="60%"  stop-color="#2e7035"/>
+            <stop offset="100%" stop-color="#1a4d20"/>
+          </linearGradient>
+          <linearGradient id="land-dark" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#2a5a30"/>
+            <stop offset="100%" stop-color="#132818"/>
+          </linearGradient>
+          <linearGradient id="desert-warm" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#daa050"/>
+            <stop offset="60%"  stop-color="#b07030"/>
+            <stop offset="100%" stop-color="#7a4818"/>
+          </linearGradient>
+          <linearGradient id="city-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#2a3a5a"/>
+            <stop offset="100%" stop-color="#0e1828"/>
+          </linearGradient>
+          <linearGradient id="mountain-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#4a5068"/>
+            <stop offset="100%" stop-color="#1e2230"/>
+          </linearGradient>
+          <linearGradient id="volcano-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#3a1008"/>
+            <stop offset="100%" stop-color="#180400"/>
+          </linearGradient>
+          <linearGradient id="citadel-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#3a2468"/>
+            <stop offset="100%" stop-color="#18103a"/>
+          </linearGradient>
+          <linearGradient id="sky-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#2a3868"/>
+            <stop offset="100%" stop-color="#12183a"/>
+          </linearGradient>
+          <!-- Shadows -->
+          <filter id="isle-shadow" x="-25%" y="-25%" width="150%" height="175%">
+            <feDropShadow dx="2" dy="7" stdDeviation="10" flood-color="#020810" flood-opacity="0.72"/>
+          </filter>
+          <!-- Locked overlay -->
+          <linearGradient id="lock-fade" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#040810" stop-opacity="0.80"/>
+            <stop offset="100%" stop-color="#020508" stop-opacity="0.88"/>
+          </linearGradient>
+        </defs>
+
+        <!-- OCEAN BASE -->
+        <rect width="960" height="560" fill="url(#ocean-deep)"/>
+        <rect width="960" height="560" fill="url(#ocean-light)"/>
+
+        <!-- Cartoon wave lines -->
+        <g stroke="#2a6aaa" fill="none" stroke-linecap="round">
+          <path d="M0,95  Q80,88  160,96  Q240,104 320,94  Q400,84 480,96  Q560,108 640,95  Q720,82  800,97  Q880,110 960,94"  opacity="0.13" stroke-width="1.5"/>
+          <path d="M0,148 Q100,140 200,150 Q300,160 400,148 Q500,136 600,149 Q700,162 800,148 Q880,138 960,150"                 opacity="0.09" stroke-width="1"/>
+          <path d="M0,220 Q120,212 240,222 Q360,232 480,220 Q600,208 720,222 Q840,234 960,218"                                   opacity="0.13" stroke-width="1.5"/>
+          <path d="M0,310 Q100,302 200,312 Q300,322 400,310 Q500,298 600,311 Q700,324 800,310 Q900,298 960,312"                  opacity="0.09" stroke-width="1"/>
+          <path d="M0,395 Q120,387 240,397 Q360,407 480,394 Q600,381 720,396 Q840,410 960,394"                                   opacity="0.12" stroke-width="1.5"/>
+          <path d="M0,470 Q80,463 160,472 Q240,481 320,469 Q400,457 480,470 Q560,483 640,470 Q720,457 800,470 Q880,481 960,468"  opacity="0.09" stroke-width="1"/>
+        </g>
+        <!-- Foam specks near islands -->
+        <g fill="#6ab0ee" opacity="0.22">
+          <circle cx="330" cy="370" r="2"/>   <circle cx="344" cy="378" r="1.5"/>
+          <circle cx="82"  cy="382" r="2"/>   <circle cx="68"  cy="374" r="1.5"/>
+          <circle cx="454" cy="236" r="1.5"/> <circle cx="468" cy="228" r="2"/>
+          <circle cx="588" cy="196" r="2"/>   <circle cx="760" cy="358" r="2"/>
+          <circle cx="726" cy="472" r="2"/>   <circle cx="448" cy="478" r="1.5"/>
+          <circle cx="168" cy="510" r="1.5"/> <circle cx="290" cy="228" r="1.5"/>
+        </g>
+
+        <!-- ══ ORIGIN ISLAND (Weeks 1-3) ══ -->
+        <g filter="url(#isle-shadow)">
+          <!-- Beach rim -->
+          <ellipse cx="185" cy="310" rx="148" ry="108" fill="#5ab88a" opacity="0.18"/>
+          <ellipse cx="185" cy="310" rx="142" ry="102" fill="#c8a060" opacity="0.38"/>
+          <!-- Main land -->
+          <path d="M 78,268 C 62,240 70,210 95,195 C 115,182 138,176 158,170
+            C 182,164 208,162 230,166 C 258,172 282,184 298,202
+            C 318,224 325,250 322,276 C 320,300 308,324 290,338
+            C 272,352 248,358 224,362 C 200,366 175,364 152,356
+            C 126,346 104,330 90,310 C 80,296 76,282 78,268 Z" fill="url(#land-green)"/>
+          <!-- Land highlight top -->
+          <path d="M 130,188 C 155,172 190,166 222,170 C 250,174 276,186 290,202"
+            stroke="#5ab860" stroke-width="3" fill="none" opacity="0.35" stroke-linecap="round"/>
+          <!-- Desert zone (Week 2) -->
+          <path d="M 148,282 C 142,266 148,250 160,242 C 172,234 188,230 202,232
+            C 218,234 232,242 238,254 C 246,268 244,286 234,298
+            C 224,308 208,314 192,312 C 174,310 156,300 148,282 Z"
+            fill="url(#desert-warm)" opacity="0.78"/>
+          <ellipse cx="192" cy="272" rx="24" ry="16" fill="#e8c070" opacity="0.28" transform="rotate(-15,192,192)"/>
+          <!-- City centre (Week 3) -->
+          <ellipse cx="190" cy="278" rx="28" ry="20" fill="url(#city-fill)" opacity="0.9"/>
+          <g stroke="#3a5080" stroke-width="1" opacity="0.4" fill="none">
+            <line x1="176" y1="278" x2="204" y2="278"/>
+            <line x1="190" y1="263" x2="190" y2="293"/>
+          </g>
+          <!-- N forest -->
+          <g fill="#2e7035" opacity="0.85">
+            <polygon points="100,244 108,228 116,244"/> <polygon points="112,248 121,230 130,248"/>
+            <polygon points="125,242 134,225 143,242"/> <polygon points="212,228 221,211 230,228"/>
+            <polygon points="225,234 234,216 243,234"/> <polygon points="238,239 247,222 256,239"/>
+          </g>
+          <g fill="#4aaa52" opacity="0.45">
+            <polygon points="104,240 108,228 112,240"/> <polygon points="116,244 121,230 126,244"/>
+            <polygon points="216,224 221,211 226,224"/> <polygon points="229,230 234,216 239,230"/>
+          </g>
+          <!-- NW mountains -->
+          <g fill="#5a6878" opacity="0.9">
+            <polygon points="98,280 112,254 126,280"/>
+            <polygon points="113,284 128,256 143,284"/>
+            <polygon points="128,278 143,252 158,278"/>
+          </g>
+          <g fill="#e8f0f8" opacity="0.65">
+            <polygon points="106,266 112,254 118,266"/>
+            <polygon points="121,268 128,256 135,268"/>
+            <polygon points="136,264 143,252 150,264"/>
+          </g>
+          <!-- River -->
+          <path d="M 190,295 Q 165,324 135,340 Q 118,348 100,346"
+            stroke="#3a88cc" stroke-width="3.5" fill="none" opacity="0.5" stroke-linecap="round"/>
+          <path d="M 190,295 Q 208,324 224,340"
+            stroke="#3a88cc" stroke-width="2.5" fill="none" opacity="0.38" stroke-linecap="round"/>
+          <!-- S coast trees -->
+          <g fill="#2e7035" opacity="0.68">
+            <polygon points="120,346 128,329 136,346"/> <polygon points="136,350 145,332 154,350"/>
+            <polygon points="226,348 235,330 244,348"/> <polygon points="242,344 251,326 260,344"/>
+          </g>
+        </g>
+
+        <!-- ══ WEEK 4 — Forest Isle ══ -->
+        <g filter="url(#isle-shadow)" opacity="0.58">
+          <ellipse cx="382" cy="208" rx="88" ry="60" fill="#a8b860" opacity="0.22"/>
+          <path d="M 304,208 C 300,186 310,166 328,156 C 348,144 372,142 396,146
+            C 418,150 438,164 448,182 C 458,200 456,222 444,238
+            C 432,252 412,260 390,258 C 366,256 342,246 324,230 C 312,220 306,214 304,208 Z"
+            fill="url(#land-dark)"/>
+          <g fill="#1e5a22" opacity="0.9">
+            <ellipse cx="360" cy="200" rx="24" ry="17"/> <ellipse cx="392" cy="192" rx="22" ry="15"/>
+            <ellipse cx="410" cy="208" rx="20" ry="14"/> <ellipse cx="372" cy="220" rx="18" ry="12"/>
+            <ellipse cx="352" cy="216" rx="16" ry="11"/> <ellipse cx="400" cy="224" rx="15" ry="10"/>
+          </g>
+          <g fill="#3a9040" opacity="0.55">
+            <polygon points="359,177 365,162 371,177"/> <polygon points="376,171 382,156 388,171"/>
+            <polygon points="396,179 402,164 408,179"/>
+          </g>
+        </g>
+
+        <!-- ══ WEEK 5 — Peak Isle ══ -->
+        <g filter="url(#isle-shadow)" opacity="0.58">
+          <ellipse cx="525" cy="165" rx="82" ry="55" fill="#6a7080" opacity="0.22"/>
+          <path d="M 452,165 C 448,141 460,121 480,111 C 502,99 528,97 552,105
+            C 574,113 592,129 600,149 C 608,169 604,191 588,207
+            C 572,221 548,227 524,223 C 500,219 476,207 462,189 C 454,177 454,171 452,165 Z"
+            fill="url(#mountain-fill)"/>
+          <g fill="#6a7088" opacity="0.95">
+            <polygon points="475,179 501,123 527,179"/>
+            <polygon points="499,181 525,125 551,181"/>
+            <polygon points="523,183 547,135 571,183"/>
+          </g>
+          <g fill="#8090a8" opacity="0.65">
+            <polygon points="481,163 501,123 521,163"/>
+            <polygon points="505,165 525,125 545,165"/>
+          </g>
+          <g fill="#e8eef8" opacity="0.82">
+            <polygon points="493,139 501,123 509,139"/>
+            <polygon points="517,141 525,125 533,141"/>
+            <polygon points="540,149 547,135 554,149"/>
+          </g>
+          <g fill="#ffffff" opacity="0.22">
+            <polygon points="496,131 501,123 506,131"/>
+            <polygon points="520,133 525,125 530,133"/>
+          </g>
+        </g>
+
+        <!-- ══ WEEK 6 — Strategy City ══ -->
+        <g filter="url(#isle-shadow)" opacity="0.58">
+          <ellipse cx="688" cy="210" rx="82" ry="56" fill="#4a6a90" opacity="0.18"/>
+          <path d="M 618,210 C 614,186 626,164 648,154 C 670,144 696,142 720,150
+            C 744,158 764,174 770,196 C 776,218 766,242 746,256
+            C 726,270 698,274 672,266 C 646,258 622,242 616,220 C 614,216 614,214 618,210 Z"
+            fill="url(#city-fill)"/>
+          <g stroke="#3a5a88" stroke-width="1.5" fill="none" opacity="0.45">
+            <line x1="630" y1="210" x2="758" y2="210"/>
+            <line x1="660" y1="170" x2="660" y2="254"/>
+            <line x1="692" y1="158" x2="692" y2="262"/>
+            <line x1="724" y1="170" x2="724" y2="254"/>
+          </g>
+          <g fill="#3a5a88" opacity="0.75">
+            <rect x="641" y="192" width="13" height="23"/> <rect x="659" y="183" width="11" height="32"/>
+            <rect x="675" y="195" width="9"  height="20"/> <rect x="689" y="178" width="15" height="37"/>
+            <rect x="710" y="190" width="11" height="26"/> <rect x="725" y="196" width="9"  height="19"/>
+          </g>
+          <g fill="#88ccff" opacity="0.45">
+            <rect x="644" y="196" width="3" height="3"/> <rect x="651" y="196" width="3" height="3"/>
+            <rect x="662" y="188" width="3" height="3"/> <rect x="693" y="184" width="4" height="3"/>
+          </g>
+        </g>
+
+        <!-- ══ WEEK 7 — Ocean Cluster ══ -->
+        <g filter="url(#isle-shadow)" opacity="0.52">
+          <ellipse cx="830" cy="310" rx="38" ry="25" fill="#1e4a6a"/>
+          <ellipse cx="882" cy="290" rx="25" ry="17" fill="#162840"/>
+          <ellipse cx="859" cy="340" rx="27" ry="19" fill="#0e2238"/>
+          <rect x="861" y="298" width="24" height="5" rx="2" fill="#2a5a7a" opacity="0.55" transform="rotate(-20,861,298)"/>
+          <rect x="846" y="318" width="20" height="4" rx="2" fill="#2a5a7a" opacity="0.55" transform="rotate(30,846,318)"/>
+          <ellipse cx="852" cy="316" rx="62" ry="44" fill="#4a9abb" opacity="0.05"/>
+        </g>
+
+        <!-- ══ WEEK 8 — Volcano ══ -->
+        <g filter="url(#isle-shadow)" opacity="0.52">
+          <ellipse cx="652" cy="436" rx="78" ry="56" fill="#5a1408" opacity="0.18"/>
+          <path d="M 584,436 C 580,410 592,388 614,378 C 636,368 664,368 686,378
+            C 706,388 720,408 722,430 C 724,452 712,472 692,480
+            C 672,488 646,486 626,476 C 602,464 586,450 584,436 Z" fill="url(#volcano-fill)"/>
+          <polygon points="620,442 652,378 684,442" fill="#3a1408" opacity="0.95"/>
+          <polygon points="632,426 652,378 672,426" fill="#4a1c10" opacity="0.9"/>
+          <path d="M 652,384 Q 638,412 628,440 Q 622,456 616,464"
+            stroke="#ff5500" stroke-width="4" fill="none" opacity="0.6" stroke-linecap="round"/>
+          <path d="M 652,384 Q 665,415 672,442 Q 676,458 680,466"
+            stroke="#ff7700" stroke-width="3" fill="none" opacity="0.45" stroke-linecap="round"/>
+          <ellipse cx="652" cy="386" rx="12" ry="8" fill="#ff6600" opacity="0.5"/>
+          <ellipse cx="652" cy="386" rx="6"  ry="4" fill="#ffaa00" opacity="0.35"/>
+        </g>
+
+        <!-- ══ WEEK 9 — Sky Isles ══ -->
+        <g filter="url(#isle-shadow)" opacity="0.52">
+          <ellipse cx="350" cy="430" rx="50" ry="22" fill="url(#sky-fill)"/>
+          <ellipse cx="350" cy="426" rx="44" ry="14" fill="#3a4878"/>
+          <ellipse cx="338" cy="444" rx="10" ry="6" fill="#2a3460" opacity="0.7"/>
+          <ellipse cx="360" cy="446" rx="8"  ry="5" fill="#2a3460" opacity="0.6"/>
+          <ellipse cx="424" cy="444" rx="30" ry="15" fill="url(#sky-fill)"/>
+          <ellipse cx="424" cy="440" rx="26" ry="10" fill="#2a3058"/>
+          <g fill="#aaccff" opacity="0.1">
+            <ellipse cx="323" cy="415" rx="32" ry="10"/>
+            <ellipse cx="378" cy="408" rx="26" ry="8"/>
+            <ellipse cx="426" cy="422" rx="22" ry="7"/>
+          </g>
+        </g>
+
+        <!-- ══ WEEK 10 — Citadel ══ -->
+        <g filter="url(#isle-shadow)" opacity="0.52">
+          <ellipse cx="118" cy="468" rx="100" ry="68" fill="#6040aa" opacity="0.12"/>
+          <path d="M 28,468 C 24,440 38,414 62,402 C 86,390 114,388 140,396
+            C 166,404 188,422 196,446 C 204,470 196,496 176,510
+            C 156,524 126,528 98,520 C 68,510 44,492 32,472 C 28,470 28,470 28,468 Z"
+            fill="url(#citadel-fill)"/>
+          <rect x="82"  y="434" width="72" height="50" rx="3" fill="#3a2468" opacity="0.9"/>
+          <rect x="90"  y="424" width="56" height="16" rx="2" fill="#4a2e7a" opacity="0.85"/>
+          <g fill="#3a2060" opacity="0.95">
+            <rect x="78"  y="418" width="16" height="36"/>
+            <rect x="142" y="418" width="16" height="36"/>
+            <rect x="104" y="408" width="28" height="20"/>
+          </g>
+          <g fill="#5a30a0" opacity="0.8">
+            <polygon points="78,418 86,404 94,418"/>
+            <polygon points="142,418 150,404 158,418"/>
+            <polygon points="104,408 118,392 132,408"/>
+          </g>
+          <g fill="#6a40b0" opacity="0.65">
+            <rect x="80"  y="414" width="4" height="5"/> <rect x="87"  y="414" width="4" height="5"/>
+            <rect x="144" y="414" width="4" height="5"/> <rect x="151" y="414" width="4" height="5"/>
+            <rect x="106" y="404" width="4" height="5"/> <rect x="120" y="404" width="4" height="5"/>
+          </g>
+          <g fill="#cc99ff" opacity="0.45">
+            <rect x="87"  y="440" width="4" height="5"/> <rect x="135" y="440" width="4" height="5"/>
+          </g>
+        </g>
+
+        <!-- ══ LOCKED OVERLAYS ══ -->
+        <path d="M 304,208 C 300,186 310,166 328,156 C 348,144 372,142 396,146 C 418,150 438,164 448,182 C 458,200 456,222 444,238 C 432,252 412,260 390,258 C 366,256 342,246 324,230 C 312,220 306,214 304,208 Z" fill="url(#lock-fade)"/>
+        <path d="M 452,165 C 448,141 460,121 480,111 C 502,99 528,97 552,105 C 574,113 592,129 600,149 C 608,169 604,191 588,207 C 572,221 548,227 524,223 C 500,219 476,207 462,189 C 454,177 454,171 452,165 Z" fill="url(#lock-fade)"/>
+        <path d="M 618,210 C 614,186 626,164 648,154 C 670,144 696,142 720,150 C 744,158 764,174 770,196 C 776,218 766,242 746,256 C 726,270 698,274 672,266 C 646,258 622,242 616,220 C 614,216 614,214 618,210 Z" fill="url(#lock-fade)"/>
+        <ellipse cx="852" cy="316" rx="66" ry="54" fill="url(#lock-fade)"/>
+        <path d="M 584,436 C 580,410 592,388 614,378 C 636,368 664,368 686,378 C 706,388 720,408 722,430 C 724,452 712,472 692,480 C 672,488 646,486 626,476 C 602,464 586,450 584,436 Z" fill="url(#lock-fade)"/>
+        <ellipse cx="384" cy="438" rx="94" ry="46" fill="url(#lock-fade)"/>
+        <path d="M 28,468 C 24,440 38,414 62,402 C 86,390 114,388 140,396 C 166,404 188,422 196,446 C 204,470 196,496 176,510 C 156,524 126,528 98,520 C 68,510 44,492 32,472 C 28,470 28,470 28,468 Z" fill="url(#lock-fade)"/>
+
+        <!-- ══ SEA ROUTES (match new island positions) ══ -->
+        <!-- W1→W2: within Origin Isle -->
+        <path d="M 148,286 Q 168,272 188,262" stroke="#3a80cc" stroke-width="2.5" fill="none" opacity="0.55" stroke-dasharray="7 5">
+          <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="1.6s" repeatCount="indefinite"/>
+        </path>
+        <!-- W2→W3: within Origin Isle -->
+        <path d="M 208,258 Q 232,248 256,242" stroke="#3a80cc" stroke-width="2.5" fill="none" opacity="0.5" stroke-dasharray="7 5">
+          <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="1.6s" repeatCount="indefinite"/>
+        </path>
+        <!-- W3→W4: Origin to Forest -->
+        <path d="M 290,232 Q 336,218 382,210" stroke="#3a80cc" stroke-width="2.2" fill="none" opacity="0.45" stroke-dasharray="8 6">
+          <animate attributeName="stroke-dashoffset" from="0" to="-28" dur="1.8s" repeatCount="indefinite"/>
+        </path>
+        <!-- W4→W5: Forest to Peak -->
+        <path d="M 450,200 Q 490,180 525,172" stroke="#2a6aaa" stroke-width="2" fill="none" opacity="0.38" stroke-dasharray="7 5"/>
+        <!-- W5→W6: Peak to City -->
+        <path d="M 594,170 Q 640,186 680,200" stroke="#2a6aaa" stroke-width="2" fill="none" opacity="0.35" stroke-dasharray="7 5"/>
+        <!-- W6→W7: City to Ocean -->
+        <path d="M 754,216 Q 800,256 832,302" stroke="#2a5a8a" stroke-width="1.8" fill="none" opacity="0.32" stroke-dasharray="6 6"/>
+        <!-- W7→W8: Ocean to Volcano -->
+        <path d="M 814,340 Q 746,388 686,420" stroke="#2a5a8a" stroke-width="1.8" fill="none" opacity="0.3" stroke-dasharray="6 6"/>
+        <!-- W8→W9: Volcano to Sky Isles -->
+        <path d="M 606,432 Q 510,434 450,436" stroke="#2a5a8a" stroke-width="1.6" fill="none" opacity="0.28" stroke-dasharray="5 7"/>
+        <!-- W9→W10: Sky to Citadel -->
+        <path d="M 320,450 Q 230,458 156,462" stroke="#2a5a8a" stroke-width="1.6" fill="none" opacity="0.26" stroke-dasharray="5 7"/>
+
+        <!-- ══ TERRITORY LABELS ══ -->
+        <g font-family="Nunito, sans-serif" font-weight="800" text-anchor="middle">
+          <text x="185" y="388" font-size="9.5" fill="#5ab860" opacity="0.52">Origin Isle</text>
+          <text x="382" y="276" font-size="8"   fill="#3a7a3a" opacity="0.5">Forest Isle</text>
+          <text x="525" y="236" font-size="8"   fill="#556078" opacity="0.5">Peak Isle</text>
+          <text x="688" y="276" font-size="8"   fill="#3a5a88" opacity="0.5">Strategy City</text>
+          <text x="845" y="370" font-size="8"   fill="#2a5a78" opacity="0.5">Ocean Cluster</text>
+          <text x="652" y="500" font-size="8"   fill="#6a2808" opacity="0.42">Volcano Isle</text>
+          <text x="386" y="470" font-size="8"   fill="#3a4880" opacity="0.5">Sky Isles</text>
+          <text x="110" y="546" font-size="8"   fill="#5a3888" opacity="0.5">Citadel Isle</text>
+        </g>
+
+
+        <!-- ══ OCEAN DETAILS: life & atmosphere ══ -->
+        <g id="ocean-details">
+
+          <!-- Animated wave arcs (subtle, drawn over ocean) -->
+          <g stroke="#3a88cc" fill="none" stroke-linecap="round" opacity="0.18">
+            <!-- Zone 1: between Origin and Forest -->
+            <path d="M 340,210 Q 358,204 376,210" stroke-width="1.8"/>
+            <path d="M 345,224 Q 360,218 375,224" stroke-width="1.2"/>
+            <path d="M 355,195 Q 368,190 381,195" stroke-width="1.4"/>
+            <!-- Zone 2: open centre-right ocean -->
+            <path d="M 640,280 Q 658,274 676,280" stroke-width="1.8"/>
+            <path d="M 645,294 Q 660,288 675,294" stroke-width="1.2"/>
+            <path d="M 655,266 Q 668,261 681,266" stroke-width="1.4"/>
+            <!-- Zone 3: lower left ocean -->
+            <path d="M 88,380 Q 104,374 120,380" stroke-width="1.6"/>
+            <path d="M 95,394 Q 108,388 121,394" stroke-width="1.1"/>
+            <!-- Zone 4: upper centre -->
+            <path d="M 348,78  Q 362,73 376,78"  stroke-width="1.5"/>
+            <path d="M 350,90  Q 362,85 374,90"  stroke-width="1.1"/>
+            <!-- Zone 5: far right -->
+            <path d="M 920,320 Q 936,314 952,320" stroke-width="1.6"/>
+            <path d="M 924,334 Q 938,328 952,334" stroke-width="1.1"/>
+          </g>
+
+          <!-- Small rocks / reef fragments -->
+          <g fill="#162238" stroke="#1e3050" stroke-width="1" opacity="0.7">
+            <!-- Scatter between Origin and Citadel -->
+            <ellipse cx="230" cy="370" rx="7" ry="4" transform="rotate(-12,230,370)"/>
+            <ellipse cx="242" cy="378" rx="4" ry="2.5"/>
+            <ellipse cx="226" cy="382" rx="5" ry="3" transform="rotate(8,226,382)"/>
+            <!-- Mid ocean rocks -->
+            <ellipse cx="600" cy="370" rx="8" ry="4.5" transform="rotate(-8,600,370)"/>
+            <ellipse cx="612" cy="378" rx="5" ry="3"/>
+            <ellipse cx="594" cy="382" rx="4" ry="2.5" transform="rotate(10,594,382)"/>
+            <!-- Between Forest and Peak -->
+            <ellipse cx="458" cy="196" rx="6" ry="3.5" transform="rotate(-6,458,196)"/>
+            <ellipse cx="451" cy="204" rx="4" ry="2.5"/>
+            <!-- Between Ocean cluster and Volcano -->
+            <ellipse cx="756" cy="390" rx="7" ry="4" transform="rotate(5,756,390)"/>
+            <ellipse cx="766" cy="398" rx="4" ry="2.5"/>
+          </g>
+          <!-- Rock highlights -->
+          <g fill="#2a4060" opacity="0.4">
+            <ellipse cx="230" cy="368" rx="4" ry="2"/>
+            <ellipse cx="600" cy="368" rx="4" ry="2"/>
+            <ellipse cx="762" cy="398" rx="3.5" ry="2"/>
+          </g>
+
+          <!-- Tiny sailing boats -->
+          <!-- Boat 1: between Origin and Forest -->
+          <g transform="translate(320,226)" opacity="0.55">
+            <polygon points="0,8 10,8 5,-2" fill="#e8d8b0" stroke="none"/>
+            <rect x="4.5" y="-2" width="1" height="10" fill="#8a7050"/>
+            <rect x="0" y="7" width="10" height="3" rx="1.5" fill="#2a4a6a"/>
+          </g>
+          <!-- Boat 2: right mid ocean -->
+          <g transform="translate(764,270)" opacity="0.5">
+            <polygon points="0,8 10,8 5,-2" fill="#d0c8a0" stroke="none"/>
+            <rect x="4.5" y="-2" width="1" height="10" fill="#7a6840"/>
+            <rect x="0" y="7" width="10" height="3" rx="1.5" fill="#1e3858"/>
+          </g>
+          <!-- Boat 3: lower centre -->
+          <g transform="translate(518,460)" opacity="0.45">
+            <polygon points="0,7 8,7 4,-1" fill="#c8c0a0" stroke="none"/>
+            <rect x="3.5" y="-1" width="1" height="8" fill="#6a5830"/>
+            <rect x="0" y="6" width="8" height="2.5" rx="1" fill="#1a3050"/>
+          </g>
+
+          <!-- Floating debris / drift markers -->
+          <g fill="#1a3448" opacity="0.5">
+            <circle cx="460" cy="330" r="2.5"/>
+            <circle cx="468" cy="340" r="1.8"/>
+            <circle cx="454" cy="342" r="1.5"/>
+            <circle cx="310" cy="300" r="2"/>
+            <circle cx="316" cy="310" r="1.5"/>
+            <circle cx="726" cy="256" r="2"/>
+            <circle cx="734" cy="262" r="1.5"/>
+          </g>
+
+          <!-- Shallow water tint near coastlines (soft glow around islands) -->
+          <g opacity="0.07">
+            <circle cx="185" cy="310" r="160" fill="#3a9a60" stroke="none"/>
+            <circle cx="382" cy="208" r="100" fill="#3a7a40" stroke="none"/>
+            <circle cx="525" cy="165" r="90"  fill="#4a5060" stroke="none"/>
+            <circle cx="688" cy="210" r="88"  fill="#2a4a7a" stroke="none"/>
+            <circle cx="652" cy="436" r="85"  fill="#5a1408" stroke="none"/>
+            <circle cx="112" cy="468" r="106" fill="#3a2468" stroke="none"/>
+          </g>
+        </g>
+
+        <!-- JS path-layer -->
+        <g id="path-layer"></g>
+      </svg>
+
+      <!-- Node HTML overlays positioned absolutely over SVG -->
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       DETAIL SCREEN
+  ══════════════════════════════════════ -->
+  <div id="detail-screen" class="screen">
+    <nav class="nav-bar" id="nav-bar">
+      <button class="nav-btn" id="btn-back">← Map</button>
+      <span class="nav-center" id="nav-label"></span>
+      <div class="nav-right">
+        <button class="nav-btn" id="btn-prev">← Prev</button>
+        <button class="nav-btn" id="btn-next">Next →</button>
+      </div>
+    </nav>
+    <div class="page-wrapper" id="page-wrapper">
+      <div class="env-layer env-bg"   id="env-bg"></div>
+      <div class="env-layer env-mid"  id="env-mid"></div>
+      <div class="env-layer env-fore" id="env-fore"></div>
+      <div class="page-content">
+        <div class="page-inner" id="page-inner"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PROFILE PANEL (global overlay)
+  ══════════════════════════════════════ -->
+  <div class="profile-panel" id="profile-panel">
+    <div class="profile-panel-head">
+      <div class="profile-avatar-big">ACM</div>
+      <div class="profile-identity">
+        <div class="profile-name">Allen Cloyd Malayo</div>
+        <div class="profile-role">CS Academy Associate<br>(Sales)</div>
+      </div>
+      <button class="profile-close-btn" id="profile-close">✕</button>
+    </div>
+
+    <!-- Level -->
+    <div class="profile-section">
+      <div class="profile-section-title">Level Progress</div>
+      <div class="xp-level-row">
+        <span class="xp-level-big">LEVEL 3</span>
+        <span class="xp-label-right">3 / 10</span>
+      </div>
+      <div class="xp-bar-big">
+        <div class="xp-bar-big-fill"></div>
+      </div>
+      <div class="xp-sublabel">7 weeks remaining to complete the journey</div>
+    </div>
+
+    <!-- Skills -->
+    <div class="profile-section">
+      <div class="profile-section-title">Skills</div>
+      <div class="skills-grid">
+        <div class="skill-tag">💰 Sales</div>
+        <div class="skill-tag">🧠 Strategic Thinking</div>
+        <div class="skill-tag">💬 Communication</div>
+      </div>
+    </div>
+
+    <!-- Inventory -->
+    <div class="profile-section">
+      <div class="profile-section-title">Inventory</div>
+      <div class="inventory-list">
+        <div class="inv-item">
+          <div class="inv-icon">📜</div>
+          <div class="inv-info">
+            <div class="inv-name">FESP Scroll</div>
+            <div class="inv-type">Knowledge Artifact</div>
+          </div>
+          <span class="inv-rarity rare">RARE</span>
+        </div>
+        <div class="inv-item">
+          <div class="inv-icon">🧭</div>
+          <div class="inv-info">
+            <div class="inv-name">Pipeline Compass</div>
+            <div class="inv-type">Navigation Tool</div>
+          </div>
+          <span class="inv-rarity uncommon">UNCOMMON</span>
+        </div>
+        <div class="inv-item">
+          <div class="inv-icon">📖</div>
+          <div class="inv-info">
+            <div class="inv-name">AE Playbook</div>
+            <div class="inv-type">Field Manual</div>
+          </div>
+          <span class="inv-rarity common">COMMON</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       LOCKED NODE POPUP
+  ══════════════════════════════════════ -->
+  <div class="locked-popup-overlay" id="locked-popup-overlay">
+    <div class="locked-popup">
+      <span class="locked-popup-env-icon" id="popup-env-icon"></span>
+      <span class="locked-popup-lock">🔒</span>
+      <div class="locked-popup-week-label" id="popup-week-label"></div>
+      <h3 class="locked-popup-title" id="popup-title"></h3>
+      <div class="locked-popup-divider"></div>
+      <p class="locked-popup-msg" id="popup-msg"></p>
+      <button class="locked-popup-close" id="locked-popup-close">— RETURN —</button>
+    </div>
+  </div>
+
+  <!-- Screenshot toggle -->
+  <button class="screenshot-toggle" id="screenshot-toggle">📷 Screenshot Mode</button>
+
+  <script>
+    // ════════════════════════════════════════
+    // DATA
+    // ════════════════════════════════════════
+    const weeks = [
+
+      /* ──────────────────────────────────────
+         WEEK 1 — The Quiet Before (Night)
+      ────────────────────────────────────── */
+      {
+        id: 1, label: 'Week 1', title: 'The Quiet Before',
+        subtitle: 'Prologue · On Leave', icon: '🌙', env: 'w1',
+        terrain: 'Night', terrainIcon: '🌌', locked: false,
+        envBg: 'linear-gradient(180deg, #01030a 0%, #040c1e 50%, #08142e 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w1">
+            <!-- Sky -->
+            <div class="scene-sky"></div>
+            <div class="stars" style="position:absolute;inset:0;z-index:1;
+              background-image:
+                radial-gradient(1.5px 1.5px at 8%  12%, rgba(200,220,255,0.75) 0%,transparent 100%),
+                radial-gradient(1px   1px   at 20% 6%,  rgba(200,220,255,0.55) 0%,transparent 100%),
+                radial-gradient(1px   1px   at 35% 18%, rgba(200,220,255,0.5)  0%,transparent 100%),
+                radial-gradient(2px   2px   at 52% 8%,  rgba(200,220,255,0.85) 0%,transparent 100%),
+                radial-gradient(1px   1px   at 65% 14%, rgba(200,220,255,0.5)  0%,transparent 100%),
+                radial-gradient(1.5px 1.5px at 78% 5%,  rgba(200,220,255,0.7)  0%,transparent 100%),
+                radial-gradient(1px   1px   at 88% 20%, rgba(200,220,255,0.6)  0%,transparent 100%),
+                radial-gradient(1px   1px   at 14% 32%, rgba(200,220,255,0.45) 0%,transparent 100%),
+                radial-gradient(1px   1px   at 44% 28%, rgba(200,220,255,0.5)  0%,transparent 100%),
+                radial-gradient(1.5px 1.5px at 70% 26%, rgba(200,220,255,0.65) 0%,transparent 100%),
+                radial-gradient(1px   1px   at 92% 34%, rgba(200,220,255,0.5)  0%,transparent 100%),
+                radial-gradient(1px   1px   at 28% 42%, rgba(200,220,255,0.35) 0%,transparent 100%),
+                radial-gradient(1px   1px   at 55% 38%, rgba(200,220,255,0.4)  0%,transparent 100%),
+                radial-gradient(1px   1px   at 82% 44%, rgba(200,220,255,0.35) 0%,transparent 100%);
+            "></div>
+            <!-- Moon -->
+            <div style="position:absolute;top:28px;right:12%;width:78px;height:78px;border-radius:50%;
+              background:radial-gradient(circle at 35% 35%,#d8e8ff,#8ab0f0 60%,#4466aa);
+              box-shadow:0 0 40px 14px rgba(100,160,255,0.22),0 0 80px 40px rgba(60,100,200,0.1);
+              animation:float-raw 8s ease-in-out infinite;z-index:2;"></div>
+
+            <!-- Header -->
+            <div class="scene-header">
+              <div class="scene-eyebrow" style="color:#3a5888">Week 1 · Prologue</div>
+              <h1 class="scene-title" style="color:#c8d8f8">The Quiet Before</h1>
+              <div class="scene-subtitle" style="color:#4a6a9a">On Leave · Before the Journey Begins</div>
+            </div>
+
+            <!-- Info panels above treeline -->
+            <div class="w1-panels">
+              <div class="w1-panel">
+                <div class="w1-panel-label">✦ The Stillness</div>
+                <div class="w1-panel-items">
+                  <div class="w1-panel-item">Two weeks of leave before Field Experience began</div>
+                  <div class="w1-panel-item">Space to arrive rested and intentional</div>
+                  <div class="w1-panel-item">A held breath before the first note</div>
+                </div>
+              </div>
+              <div class="w1-panel">
+                <div class="w1-panel-label">◈ What I Carried In</div>
+                <div class="w1-panel-items">
+                  <div class="w1-panel-item">Curiosity over certainty</div>
+                  <div class="w1-panel-item">Willingness to begin slowly</div>
+                  <div class="w1-panel-item">Thoughts left to drift and settle</div>
+                </div>
+              </div>
+              <div class="w1-panel">
+                <div class="w1-panel-label">→ The Knowing</div>
+                <div class="w1-panel-items">
+                  <div class="w1-panel-item">Something different was coming</div>
+                  <div class="w1-panel-item">Readiness without certainty</div>
+                  <div class="w1-panel-item">The quiet before matters</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Treeline -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:155px;z-index:3;
+              background:linear-gradient(to top,#01020a,#020510 60%,transparent);
+              clip-path:polygon(0 100%,0 52%,4% 42%,7% 50%,9% 28%,12% 48%,14% 38%,17% 55%,21% 22%,24% 46%,27% 34%,30% 55%,34% 40%,37% 60%,40% 44%,43% 52%,46% 34%,49% 54%,52% 40%,55% 58%,58% 36%,61% 54%,64% 40%,67% 58%,70% 45%,73% 54%,76% 40%,79% 56%,82% 43%,85% 58%,88% 48%,91% 56%,94% 46%,97% 52%,100% 48%,100% 100%);
+            "></div>
+          </div>
+
+          <!-- Reflection -->
+          <div class="reflection-wrap">
+            <div class="ref-divider">
+              <div class="ref-divider-line"></div>
+              <span class="ref-divider-label" style="color:#2a3a60">Reflection · Week 1</span>
+              <div class="ref-divider-line"></div>
+            </div>
+            <div class="refl-w1">
+              <div class="prose">
+                <p>There is a particular quality to silence when you know that something is about to begin. Not the silence of emptiness, but the held breath of anticipation — the kind that settles over a room just before the first note of music, or the moment a runner leans into the start.</p>
+                <p>This was that week. On leave, between one chapter and the next, I found myself suspended in a strange and welcome stillness. The calendar had not yet begun its counting. The expectations had not yet arrived at the door.</p>
+                <p>I spent mornings slowly. I read things I had been meaning to read. I walked without a destination. I let thoughts arrive without immediately reaching for a notebook to capture them, allowing them instead to drift and settle like sediment in still water.</p>
+                <p><em>What does it mean to begin something well? Perhaps it means arriving rested. Perhaps it means arriving curious rather than certain. Perhaps it means allowing the quiet to do its work before the noise begins.</em></p>
+                <p>I did not know, in that week, what was coming. But I knew, in the particular way that one sometimes knows things without evidence, that it would matter. That this time would be different from the last. That I was, in some small but genuine way, ready.</p>
+              </div>
+            </div>
+          </div>
+        `; },
+      },
+
+      /* ──────────────────────────────────────
+         WEEK 2 — The Waiting Sands (Desert)
+      ────────────────────────────────────── */
+      {
+        id: 2, label: 'Week 2', title: 'The Waiting Sands',
+        subtitle: 'Interlude · On Leave', icon: '⏳', env: 'w2',
+        terrain: 'Desert', terrainIcon: '🏜️', locked: false,
+        envBg: 'linear-gradient(180deg,#200c00 0%,#5a2800 35%,#8a4400 60%,#3a1800 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w2">
+            <div class="scene-sky"></div>
+
+            <!-- Sun -->
+            <div style="position:absolute;top:22px;left:50%;
+              transform:translateX(-50%);
+              width:96px;height:96px;border-radius:50%;
+              background:radial-gradient(circle at 40% 40%,#fff8e8,#ffb830 50%,#e07000);
+              box-shadow:0 0 60px 22px rgba(255,160,0,0.35),0 0 120px 60px rgba(255,80,0,0.15);
+              animation:float-center 6s ease-in-out infinite;z-index:2;"></div>
+
+            <!-- Header -->
+            <div class="scene-header">
+              <div class="scene-eyebrow" style="color:#7a4a18">Week 2 · Interlude</div>
+              <h1 class="scene-title" style="color:#ffe4b0">The Waiting Sands</h1>
+              <div class="scene-subtitle" style="color:#8a5a28">On Leave · The Weight of Transition</div>
+            </div>
+
+            <!-- Panels on sand -->
+            <div class="w2-panels">
+              <div class="w2-panel">
+                <div class="w2-panel-label">✦ The Texture</div>
+                <div class="w2-panel-item">Where W1 was spacious, W2 carried quiet weight</div>
+                <div class="w2-panel-item">Not dread — the particular gravity of transition</div>
+                <div class="w2-panel-item">The shore exposing what usually lies hidden</div>
+              </div>
+              <div class="w2-panel">
+                <div class="w2-panel-label">◈ The Audit</div>
+                <div class="w2-panel-item">Habits that travel with me</div>
+                <div class="w2-panel-item">Assumptions I forget I'm making</div>
+                <div class="w2-panel-item">Beliefs I mistake for facts</div>
+              </div>
+              <div class="w2-panel">
+                <div class="w2-panel-label">→ The Question</div>
+                <div class="w2-panel-item">What kind of impressions do I want to leave?</div>
+                <div class="w2-panel-item">What kind of presence do I want to be?</div>
+                <div class="w2-panel-item">No conclusions yet — only questions</div>
+              </div>
+            </div>
+
+            <!-- Far dunes -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:190px;z-index:3;
+              background:linear-gradient(to top,#1a0e00,#3a1c00 40%,transparent);
+              clip-path:polygon(0 100%,0 62%,6% 45%,12% 68%,20% 38%,28% 65%,36% 42%,46% 72%,56% 48%,66% 70%,74% 44%,82% 68%,90% 48%,96% 62%,100% 55%,100% 100%);
+            "></div>
+            <!-- Near dunes -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:110px;z-index:4;
+              background:linear-gradient(to top,#0e0700,#1e1000 60%,transparent);
+              clip-path:polygon(0 100%,0 78%,10% 55%,22% 80%,34% 52%,48% 82%,60% 58%,72% 78%,82% 55%,92% 74%,100% 60%,100% 100%);
+            "></div>
+          </div>
+
+          <!-- Reflection -->
+          <div class="reflection-wrap">
+            <div class="ref-divider">
+              <div class="ref-divider-line" style="background:rgba(180,100,30,0.15)"></div>
+              <span class="ref-divider-label" style="color:#5a3a18">Reflection · Week 2</span>
+              <div class="ref-divider-line" style="background:rgba(180,100,30,0.15)"></div>
+            </div>
+            <div class="refl-w2">
+              <div class="prose">
+                <p>The second week felt like standing at the edge of a shore, watching the tide draw back. Everything in the near distance was exposed — familiar shapes made strange by the low light, the texture of what usually lies hidden.</p>
+                <p>Still on leave, still in the in-between. But this week had a different texture to it. Where the first week had been spacious and light, this one carried a quiet weight. Not dread — nothing so sharp as that. More like the particular gravity of transition.</p>
+                <p>I found myself thinking about the things I carry into new beginnings: the habits that travel with me, the assumptions I forget I'm making, the small calcified beliefs about myself that I mistake for facts. This is the work that leave allows, if you let it. The slow audit of what you're bringing along.</p>
+                <p><em>The sands here are waiting — not empty, but patient. They hold impressions easily. They give them up again just as easily.</em></p>
+                <p>I thought about what kind of impressions I wanted to leave. What kind of presence I wanted to be. There were no conclusions yet, only questions, which is perhaps the right thing to arrive with at the start of something new.</p>
+              </div>
+            </div>
+          </div>
+        `; },
+      },
+
+      /* ──────────────────────────────────────
+         WEEK 3 — City of Insight
+      ────────────────────────────────────── */
+      {
+        id: 3, label: 'Week 3', title: 'City of Insight',
+        subtitle: 'FE1 Week 3 Reflection', icon: '🌆', env: 'w3',
+        terrain: 'City', terrainIcon: '🏙️', locked: false,
+        envBg: 'linear-gradient(180deg,#010508 0%,#020c18 55%,#04122a 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w3" style="min-height:calc(100vh - var(--nav-h));overflow:hidden;">
+            <div class="scene-sky"></div>
+            <div class="city-haze"></div>
+            <div class="scan-line"></div>
+
+            <!-- ════════════ CITY SVG ════════════ -->
+            <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:2"
+              viewBox="0 0 1000 580" preserveAspectRatio="xMidYMax meet"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bB"  x1="0%"y1="0%"x2="0%"y2="100%"><stop offset="0%" stop-color="#040c18"/><stop offset="100%" stop-color="#010408"/></linearGradient>
+                <linearGradient id="bM"  x1="0%"y1="0%"x2="0%"y2="100%"><stop offset="0%" stop-color="#0c1e38"/><stop offset="100%" stop-color="#030810"/></linearGradient>
+                <linearGradient id="tLo" x1="0%"y1="0%"x2="0%"y2="100%"><stop offset="0%" stop-color="#0e2030"/><stop offset="100%" stop-color="#040a14"/></linearGradient>
+                <linearGradient id="tMi" x1="0%"y1="0%"x2="0%"y2="100%"><stop offset="0%" stop-color="#183858"/><stop offset="100%" stop-color="#060c1c"/></linearGradient>
+                <linearGradient id="tHi" x1="0%"y1="0%"x2="0%"y2="100%"><stop offset="0%" stop-color="#1e4878"/><stop offset="100%" stop-color="#060e1e"/></linearGradient>
+                <linearGradient id="tSp" x1="0%"y1="0%"x2="0%"y2="100%"><stop offset="0%" stop-color="#281040"/><stop offset="100%" stop-color="#050310"/></linearGradient>
+                <linearGradient id="fog" x1="0%"y1="0%"x2="0%"y2="100%"><stop offset="0%" stop-color="#010508" stop-opacity="0"/><stop offset="100%" stop-color="#000408" stop-opacity="0.95"/></linearGradient>
+                <filter id="gF" x="-25%"y="-25%"width="150%"height="150%"><feGaussianBlur stdDeviation="5"/></filter>
+                <filter id="gS" x="-15%"y="-15%"width="130%"height="130%"><feGaussianBlur stdDeviation="2.5"/></filter>
+              </defs>
+
+              <!-- ── BG SKYLINE ── -->
+              <g fill="url(#bB)" opacity="0.35">
+                <rect x="0"   y="290"width="16"height="290"/><rect x="18"  y="240"width="12"height="340"/><rect x="32"  y="260"width="18"height="320"/>
+                <rect x="52"  y="210"width="22"height="370"/><rect x="76"  y="250"width="16"height="330"/><rect x="94"  y="195"width="26"height="385"/>
+                <rect x="320" y="250"width="18"height="330"/><rect x="340" y="210"width="14"height="370"/><rect x="356" y="230"width="20"height="350"/>
+                <rect x="378" y="190"width="28"height="390"/><rect x="408" y="215"width="16"height="365"/>
+                <rect x="580" y="230"width="20"height="350"/><rect x="602" y="200"width="16"height="380"/><rect x="620" y="235"width="18"height="345"/>
+                <rect x="880" y="240"width="16"height="340"/><rect x="898" y="210"width="22"height="370"/><rect x="922" y="230"width="14"height="350"/>
+                <rect x="938" y="260"width="20"height="320"/><rect x="960" y="280"width="18"height="300"/><rect x="980" y="250"width="20"height="330"/>
+              </g>
+              <!-- BG windows -->
+              <g fill="#244866" opacity="0.18">
+                <rect x="56" y="220"width="4"height="4"/><rect x="65" y="220"width="4"height="4"/>
+                <rect x="97" y="204"width="5"height="5"/><rect x="107"y="204"width="5"height="5"/>
+                <rect x="381"y="200"width="5"height="4"/><rect x="391"y="200"width="5"height="4"/>
+                <rect x="605"y="210"width="4"height="4"/><rect x="614"y="210"width="4"height="4"/>
+                <rect x="901"y="220"width="5"height="4"/><rect x="911"y="220"width="5"height="4"/>
+              </g>
+
+              <!-- ── MID-GROUND BUILDINGS ── -->
+              <g fill="url(#bM)">
+                <rect x="120"y="330"width="36"height="250"/><rect x="158"y="295"width="28"height="285"/><rect x="188"y="310"width="32"height="270"/>
+                <rect x="222"y="270"width="40"height="310"/><rect x="264"y="330"width="26"height="250"/>
+                <rect x="700"y="310"width="32"height="270"/><rect x="734"y="278"width="28"height="302"/><rect x="764"y="295"width="36"height="285"/>
+                <rect x="802"y="260"width="30"height="320"/><rect x="834"y="318"width="24"height="262"/>
+              </g>
+              <!-- Mid windows (brighter) -->
+              <g fill="#3a7090" opacity="0.38" style="animation:win-blink 8s ease-in-out infinite">
+                <rect x="128"y="340"width="6"height="6"/><rect x="140"y="340"width="6"height="6"/>
+                <rect x="128"y="354"width="6"height="6"/><rect x="140"y="354"width="6"height="6"/>
+                <rect x="229"y="280"width="7"height="6"/><rect x="242"y="280"width="7"height="6"/>
+                <rect x="229"y="294"width="7"height="6"/><rect x="242"y="294"width="7"height="6"/>
+                <rect x="708"y="320"width="6"height="6"/><rect x="720"y="320"width="6"height="6"/>
+                <rect x="808"y="270"width="7"height="6"/><rect x="821"y="270"width="7"height="6"/>
+                <rect x="808"y="284"width="7"height="6"/>
+              </g>
+              <!-- Mid neon accent strips -->
+              <line x1="120"y1="330"x2="156"y2="330" stroke="#1a6888" stroke-width="1.5" opacity="0.6" filter="url(#gS)"/>
+              <line x1="222"y1="270"x2="262"y2="270" stroke="#2a80a8" stroke-width="1.5" opacity="0.55" filter="url(#gS)"/>
+              <line x1="700"y1="310"x2="732"y2="310" stroke="#1a6888" stroke-width="1.5" opacity="0.55" filter="url(#gS)"/>
+              <line x1="802"y1="260"x2="832"y2="260" stroke="#2a5888" stroke-width="1.5" opacity="0.5" filter="url(#gS)"/>
+
+              <!-- ── PIPELINE GEN TOWER (left, 20% — short, dim) ── -->
+              <rect x="42"  y="480"width="58"height="100" fill="url(#tLo)"/>
+              <rect x="42"  y="474"width="58"height="8"   fill="#0e1e2e"/>
+              <g fill="#244860" opacity="0.45">
+                <rect x="50" y="490"width="7"height="7"/><rect x="62" y="490"width="7"height="7"/>
+                <rect x="74" y="490"width="7"height="7"/><rect x="86" y="490"width="7"height="7"/>
+                <rect x="50" y="504"width="7"height="7"/><rect x="62" y="504"width="7"height="7"/>
+              </g>
+              <text x="71" y="467"text-anchor="middle"font-family="Nunito,sans-serif"font-size="8.5"fill="#2a5878"font-weight="800">Pipeline</text>
+              <text x="71" y="457"text-anchor="middle"font-family="Nunito,sans-serif"font-size="8"fill="#1a4060" font-style="italic">Emerging</text>
+
+              <!-- ── ACCOUNT PLANNING TOWER (left-centre, 40% — medium) ── -->
+              <rect x="162"y="390"width="76"height="190" fill="url(#tMi)"/>
+              <rect x="162"y="382"width="76"height="10"  fill="#142638"/>
+              <g fill="#3a88a8" opacity="0.48" style="animation:win-blink 11s 2s ease-in-out infinite">
+                <rect x="171"y="400"width="9"height="8"/><rect x="186"y="400"width="9"height="8"/>
+                <rect x="201"y="400"width="9"height="8"/><rect x="216"y="400"width="9"height="8"/>
+                <rect x="171"y="416"width="9"height="8"/><rect x="186"y="416"width="9"height="8"/>
+                <rect x="216"y="416"width="9"height="8"/>
+                <rect x="171"y="432"width="9"height="8"/><rect x="201"y="432"width="9"height="8"/>
+                <rect x="216"y="432"width="9"height="8"/>
+              </g>
+              <!-- Cyan edge glow -->
+              <rect x="162"y="382"width="2"height="190" fill="#1a8aaa" opacity="0.28" filter="url(#gS)"/>
+              <rect x="236"y="382"width="2"height="190" fill="#1a8aaa" opacity="0.18" filter="url(#gS)"/>
+              <line x1="162"y1="382"x2="238"y2="382" stroke="#2a90b0" stroke-width="2.5" opacity="0.6" filter="url(#gS)"/>
+              <text x="200"y="374"text-anchor="middle"font-family="Nunito,sans-serif"font-size="8.5"fill="#3a88a8"font-weight="800">Strategy</text>
+              <text x="200"y="364"text-anchor="middle"font-family="Nunito,sans-serif"font-size="8"fill="#2a6080" font-style="italic">Developing</text>
+
+              <!-- ── ADAPTABILITY TOWER (centre, 60% — LANDMARK) ── -->
+              <!-- Glow bloom behind tower -->
+              <ellipse cx="486"cy="400"rx="80"ry="200" fill="#00aacc" opacity="0.05" filter="url(#gF)"/>
+              <!-- Main shaft -->
+              <rect x="430"y="230"width="112"height="350" fill="url(#tHi)"style="animation:bldg-pulse 4s ease-in-out infinite"/>
+              <!-- Side fins -->
+              <rect x="417"y="270"width="15"height="310" fill="#0c1e38" opacity="0.9"/>
+              <rect x="542"y="270"width="15"height="310" fill="#0c1e38" opacity="0.9"/>
+              <!-- Crown -->
+              <rect x="452"y="192"width="68"height="40"  fill="#102840" opacity="0.95"/>
+              <rect x="464"y="168"width="44"height="28"  fill="#0e2238" opacity="0.95"/>
+              <rect x="476"y="148"width="20"height="24"  fill="#0c1e30" opacity="0.95"/>
+              <!-- Antenna -->
+              <line x1="486"y1="148"x2="486"y2="108" stroke="#2a7aaa" stroke-width="2.5"/>
+              <circle cx="486"cy="105"r="5" fill="none" stroke="#00e5ff" stroke-width="1.5" filter="url(#gS)"/>
+              <circle cx="486"cy="105"r="2.5" fill="#00e5ff" opacity="0.9" filter="url(#gF)"/>
+              <!-- Windows — bright -->
+              <g fill="#48b8d8" opacity="0.62" style="animation:win-blink 7s 1s ease-in-out infinite">
+                <rect x="441"y="244"width="11"height="10"/><rect x="458"y="244"width="11"height="10"/>
+                <rect x="475"y="244"width="11"height="10"/><rect x="492"y="244"width="11"height="10"/>
+                <rect x="509"y="244"width="11"height="10"/><rect x="526"y="244"width="11"height="10"/>
+                <rect x="441"y="262"width="11"height="10"/><rect x="458"y="262"width="11"height="10"/>
+                <rect x="492"y="262"width="11"height="10"/><rect x="526"y="262"width="11"height="10"/>
+                <rect x="441"y="280"width="11"height="10"/><rect x="475"y="280"width="11"height="10"/>
+                <rect x="509"y="280"width="11"height="10"/><rect x="526"y="280"width="11"height="10"/>
+                <rect x="441"y="298"width="11"height="10"/><rect x="458"y="298"width="11"height="10"/>
+                <rect x="492"y="298"width="11"height="10"/><rect x="509"y="298"width="11"height="10"/>
+              </g>
+              <!-- Neon top bar -->
+              <rect x="430"y="230"width="112"height="4" fill="#00e5ff" opacity="0.55" filter="url(#gF)"/>
+              <!-- Edge glows -->
+              <rect x="430"y="230"width="3"height="350" fill="#00e5ff" opacity="0.32" filter="url(#gS)"/>
+              <rect x="539"y="230"width="3"height="350" fill="#00e5ff" opacity="0.22" filter="url(#gS)"/>
+              <!-- Labels anchored to crown -->
+              <text x="486"y="188"text-anchor="middle"font-family="Nunito,sans-serif"font-size="9"fill="#5ac8e8"font-weight="800"filter="url(#gS)">Adaptability</text>
+              <text x="486"y="177"text-anchor="middle"font-family="Nunito,sans-serif"font-size="8.5"fill="#00ccee" font-style="italic"filter="url(#gF)">Strong Signal</text>
+
+              <!-- ── SUPPORT / COMM TOWER (right, tall, purple) ── -->
+              <ellipse cx="858"cy="400"rx="60"ry="180" fill="#660099" opacity="0.05" filter="url(#gF)"/>
+              <rect x="822"y="272"width="72"height="308" fill="url(#tSp)"/>
+              <rect x="834"y="236"width="48"height="40"  fill="#1c0c34" opacity="0.95"/>
+              <rect x="846"y="210"width="24"height="30"  fill="#180a2e" opacity="0.95"/>
+              <rect x="856"y="188"width="10"height="24"  fill="#140828" opacity="0.95"/>
+              <line x1="861"y1="188"x2="861"y2="152" stroke="#6622aa" stroke-width="2"/>
+              <circle cx="861"cy="149"r="5" fill="none" stroke="#bb66ff" stroke-width="1.5" filter="url(#gS)"/>
+              <circle cx="861"cy="149"r="2.5" fill="#bb66ff" opacity="0.85" filter="url(#gF)"/>
+              <!-- Purple windows -->
+              <g fill="#7744bb" opacity="0.5" style="animation:win-blink 9s 3s ease-in-out infinite">
+                <rect x="830"y="284"width="8"height="8"/><rect x="843"y="284"width="8"height="8"/>
+                <rect x="856"y="284"width="8"height="8"/><rect x="869"y="284"width="8"height="8"/>
+                <rect x="882"y="284"width="8"height="8"/>
+                <rect x="830"y="300"width="8"height="8"/><rect x="856"y="300"width="8"height="8"/>
+                <rect x="882"y="300"width="8"height="8"/>
+                <rect x="838"y="246"width="6"height="6"/><rect x="849"y="246"width="6"height="6"/>
+                <rect x="860"y="246"width="6"height="6"/><rect x="871"y="246"width="6"height="6"/>
+                <rect x="849"y="218"width="5"height="5"/><rect x="858"y="218"width="5"height="5"/>
+              </g>
+              <!-- Purple neon edge -->
+              <rect x="822"y="272"width="2"height="308" fill="#9922cc" opacity="0.38" filter="url(#gS)"/>
+              <rect x="892"y="272"width="2"height="308" fill="#9922cc" opacity="0.28" filter="url(#gS)"/>
+              <rect x="822"y="272"width="72"height="3"  fill="#bb66ff" opacity="0.48" filter="url(#gF)"/>
+              <!-- Support labels -->
+              <text x="861"y="266"text-anchor="middle"font-family="Nunito,sans-serif"font-size="8.5"fill="#9944cc"font-weight="800"filter="url(#gS)">Signal Tower</text>
+
+              <!-- ── FLANKING FILLER BUILDINGS ── -->
+              <rect x="306"y="370"width="48"height="210" fill="#09182c" opacity="0.9"/>
+              <g fill="#2a4a68" opacity="0.32"><rect x="314"y="380"width="8"height="8"/><rect x="328"y="380"width="8"height="8"/></g>
+              <rect x="660"y="350"width="54"height="230" fill="#081828" opacity="0.9"/>
+              <g fill="#2a4a68" opacity="0.3"><rect x="668"y="362"width="8"height="8"/><rect x="682"y="362"width="8"height="8"/></g>
+
+              <!-- Ground + street glow -->
+              <rect x="0"y="568"width="1000"height="12" fill="#000608"/>
+              <rect x="0"y="555"width="1000"height="26" fill="url(#fog)" opacity="0.65"/>
+              <rect x="0"y="568"width="1000"height="5"  fill="#00e5ff" opacity="0.03" filter="url(#gS)"/>
+              <rect x="780"y="548"width="220"height="32" fill="#440088" opacity="0.07" filter="url(#gS)"/>
+
+              <!-- Full depth fog -->
+              <rect x="0"y="0"width="1000"height="580" fill="url(#fog)" opacity="0.45"/>
+            </svg>
+
+            <!-- ── SKYLINE TITLE (anchored above centre tower) ── -->
+            <div class="w3-skyline-title">
+              <span class="w3-skyline-main">City of Insight</span>
+              <span class="w3-skyline-rule"></span>
+              <span class="w3-skyline-sub">Week 3 &nbsp;·&nbsp; Jun 8–12 &nbsp;·&nbsp; FE1</span>
+            </div>
+
+            <!-- ── BILLBOARDS — Key Moments (left building face) ── -->
+            <div class="w3-bb-tag" style="left:3.5%;bottom:36%;width:22%;">
+              <div class="w3-bb-cat" style="color:#0090aa;font-size:0.3rem;letter-spacing:0.18em;margin-bottom:8px;">— KEY MOMENTS —</div>
+              <div class="w3-bb-item" style="border-color:rgba(0,190,255,0.55);color:#78c8d8;font-size:0.82rem;">FE Launch Initiated</div>
+              <div class="w3-bb-item" style="border-color:rgba(0,168,240,0.45);color:#68b8cc;font-size:0.78rem;">FESP Presented + Refined</div>
+              <div class="w3-bb-item" style="border-color:rgba(0,148,220,0.38);color:#58a8bc;font-size:0.78rem;">AE Workflow Visibility Gained</div>
+              <div class="w3-bb-item" style="border-color:rgba(0,128,200,0.32);color:#4898ac;font-size:0.75rem;">Pipeline Tools Activated</div>
+              <div class="w3-bb-item" style="border-color:rgba(0,108,180,0.26);color:#38889c;font-size:0.75rem;">External Touchpoints Identified</div>
+            </div>
+
+            <!-- ── NEON SIGNS — Key Insights (right skyline, spread vertically) ── -->
+            <div class="w3-ns-tag" style="right:3.5%;bottom:44%;width:19%;">
+              <div class="w3-ns-cat" style="color:#009966;font-size:0.3rem;letter-spacing:0.18em;margin-bottom:7px;">— INSIGHTS —</div>
+              <div class="w3-ns-item" style="color:#44dd99;text-shadow:0 0 10px rgba(0,220,120,0.55);font-size:0.82rem;margin-bottom:7px;">Opportunity starts before the meeting</div>
+              <div class="w3-ns-item" style="color:#33cc88;text-shadow:0 0 8px rgba(0,200,100,0.48);font-size:0.8rem;margin-bottom:7px;">Relationships compound over time</div>
+              <div class="w3-ns-item" style="color:#22bb77;text-shadow:0 0 8px rgba(0,180,90,0.42);font-size:0.78rem;margin-bottom:7px;">Visibility &gt; immediacy</div>
+              <div class="w3-ns-item" style="color:#11aa66;text-shadow:0 0 8px rgba(0,160,80,0.38);font-size:0.78rem;">Adaptability drives progress</div>
+            </div>
+
+            <!-- ── SIGNAL TOWER — Needs (upper-right, near tower antenna) ── -->
+            <div class="w3-sup-tag" style="right:2.5%;bottom:60%;width:18%;text-align:left;">
+              <div class="w3-sup-cat" style="color:#aa55ee;font-size:0.3rem;letter-spacing:0.18em;margin-bottom:6px;">— SIGNAL REQUESTS —</div>
+              <div class="w3-sup-item" style="color:#9944dd;font-size:0.78rem;margin-bottom:4px;">More real customer exposure</div>
+              <div class="w3-sup-item" style="color:#8833cc;font-size:0.76rem;margin-bottom:4px;">AE decision-making patterns</div>
+              <div class="w3-sup-item" style="color:#7722bb;font-size:0.76rem;">Campaign budget alignment</div>
+            </div>
+
+            <!-- ── ROAD — Next Moves ── -->
+            <div class="w3-road-bar">
+              <span class="w3-road-lbl">MOVING TO</span>
+              <div class="w3-wp"><div class="w3-dot on"></div><span class="w3-wt on">Pipeline Gen</span></div>
+              <span class="w3-arr">›</span>
+              <div class="w3-wp"><div class="w3-dot"></div><span class="w3-wt">AE Alignment</span></div>
+              <span class="w3-arr">›</span>
+              <div class="w3-wp"><div class="w3-dot"></div><span class="w3-wt">Account Outreach</span></div>
+              <span class="w3-arr">›</span>
+              <div class="w3-wp"><div class="w3-dot"></div><span class="w3-wt">Engagement Plans</span></div>
+              <span class="w3-arr">›</span>
+              <div class="w3-wp"><div class="w3-dot"></div><span class="w3-wt">Balikbayan Box</span></div>
+            </div>
+          </div>
+
+          <!-- Detailed Reflection -->
+          <div class="reflection-wrap">
+            <div class="ref-divider">
+              <div class="ref-divider-line" style="background:rgba(0,180,255,0.1)"></div>
+              <span class="ref-divider-label" style="color:#005577">Reflection · Week 3 · Jun 8–12</span>
+              <div class="ref-divider-line" style="background:rgba(0,180,255,0.1)"></div>
+            </div>
+            <div class="refl-w3">
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">⭐</span>
+                  <span class="ref-section-title">Highlights</span>
+                </div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets">
+                    <li>Finally started my Field Experience. Most of my time was spent getting oriented, aligning on my FESP, and learning how AEs approach pipeline building and account management. Not the most action-packed week, but it gave me a much clearer picture of the work behind the scenes.</li>
+                    <li>Presented my FESP in person and received feedback on account prioritization and opportunity development. The discussions encouraged me to think more strategically about long-term account potential, not purely immediate opportunities.</li>
+                    <li>Had a 1:1 alignment with my buddy and completed walkthroughs on Demand Generation, Harmony, and Pipeline Health Manager. Helpful to see how an experienced AE manages pipeline and approaches opportunity creation in practice.</li>
+                    <li>Identified five industry and networking events relevant to my portfolio that I can potentially attend — helping me think more proactively about creating customer touchpoints outside of traditional SAP engagements.</li>
+                    <li>While several planned shadowing opportunities were cancelled due to scheduling conflicts, I used the time to attend enablement sessions, work on FE1 deliverables, and participate in P&amp;C activities.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">💡</span>
+                  <span class="ref-section-title">Key Learnings</span>
+                </div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-learnings">
+                    <li>Opportunity creation starts long before a customer conversation. Understanding the account, identifying the right stakeholders, and recognizing timing signals are all part of the process.</li>
+                    <li>Not every activity needs to lead to an immediate opportunity. Building familiarity, relationships, and visibility can create value that pays off later.</li>
+                    <li>Field Experience requires adaptability. When plans change, it's important to find alternative ways to learn and make progress.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">📈</span>
+                  <span class="ref-section-title">Field Experience Progress</span>
+                </div>
+                <div class="ref-section-body">
+                  <div class="ref-progress-items">
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Pipeline Generation &amp; Opportunity Identification</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Got introduced to some tools and processes used to build pipeline, but still need actual hands-on experience identifying and qualifying opportunities.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Account Planning &amp; Strategic Thinking</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">The FESP discussions helped me look beyond immediate targets and think more strategically about account potential and long-term opportunity development.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Learning Agility &amp; Self-Management</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">This week tested my ability to adjust when plans changed. While not everything went as expected, I was able to find other opportunities to learn and stay productive.</div>
+                    </div>
+                    <div class="completed-tasks">
+                      <div class="completed-tasks-label">Completed this week</div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Presented FESP and incorporated feedback into account planning.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Completed Demand Generation, Harmony, and Pipeline Health Manager walkthroughs.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Participated in enablement sessions on Pipeline Health Manager and Success Plans.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended P&amp;C activities and continued work on FE1 deliverables and commercial readiness tasks.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">🎯</span>
+                  <span class="ref-section-title">Focus for Next Week</span>
+                </div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-focus">
+                    <li>Continue building pipeline generation skills and applying them to assigned accounts.</li>
+                    <li>Align with AEs and secure more shadowing opportunities and customer exposure.</li>
+                    <li>Start outreach for accounts with no warm access.</li>
+                    <li>Start translating account research into actionable engagement plans.</li>
+                    <li>Concretize plan for the "Balikbayan Box" engagement campaign.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">🤝</span>
+                  <span class="ref-section-title">Support Needed</span>
+                </div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-support">
+                    <li>More opportunities to shadow customer meetings and account planning discussions.</li>
+                    <li>Guidance on how experienced AEs prioritize opportunities and build pipeline across multiple accounts.</li>
+                    <li>Continued support in identifying shadowing opportunities aligned with my FESP goals.</li>
+                    <li>Budget endorsement for my "Balikbayan Box" Campaign from the managing director.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `; },
+      },
+
+      /* Locked weeks — minimal buildScene */
+      { id: 4,  label: 'Week 4',  title: 'The Deep Forest',    subtitle: 'Week 4 · Forest',   icon: '🌲', env: 'w4',  terrain: 'Forest',   terrainIcon: '🌿', locked: true,  envBg: 'linear-gradient(160deg,#040e06 0%,#091810 100%)', buildScene() { return ''; } },
+      { id: 5,  label: 'Week 5',  title: 'The High Peaks',     subtitle: 'Week 5 · Mountain', icon: '⛰️', env: 'w5',  terrain: 'Mountain', terrainIcon: '🏔️', locked: true,  envBg: 'linear-gradient(160deg,#08060e 0%,#140e22 100%)', buildScene() { return ''; } },
+      { id: 6,  label: 'Week 6',  title: 'The Strategy City',  subtitle: 'Week 6 · Urban',    icon: '🏛️', env: 'w6',  terrain: 'Urban',    terrainIcon: '🗺️', locked: true,  envBg: 'linear-gradient(160deg,#06080e 0%,#0e1222 100%)', buildScene() { return ''; } },
+      { id: 7,  label: 'Week 7',  title: 'The Ocean Depths',   subtitle: 'Week 7 · Ocean',    icon: '🌊', env: 'w7',  terrain: 'Ocean',    terrainIcon: '🐚', locked: true,  envBg: 'linear-gradient(160deg,#0e0408 0%,#1e0810 100%)', buildScene() { return ''; } },
+      { id: 8,  label: 'Week 8',  title: "The Volcano's Edge", subtitle: 'Week 8 · Volcano',  icon: '🌋', env: 'w8',  terrain: 'Volcano',  terrainIcon: '🔥', locked: true,  envBg: 'linear-gradient(160deg,#05050e 0%,#0e0e1e 100%)', buildScene() { return ''; } },
+      { id: 9,  label: 'Week 9',  title: 'The Sky Reaches',    subtitle: 'Week 9 · Sky',      icon: '☁️', env: 'w9',  terrain: 'Sky',      terrainIcon: '⚡', locked: true,  envBg: 'linear-gradient(160deg,#050810 0%,#0a1220 100%)', buildScene() { return ''; } },
+      { id: 10, label: 'Week 10', title: 'The Iron Citadel',   subtitle: 'Week 10 · Citadel', icon: '🏰', env: 'w10', terrain: 'Citadel',  terrainIcon: '⚔️', locked: true,  envBg: 'linear-gradient(160deg,#050508 0%,#0a0a12 100%)', buildScene() { return ''; } },
+    ];
+
+    function getTheme(env) {
+      return ({
+        w1:  { nodeBg: '#0d1a3a', nodeGlow: '#4f7fe8', accent: '#7fb3ff', text: '#c8d8f8' },
+        w2:  { nodeBg: '#3a1800', nodeGlow: '#f5a623', accent: '#ffc95c', text: '#ffe4b0' },
+        w3:  { nodeBg: '#001833', nodeGlow: '#00c8e0', accent: '#00e5ff', text: '#b0f0ff' },
+        w4:  { nodeBg: '#0a2210', nodeGlow: '#4caf50', accent: '#80e085', text: '#c8f0cb' },
+        w5:  { nodeBg: '#1a1030', nodeGlow: '#9370db', accent: '#c0a0ff', text: '#ddd0ff' },
+        w6:  { nodeBg: '#0e1e33', nodeGlow: '#5599cc', accent: '#88bbff', text: '#c0d8f8' },
+        w7:  { nodeBg: '#2a0812', nodeGlow: '#ff5555', accent: '#ff9090', text: '#ffd0d0' },
+        w8:  { nodeBg: '#0a0a22', nodeGlow: '#88aaff', accent: '#aaccff', text: '#dde8ff' },
+        w9:  { nodeBg: '#0a1020', nodeGlow: '#556699', accent: '#aaccff', text: '#ccdcf8' },
+        w10: { nodeBg: '#180e2a', nodeGlow: '#cc99ff', accent: '#ffcc88', text: '#ffe8cc' },
+      })[env] || { nodeBg: '#0d1a3a', nodeGlow: '#4f7fe8', accent: '#7fb3ff', text: '#c8d8f8' };
+    }
+
+    // Node positions in SVG viewBox coordinates (960 × 560)
+    // Matched to island centres in the terrain SVG
+    const NODE_POSITIONS = [
+      { x: 110, y: 320 },  // W1  – Origin Isle, coastal edge
+      { x: 175, y: 292 },  // W2  – Origin Isle, desert inner
+      { x: 252, y: 262 },  // W3  – Origin Isle, city centre
+      { x: 382, y: 230 },  // W4  – Forest Isle (pushed down)
+      { x: 525, y: 190 },  // W5  – Peak Isle
+      { x: 688, y: 232 },  // W6  – Strategy City Isle
+      { x: 830, y: 332 },  // W7  – Ocean Cluster
+      { x: 650, y: 450 },  // W8  – Volcano Isle
+      { x: 386, y: 455 },  // W9  – Sky Isles
+      { x: 112, y: 485 },  // W10 – Citadel Isle
+    ];
+
+    // SVG viewBox dimensions
+    const SVG_W = 960, SVG_H = 560;
+
+    // ════════════════════════════════════════
+    // MAP BUILD
+    // ════════════════════════════════════════
+    function buildMap() {
+      const container = document.getElementById('world-container');
+      const svg       = document.getElementById('world-svg');
+
+      // Convert SVG viewBox coordinates → % of container using actual rendered transform.
+      // Works for both slice and meet preserveAspectRatio.
+      function svgToPercent(x, y) {
+        const ctRect  = container.getBoundingClientRect();
+        const svgRect = svg.getBoundingClientRect();
+        // Offset of SVG within container (for slice, may be negative)
+        const offX = svgRect.left - ctRect.left;
+        const offY = svgRect.top  - ctRect.top;
+        // Scale factor: rendered px per viewBox unit
+        const scaleX = svgRect.width  / SVG_W;
+        const scaleY = svgRect.height / SVG_H;
+        const scale  = Math.max(scaleX, scaleY); // slice uses max
+        // Shift due to centering
+        const shiftX = (svgRect.width  - SVG_W * scale) / 2;
+        const shiftY = (svgRect.height - SVG_H * scale) / 2;
+        const pxX = offX + shiftX + x * scale;
+        const pxY = offY + shiftY + y * scale;
+        return {
+          px: (pxX / ctRect.width)  * 100,
+          py: (pxY / ctRect.height) * 100
+        };
+      }
+
+      // Draw connection paths in the SVG path-layer group
+      const pathLayer = document.getElementById('path-layer');
+      // Current week index (0-based). Paths up to this are "traveled".
+      const CURRENT_IDX = 2; // Week 3 = index 2
+
+      weeks.forEach((week, i) => {
+        if (i === 0) return;
+        const p1 = NODE_POSITIONS[i - 1];
+        const p2 = NODE_POSITIONS[i];
+        const cx = (p1.x + p2.x) / 2 + (i % 2 === 0 ? -30 : 30);
+        const cy = (p1.y + p2.y) / 2 - 22;
+        const d  = `M ${p1.x} ${p1.y} Q ${cx} ${cy} ${p2.x} ${p2.y}`;
+
+        const traveled = i <= CURRENT_IDX;
+        const unlocked = !weeks[i - 1].locked && !week.locked;
+
+        if (traveled) {
+          // Glow underlay — wider, softer
+          const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          glow.setAttribute('d', d);
+          glow.setAttribute('fill', 'none');
+          glow.setAttribute('stroke', 'rgba(80,180,255,0.28)');
+          glow.setAttribute('stroke-width', '8');
+          glow.setAttribute('stroke-linecap', 'round');
+          pathLayer.appendChild(glow);
+        }
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke-linecap', 'round');
+
+        if (traveled) {
+          // Bright solid traveled path
+          path.setAttribute('stroke', 'rgba(100,200,255,0.85)');
+          path.setAttribute('stroke-width', '2.5');
+          path.setAttribute('stroke-dasharray', 'none');
+          // Animated shimmer on traveled path
+          const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+          anim.setAttribute('attributeName', 'stroke-opacity');
+          anim.setAttribute('values', '0.85;0.55;0.85');
+          anim.setAttribute('dur', '3s');
+          anim.setAttribute('repeatCount', 'indefinite');
+          path.appendChild(anim);
+        } else if (unlocked) {
+          path.setAttribute('stroke', 'rgba(120,180,255,0.55)');
+          path.setAttribute('stroke-width', '2');
+          path.setAttribute('stroke-dasharray', '7 5');
+          const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+          anim.setAttribute('attributeName', 'stroke-dashoffset');
+          anim.setAttribute('from', '0');
+          anim.setAttribute('to', '-24');
+          anim.setAttribute('dur', '1.8s');
+          anim.setAttribute('repeatCount', 'indefinite');
+          path.appendChild(anim);
+        } else {
+          path.setAttribute('stroke', 'rgba(30,50,90,0.28)');
+          path.setAttribute('stroke-width', '1.5');
+          path.setAttribute('stroke-dasharray', '3 8');
+        }
+
+        pathLayer.appendChild(path);
+      });
+
+      // Create HTML node overlays
+      weeks.forEach((week, i) => {
+        const pos  = NODE_POSITIONS[i];
+        const pct  = svgToPercent(pos.x, pos.y);
+
+        const wrap = document.createElement('div');
+        wrap.className = 'node-wrap ' + (week.locked ? 'locked' : 'unlocked');
+        wrap.style.left = pct.px + '%';
+        wrap.style.top  = pct.py + '%';
+
+        // Tighten node size on Origin Isle (weeks 1–3 are close together)
+        const isOrigin = week.id <= 3;
+        const nodeSize = isOrigin ? '52px' : '60px';
+
+        const btn = document.createElement('div');
+        btn.className = 'node-btn ' + (week.locked ? 'locked' : 'unlocked');
+        btn.style.width  = nodeSize;
+        btn.style.height = nodeSize;
+
+        if (!week.locked) {
+          const t = getTheme(week.env);
+          btn.style.background  = t.nodeBg;
+          btn.style.borderColor = t.nodeGlow;
+          btn.style.setProperty('--glow', t.nodeGlow + '66');
+          btn.style.boxShadow   = `0 0 16px 4px ${t.nodeGlow}44, inset 0 1px 0 rgba(255,255,255,0.1)`;
+          // Highlight current week (W3)
+          if (week.id === 3) {
+            btn.style.borderColor = '#ffcc44';
+            btn.style.boxShadow   = `0 0 22px 6px rgba(255,200,40,0.5), inset 0 1px 0 rgba(255,255,255,0.1)`;
+          }
+        }
+
+        // Terrain badge
+        const badge = document.createElement('div');
+        badge.className = 'node-badge';
+        badge.textContent = week.terrainIcon;
+        if (!week.locked) {
+          const t = getTheme(week.env);
+          badge.style.background  = t.nodeBg;
+          badge.style.borderColor = week.id === 3 ? '#ffcc44' : t.nodeGlow;
+        } else {
+          badge.style.background  = '#080d18';
+          badge.style.borderColor = '#16213a';
+        }
+
+        // Week number
+        const num = document.createElement('span');
+        num.className = 'node-num';
+        num.textContent = 'W' + week.id;
+        num.style.color = week.locked ? '#1e2d45' : (week.id === 3 ? '#ffdd66' : getTheme(week.env).accent);
+
+        if (week.locked) {
+          const lockEl = document.createElement('span');
+          lockEl.className = 'node-lock-icon';
+          lockEl.textContent = '🔒';
+          btn.appendChild(badge);
+          btn.appendChild(num);
+          btn.appendChild(lockEl);
+        } else {
+          const icon = document.createElement('span');
+          icon.className = 'node-icon';
+          icon.textContent = week.icon;
+          btn.appendChild(badge);
+          btn.appendChild(num);
+          btn.appendChild(icon);
+        }
+
+        const caption = document.createElement('div');
+        caption.className = 'node-caption';
+        caption.textContent = week.locked ? week.terrain : week.title;
+        if (!week.locked) caption.style.color = week.id === 3 ? '#ffdd88' : getTheme(week.env).text;
+
+        wrap.appendChild(btn);
+        wrap.appendChild(caption);
+
+        if (week.locked) {
+          wrap.addEventListener('click', () => showLockedPopup(week));
+        } else {
+          wrap.addEventListener('click', () => openWeek(week.id));
+        }
+
+        container.appendChild(wrap);
+      });
+
+      // ── Player avatar on Week 3 (current position) ──
+      const avatarPos  = NODE_POSITIONS[2]; // Week 3
+      const avatarPct  = svgToPercent(avatarPos.x, avatarPos.y);
+
+      const avatarWrap = document.createElement('div');
+      avatarWrap.className = 'player-avatar-wrap';
+      // Offset upward so the pin tip lands on the node centre
+      avatarWrap.style.left = avatarPct.px + '%';
+      avatarWrap.style.top  = (avatarPct.py - 1.5) + '%';
+
+      avatarWrap.innerHTML = `
+        <div class="player-avatar-tooltip">Current Position</div>
+        <div class="player-avatar-label">▼ YOU ARE HERE</div>
+        <div class="player-avatar-badge">ACM</div>
+        <div class="player-avatar-pin"></div>
+        <div class="player-avatar-ring"></div>
+      `;
+
+      container.appendChild(avatarWrap);
+    }
+
+    // ════════════════════════════════════════
+    // LOCKED POPUP
+    // ════════════════════════════════════════
+    function showLockedPopup(week) {
+      document.getElementById('popup-env-icon').textContent   = week.icon;
+      document.getElementById('popup-week-label').textContent = week.label + ' · ' + week.terrain;
+      document.getElementById('popup-title').textContent      = week.title;
+      document.getElementById('popup-msg').textContent        =
+        'This chapter hasn\'t been unlocked yet.\nComplete earlier weeks to reveal this territory.';
+      document.getElementById('locked-popup-overlay').classList.add('active');
+    }
+
+    function closeLockedPopup() {
+      document.getElementById('locked-popup-overlay').classList.remove('active');
+    }
+
+    document.getElementById('locked-popup-close').addEventListener('click', closeLockedPopup);
+    document.getElementById('locked-popup-overlay').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeLockedPopup();
+    });
+
+    // ════════════════════════════════════════
+    // PROFILE PANEL
+    // ════════════════════════════════════════
+    document.getElementById('profile-btn').addEventListener('click', () => {
+      document.getElementById('profile-panel').classList.add('open');
+    });
+
+    document.getElementById('profile-close').addEventListener('click', () => {
+      document.getElementById('profile-panel').classList.remove('open');
+    });
+
+    // ════════════════════════════════════════
+    // DETAIL PAGE
+    // ════════════════════════════════════════
+    let currentWeekId = null;
+
+    function openWeek(id) {
+      currentWeekId = id;
+      renderDetail(id);
+      document.getElementById('map-screen').classList.remove('active');
+      const detail = document.getElementById('detail-screen');
+      detail.classList.add('active', 'entering');
+      setTimeout(() => detail.classList.remove('entering'), 450);
+    }
+
+    function renderDetail(id) {
+      const week  = weeks.find(w => w.id === id);
+      const theme = getTheme(week.env);
+
+      // Nav
+      const navLabel = document.getElementById('nav-label');
+      navLabel.textContent      = week.label;
+      navLabel.style.color      = theme.accent;
+      navLabel.style.textShadow = `0 0 14px ${theme.nodeGlow}`;
+
+      document.getElementById('btn-prev').disabled = id <= 1;
+      const nextWeek = weeks.find(w => w.id === id + 1);
+      document.getElementById('btn-next').disabled = !nextWeek || nextWeek.locked;
+
+      // Page wrapper gets the env bg
+      const wrapper = document.getElementById('page-wrapper');
+      wrapper.className = 'page-wrapper';
+      wrapper.style.background = week.envBg || '#05080f';
+
+      // Clear env layers — scene content lives directly in page-inner now
+      const bg  = document.getElementById('env-bg');
+      const mid = document.getElementById('env-mid');
+      const fore = document.getElementById('env-fore');
+      bg.innerHTML = mid.innerHTML = fore.innerHTML = '';
+      bg.style.background = '';
+
+      const inner = document.getElementById('page-inner');
+      inner.style.maxWidth = '100%';
+      inner.style.padding  = '0';
+
+      if (week.locked) {
+        inner.innerHTML = `
+          <div class="locked-page">
+            <div class="locked-icon-big">${week.icon}</div>
+            <h2>${week.terrain} · Locked</h2>
+            <p>${week.title}<br><br>This realm hasn't been discovered yet. Return when the time comes.</p>
+          </div>`;
+      } else {
+        inner.innerHTML = week.buildScene();
+      }
+
+      document.querySelector('.page-content').scrollTop = 0;
+    }
+
+    // ════════════════════════════════════════
+    // NAV
+    // ════════════════════════════════════════
+    document.getElementById('btn-back').addEventListener('click', () => {
+      document.getElementById('detail-screen').classList.remove('active');
+      document.getElementById('map-screen').classList.add('active');
+      currentWeekId = null;
+    });
+
+    document.getElementById('btn-prev').addEventListener('click', () => {
+      if (currentWeekId > 1) { currentWeekId--; renderDetail(currentWeekId); animateCard(); }
+    });
+
+    document.getElementById('btn-next').addEventListener('click', () => {
+      const next = weeks.find(w => w.id === currentWeekId + 1);
+      if (next && !next.locked) { currentWeekId++; renderDetail(currentWeekId); animateCard(); }
+    });
+
+    function animateCard() {
+      const scene = document.querySelector('.scene-wrap');
+      if (!scene) return;
+      scene.style.animation = 'none';
+      void scene.offsetWidth;
+      scene.style.animation = 'card-in 0.4s cubic-bezier(.25,.46,.45,.94) both';
+    }
+
+    // ════════════════════════════════════════
+    // SCREENSHOT MODE
+    // ════════════════════════════════════════
+    document.getElementById('screenshot-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('screenshot-mode');
+    });
+
+    // ════════════════════════════════════════
+    // INIT
+    // ════════════════════════════════════════
+    buildMap();
+  </script>
+</body>
+</html>
