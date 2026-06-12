@@ -1406,6 +1406,31 @@
       animation: card-in 0.5s 0.15s cubic-bezier(.25,.46,.45,.94) both;
     }
 
+    /* ── Reflection photo ── */
+    .ref-photo {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 12px 0 4px;
+      border: 1px solid rgba(0,180,255,0.12);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .ref-photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .ref-photo-caption {
+      font-size: 0.7rem;
+      color: #2a5a70;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
     /* Reflection divider */
     .ref-divider {
       display: flex;
@@ -1695,7 +1720,12 @@
     <div class="map-topbar">
       <!-- Player HUD (left) -->
       <div class="map-hud" id="map-hud">
-        <div class="hud-avatar">ACM</div>
+        <div class="hud-avatar">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" fill="#7fb3ff" opacity="0.9"/>
+            <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" stroke="#7fb3ff" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.9"/>
+          </svg>
+        </div>
         <div class="hud-info">
           <div class="hud-name">Allen Cloyd Malayo</div>
           <div class="hud-role">CS Academy Associate</div>
@@ -2177,7 +2207,12 @@
   ══════════════════════════════════════ -->
   <div class="profile-panel" id="profile-panel">
     <div class="profile-panel-head">
-      <div class="profile-avatar-big">ACM</div>
+      <div class="profile-avatar-big">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="8" r="4.5" fill="#7fb3ff" opacity="0.9"/>
+          <path d="M3 20c0-4.5 4.03-8 9-8s9 3.5 9 8" stroke="#7fb3ff" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.9"/>
+        </svg>
+      </div>
       <div class="profile-identity">
         <div class="profile-name">Allen Cloyd Malayo</div>
         <div class="profile-role">CS Academy Associate<br>(Sales)</div>
@@ -2689,7 +2724,15 @@
                   <ul class="ref-bullets">
                     <li>Finally started my Field Experience. Most of my time was spent getting oriented, aligning on my FESP, and learning how AEs approach pipeline building and account management. Not the most action-packed week, but it gave me a much clearer picture of the work behind the scenes.</li>
                     <li>Presented my FESP in person and received feedback on account prioritization and opportunity development. The discussions encouraged me to think more strategically about long-term account potential, not purely immediate opportunities.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_5322.jpeg" alt="FESP presentation session"/>
+                    </div>
+                    <p class="ref-photo-caption">FESP presentation — field office, Week 3</p>
                     <li>Had a 1:1 alignment with my buddy and completed walkthroughs on Demand Generation, Harmony, and Pipeline Health Manager. Helpful to see how an experienced AE manages pipeline and approaches opportunity creation in practice.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_5349.jpeg" alt="Pipeline walkthrough with buddy"/>
+                    </div>
+                    <p class="ref-photo-caption">Pipeline Health Manager walkthrough — Converge ICT account view</p>
                     <li>Identified five industry and networking events relevant to my portfolio that I can potentially attend — helping me think more proactively about creating customer touchpoints outside of traditional SAP engagements.</li>
                     <li>While several planned shadowing opportunities were cancelled due to scheduling conflicts, I used the time to attend enablement sessions, work on FE1 deliverables, and participate in P&amp;C activities.</li>
                   </ul>
@@ -3014,7 +3057,12 @@
       avatarWrap.innerHTML = `
         <div class="player-avatar-tooltip">Current Position</div>
         <div class="player-avatar-label">▼ YOU ARE HERE</div>
-        <div class="player-avatar-badge">ACM</div>
+        <div class="player-avatar-badge">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" fill="#ffdd88" opacity="0.95"/>
+            <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" stroke="#ffdd88" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.95"/>
+          </svg>
+        </div>
         <div class="player-avatar-pin"></div>
         <div class="player-avatar-ring"></div>
       `;
