@@ -168,7 +168,7 @@
 
     .xp-bar-fill {
       height: 100%;
-      width: 30%;
+      width: 50%;
       background: linear-gradient(90deg, #3a6ecc, #7fb3ff);
       border-radius: 4px;
       box-shadow: 0 0 6px #4f7fe8;
@@ -1680,6 +1680,155 @@
     .w3-arr { color: #102838; font-size: 0.65rem; margin: 0 4px; flex-shrink: 0; }
 
 
+
+    /* ══════════════════════════════════════
+       WEEK 5 — MOUNTAIN OF CHALLENGE
+    ══════════════════════════════════════ */
+
+    .scene-w5 .scene-sky {
+      background:
+        radial-gradient(ellipse 100% 55% at 50% 100%, rgba(200,215,255,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse  70% 35% at 25%  90%, rgba(180,200,240,0.14) 0%, transparent 58%),
+        radial-gradient(ellipse  70% 35% at 78%  90%, rgba(180,200,240,0.12) 0%, transparent 58%),
+        linear-gradient(180deg, #04060e 0%, #090d1e 28%, #111428 55%, #0d1220 85%, #0a0f1a 100%);
+    }
+
+    /* Mist/cloud layer at base */
+    .scene-w5 .mountain-mist {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 130% 28% at 50% 100%, rgba(220,230,255,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse  90% 18% at 20% 100%, rgba(200,215,240,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse  90% 18% at 80% 100%, rgba(200,215,240,0.12) 0%, transparent 50%);
+    }
+
+    /* Mountain title */
+    .w5-mountain-title {
+      position: absolute;
+      bottom: 38%; left: 50%;
+      transform: translateX(-50%);
+      z-index: 22; text-align: center; pointer-events: none; white-space: nowrap;
+    }
+    .w5-mountain-main {
+      font-family: var(--ui-font);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-weight: 800; line-height: 1; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #ffffff 0%, #e8eeff 45%, #b0c0ee 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 32px rgba(180,200,255,0.9)) drop-shadow(0 0 60px rgba(120,150,255,0.55));
+    }
+    .w5-mountain-rule {
+      display: block; width: 100%; height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(160,180,255,0.45), transparent);
+      margin: 6px auto 0;
+    }
+    .w5-mountain-sub {
+      font-family: var(--px-font); font-size: 0.3rem;
+      color: rgba(160,180,255,0.45); letter-spacing: 0.24em; margin-top: 5px;
+    }
+
+    /* Milestone flags — left column */
+    .w5-flag-col {
+      position: absolute; left: 3%; top: 0; bottom: 0;
+      width: 23%; z-index: 15; pointer-events: none;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 70px; gap: 8px;
+    }
+    .w5-flag {
+      border-left: 2px solid rgba(160,180,255,0.38);
+      padding: 5px 0 5px 10px;
+    }
+    .w5-flag-num {
+      font-family: var(--px-font); font-size: 0.24rem;
+      color: #3a4888; letter-spacing: 0.1em; margin-bottom: 2px;
+    }
+    .w5-flag-text {
+      font-size: 0.73rem; font-weight: 700; color: #bccce0; line-height: 1.3;
+    }
+
+    /* Insight markers — right column */
+    .w5-insight-col {
+      position: absolute; right: 3%; top: 0; bottom: 0;
+      width: 22%; z-index: 15; pointer-events: none;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 70px; gap: 8px;
+    }
+    .w5-insight-header {
+      font-family: var(--px-font); font-size: 0.26rem;
+      color: #3a4888; letter-spacing: 0.14em; margin-bottom: 4px;
+    }
+    .w5-insight-item {
+      font-size: 0.73rem; font-weight: 700; color: #b0bee0;
+      line-height: 1.3; margin-bottom: 5px;
+      display: flex; gap: 6px; align-items: flex-start;
+    }
+    .w5-insight-item::before { content: '⛰'; font-size: 0.58rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* Altitude growth — right lower */
+    .w5-altitude-col {
+      position: absolute; right: 3%; bottom: 58%; width: 22%;
+      z-index: 15; pointer-events: none;
+    }
+    .w5-altitude-header {
+      font-family: var(--px-font); font-size: 0.26rem;
+      color: #3a4888; letter-spacing: 0.12em; margin-bottom: 6px;
+    }
+    .w5-altitude-item {
+      font-size: 0.7rem; font-weight: 700;
+      line-height: 1.3; margin-bottom: 4px; display: flex; gap: 5px; align-items: flex-start;
+    }
+    .w5-altitude-item::before { content: '↑'; flex-shrink: 0; font-size: 0.7rem; }
+
+    /* Path strip at bottom */
+    .w5-path-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 62px;
+      z-index: 16;
+      background: linear-gradient(to top, #030408 55%, transparent);
+      display: flex; align-items: center; padding: 0 22px; gap: 0; overflow: hidden;
+    }
+    .w5-path-strip::after {
+      content: '';
+      position: absolute; left: 0; right: 0; top: 36px; height: 2px;
+      background: repeating-linear-gradient(90deg,
+        transparent 0, transparent 22px,
+        rgba(140,160,255,0.18) 22px, rgba(140,160,255,0.18) 40px);
+    }
+    .w5-path-lbl {
+      font-family: var(--px-font); font-size: 0.24rem;
+      color: #1a2050; letter-spacing: 0.16em; white-space: nowrap;
+      margin-right: 14px; flex-shrink: 0; z-index: 1;
+    }
+    .w5-path-node { display: flex; align-items: center; gap: 5px; flex-shrink: 0; z-index: 1; }
+    .w5-path-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(60,80,140,0.6); box-shadow: 0 0 5px rgba(80,100,200,0.25);
+    }
+    .w5-path-dot.lit {
+      background: #aabbff;
+      box-shadow: 0 0 10px #aabbff, 0 0 22px rgba(160,180,255,0.55);
+    }
+    .w5-path-text { font-size: 0.68rem; font-weight: 700; color: #2a3460; white-space: nowrap; }
+    .w5-path-text.lit { color: #ccd8ff; }
+    .w5-path-arr { color: #121830; font-size: 0.65rem; margin: 0 4px; flex-shrink: 0; }
+
+    /* Reflection theme: stone dark panels */
+    .refl-w5 .ref-section {
+      background: rgba(3,4,12,0.78);
+      border: 1px solid rgba(100,120,200,0.14);
+      border-radius: 12px; overflow: hidden; margin-bottom: 12px;
+    }
+    .refl-w5 .ref-section:last-child { margin-bottom: 0; }
+    .refl-w5 .ref-section-head {
+      background: rgba(8,10,28,0.72);
+      border-bottom: 1px solid rgba(100,120,200,0.12);
+      padding: 10px 18px; display: flex; align-items: center; gap: 8px;
+    }
+    .refl-w5 .ref-section-icon { font-size: 0.85rem; }
+    .refl-w5 .ref-section-title {
+      font-family: var(--px-font); font-size: 0.36rem; color: #7a88cc; letter-spacing: 0.1em;
+    }
+    .refl-w5 .ref-section-body { padding: 14px 18px; }
+
     /* ══════════════════════════════════════
        WEEK 4 — FOREST OF PRACTICE
     ══════════════════════════════════════ */
@@ -2166,11 +2315,11 @@
           <div class="hud-name">Allen Cloyd Malayo</div>
           <div class="hud-role">CS Academy Associate</div>
           <div class="hud-level-row">
-            <span class="level-badge">LV 4</span>
+            <span class="level-badge">LV 5</span>
             <div class="xp-bar-wrap">
               <div class="xp-bar-fill"></div>
             </div>
-            <span class="xp-fraction">4/10</span>
+            <span class="xp-fraction">5/10</span>
           </div>
         </div>
       </div>
@@ -2477,7 +2626,7 @@
         </g>
 
         <!-- ══ LOCKED OVERLAYS (W5–W10) ══ -->
-        <path d="M 452,165 C 448,141 460,121 480,111 C 502,99 528,97 552,105 C 574,113 592,129 600,149 C 608,169 604,191 588,207 C 572,221 548,227 524,223 C 500,219 476,207 462,189 C 454,177 454,171 452,165 Z" fill="url(#lock-fade)"/>
+        <!-- W5 unlocked — overlay removed -->
         <path d="M 618,210 C 614,186 626,164 648,154 C 670,144 696,142 720,150 C 744,158 764,174 770,196 C 776,218 766,242 746,256 C 726,270 698,274 672,266 C 646,258 622,242 616,220 C 614,216 614,214 618,210 Z" fill="url(#lock-fade)"/>
         <ellipse cx="852" cy="316" rx="66" ry="54" fill="url(#lock-fade)"/>
         <path d="M 584,436 C 580,410 592,388 614,378 C 636,368 664,368 686,378 C 706,388 720,408 722,430 C 724,452 712,472 692,480 C 672,488 646,486 626,476 C 602,464 586,450 584,436 Z" fill="url(#lock-fade)"/>
@@ -2667,11 +2816,11 @@
     <div class="mod-section">
       <div class="mod-section-label">Character Core</div>
       <div class="char-level-row">
-        <span class="char-level-badge">LEVEL 4</span>
-        <span class="char-week-count">WEEK 4 OF 10</span>
+        <span class="char-level-badge">LEVEL 5</span>
+        <span class="char-week-count">WEEK 5 OF 10</span>
       </div>
-      <div class="char-xp-track"><div class="char-xp-fill" style="width:40%"></div></div>
-      <div class="char-xp-note">Journey 40% complete · 6 realms remaining</div>
+      <div class="char-xp-track"><div class="char-xp-fill" style="width:50%"></div></div>
+      <div class="char-xp-note">Journey 50% complete · 5 realms remaining</div>
     </div>
 
     <!-- INVENTORY -->
@@ -4215,7 +4364,310 @@
           </div>
         `; },
       },
-      { id: 5,  label: 'Week 5',  title: 'The High Peaks',     subtitle: 'Week 5 · Mountain', icon: '⛰️', env: 'w5',  terrain: 'Mountain', terrainIcon: '🏔️', locked: true,  envBg: 'linear-gradient(160deg,#08060e 0%,#140e22 100%)', buildScene() { return ''; } },
+      {
+        id: 5, label: 'Week 5', title: 'Mountain of Challenge',
+        subtitle: 'FE1 Week 5 Reflection', icon: '⛰️', env: 'w5',
+        terrain: 'Mountain', terrainIcon: '🏔️', locked: false,
+        envBg: 'linear-gradient(180deg,#010205 0%,#050510 40%,#080818 70%,#050510 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w5" style="min-height:calc(100vh - var(--nav-h));overflow:hidden;">
+            <div class="scene-sky"></div>
+            <div class="mountain-mist"></div>
+            <div class="scan-line" style="background:linear-gradient(90deg,transparent,rgba(140,160,255,0.07) 50%,transparent);animation:scan 20s linear infinite;"></div>
+
+            <!-- ══ MOUNTAIN SVG ══ -->
+            <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:2"
+              viewBox="0 0 1000 580" preserveAspectRatio="xMidYMax meet"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="mtnFog" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#030408" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#020308" stop-opacity="0.95"/>
+                </linearGradient>
+                <linearGradient id="snowG" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#c0d0f0"/>
+                </linearGradient>
+                <filter id="mGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="4" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="mGlowS" x="-10%" y="-10%" width="120%" height="120%">
+                  <feGaussianBlur stdDeviation="2" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+
+              <!-- ── FAR MOUNTAINS (background) ── -->
+              <g opacity="0.30" fill="#141830">
+                <polygon points="0,580 120,300 240,580"/>
+                <polygon points="80,580 220,260 360,580"/>
+                <polygon points="600,580 740,270 880,580"/>
+                <polygon points="680,580 820,240 960,580"/>
+                <polygon points="820,580 940,310 1000,580"/>
+                <polygon points="300,580 430,290 560,580"/>
+              </g>
+              <!-- Far mountain highlights -->
+              <g opacity="0.18" fill="#3a3a70">
+                <polygon points="85,580 220,263 355,580"/>
+                <polygon points="605,580 740,273 875,580"/>
+              </g>
+
+              <!-- ── MID MOUNTAINS ── -->
+              <g opacity="0.50" fill="#181c38">
+                <polygon points="0,580 160,330 320,580"/>
+                <polygon points="120,580 280,295 440,580"/>
+                <polygon points="540,580 700,300 860,580"/>
+                <polygon points="660,580 820,270 980,580"/>
+              </g>
+              <g opacity="0.28" fill="#3a3a6a">
+                <polygon points="5,580 160,334 315,580"/>
+                <polygon points="545,580 700,304 855,580"/>
+              </g>
+
+              <!-- ── MAIN PEAK (centre landmark) ── -->
+              <!-- Base/body -->
+              <polygon points="180,580 500,80 820,580" fill="#1e2040" opacity="0.92"/>
+              <!-- Left face (lighter) -->
+              <polygon points="180,580 500,80 500,580" fill="#2a2e50" opacity="0.55"/>
+              <!-- Right face (darker) -->
+              <polygon points="500,80 820,580 500,580" fill="#141828" opacity="0.75"/>
+              <!-- Rock band mid-mountain -->
+              <polygon points="240,500 500,200 760,500 680,520 500,230 320,520" fill="#1a1e38" opacity="0.55"/>
+
+              <!-- Glacier / ice field upper slopes -->
+              <polygon points="400,350 500,180 600,350 560,370 500,200 440,370" fill="#b0c0e0" opacity="0.25"/>
+              <!-- Additional snow fields on upper slopes -->
+              <polygon points="430,280 500,130 570,280 555,290 500,145 445,290" fill="#dde8f8" opacity="0.22"/>
+              <polygon points="455,220 500,110 545,220 538,228 500,120 462,228" fill="#eef4ff" opacity="0.30"/>
+
+              <!-- Snow cap -->
+              <polygon points="460,160 500,80 540,160 530,170 500,100 470,170" fill="url(#snowG)" opacity="0.97" filter="url(#mGlow)"/>
+              <polygon points="470,155 500,90 530,155 520,160 500,100 480,160" fill="#ffffff" opacity="0.85"/>
+              <!-- Snow glow -->
+              <polygon points="460,160 500,80 540,160" fill="none" stroke="#dde8ff" stroke-width="2" opacity="0.75" filter="url(#mGlowS)"/>
+
+              <!-- Climbing path (left side) -->
+              <path d="M 280,540 Q 320,480 350,430 Q 380,380 370,320 Q 365,280 400,240 Q 430,210 440,185"
+                stroke="#5566aa" stroke-width="2.5" fill="none" opacity="0.55"
+                stroke-dasharray="8 6" stroke-linecap="round"/>
+              <!-- Path progress glow (upper portion = traveled) -->
+              <path d="M 370,320 Q 365,280 400,240 Q 430,210 440,185"
+                stroke="#aabbee" stroke-width="2.5" fill="none" opacity="0.65" filter="url(#mGlowS)"
+                stroke-dasharray="8 6" stroke-linecap="round"/>
+
+              <!-- Flags at milestones -->
+              <!-- Flag 1 -->
+              <line x1="320" y1="480" x2="320" y2="456" stroke="#99aacc" stroke-width="1.5"/>
+              <polygon points="320,456 338,462 320,468" fill="#6677cc" opacity="0.9"/>
+              <!-- Flag 2 -->
+              <line x1="358" y1="415" x2="358" y2="391" stroke="#99aacc" stroke-width="1.5"/>
+              <polygon points="358,391 376,397 358,403" fill="#6677cc" opacity="0.9"/>
+              <!-- Flag 3 (near peak) -->
+              <line x1="430" y1="222" x2="430" y2="198" stroke="#bbccee" stroke-width="2"/>
+              <polygon points="430,198 450,204 430,210" fill="#99aade" opacity="0.95" filter="url(#mGlowS)"/>
+
+              <!-- Star/summit marker -->
+              <circle cx="500" cy="80" r="6" fill="none" stroke="#ddeeff" stroke-width="2" opacity="0.85" filter="url(#mGlowS)"/>
+              <circle cx="500" cy="80" r="3" fill="#ffffff" opacity="0.8" filter="url(#mGlow)"/>
+
+              <!-- Rock outcrop obstacles -->
+              <polygon points="280,540 310,510 340,535" fill="#181c30" opacity="0.85"/>
+              <polygon points="620,530 650,505 680,528" fill="#181c30" opacity="0.8"/>
+
+              <!-- Cloud wisps mid-mountain -->
+              <g fill="#c8d8ff" opacity="0.14">
+                <ellipse cx="300" cy="420" rx="60" ry="18"/>
+                <ellipse cx="680" cy="400" rx="55" ry="16"/>
+                <ellipse cx="500" cy="320" rx="50" ry="14"/>
+              </g>
+
+              <!-- Stars in sky -->
+              <g fill="#ffffff" opacity="0.65">
+                <circle cx="80"  cy="60"  r="1.5"/>
+                <circle cx="180" cy="40"  r="1"/>
+                <circle cx="300" cy="25"  r="1.5"/>
+                <circle cx="450" cy="40"  r="1"/>
+                <circle cx="600" cy="22"  r="1.5"/>
+                <circle cx="730" cy="45"  r="1"/>
+                <circle cx="850" cy="30"  r="1.5"/>
+                <circle cx="950" cy="55"  r="1"/>
+                <circle cx="140" cy="90"  r="1"/>
+                <circle cx="380" cy="70"  r="1.5"/>
+                <circle cx="780" cy="68"  r="1"/>
+              </g>
+
+              <!-- Ground and fog -->
+              <rect x="0" y="568" width="1000" height="12" fill="#060a14"/>
+              <rect x="0" y="545" width="1000" height="38" fill="url(#mtnFog)" opacity="0.7"/>
+            </svg>
+
+            <!-- ══ MOUNTAIN TITLE ══ -->
+            <div class="w5-mountain-title">
+              <span class="w5-mountain-main">Mountain of Challenge</span>
+              <span class="w5-mountain-rule"></span>
+              <span class="w5-mountain-sub">Week 5 &nbsp;·&nbsp; Jun 22–26, 2025 &nbsp;·&nbsp; FE1 Field Experience</span>
+            </div>
+
+            <!-- ══ MILESTONE FLAGS — left ══ -->
+            <div class="w5-flag-col">
+              <div style="font-family:var(--px-font);font-size:0.26rem;color:#1a2258;letter-spacing:0.16em;margin-bottom:4px;">— MILESTONE FLAGS —</div>
+              <div class="w5-flag"><div class="w5-flag-num">01</div><div class="w5-flag-text">First Informal Discovery (BSP)</div></div>
+              <div class="w5-flag"><div class="w5-flag-num">02</div><div class="w5-flag-text">Customer Engagement: NAIA Infra Corp</div></div>
+              <div class="w5-flag"><div class="w5-flag-num">03</div><div class="w5-flag-text">Forecast &amp; Pipeline Exposure Increased</div></div>
+              <div class="w5-flag"><div class="w5-flag-num">04</div><div class="w5-flag-text">Internal Alignment Led (SSS &amp; BSP)</div></div>
+              <div class="w5-flag"><div class="w5-flag-num">05</div><div class="w5-flag-text">First Executive Brief Drafted (NGCP)</div></div>
+              <div class="w5-flag"><div class="w5-flag-num">06</div><div class="w5-flag-text">Industry Exposure Expanded (PhilEnergy)</div></div>
+            </div>
+
+            <!-- ══ INSIGHT MARKERS — right ══ -->
+            <div class="w5-insight-col">
+              <div class="w5-insight-header">— INSIGHT MARKERS —</div>
+              <div class="w5-insight-item">Opportunities emerge from genuine relationships</div>
+              <div class="w5-insight-item">Executive conversations must center on business value</div>
+              <div class="w5-insight-item">Discovery continues beyond initial meetings</div>
+              <div class="w5-insight-item">Proactive account management drives success</div>
+            </div>
+
+            <!-- ══ ALTITUDE GROWTH — right lower ══ -->
+            <div class="w5-altitude-col">
+              <div class="w5-altitude-header">— ALTITUDE GROWTH —</div>
+              <div class="w5-altitude-item" style="color:#bbc8e8">Discovery &amp; Networking <span style="color:#8090c0;font-style:italic">→ Expanding Reach</span></div>
+              <div class="w5-altitude-item" style="color:#aab8da">Business Acumen <span style="color:#7888c0;font-style:italic">→ Strengthening</span></div>
+              <div class="w5-altitude-item" style="color:#bbc8e8">Executive Engagement <span style="color:#8090c0;font-style:italic">→ Developing</span></div>
+            </div>
+
+            <!-- ══ CLIMBING PATH ══ -->
+            <div class="w5-path-strip">
+              <span class="w5-path-lbl">CLIMBING ROUTE</span>
+              <div class="w5-path-node"><div class="w5-path-dot lit"></div><span class="w5-path-text lit">Qualify Opportunities</span></div>
+              <span class="w5-path-arr">›</span>
+              <div class="w5-path-node"><div class="w5-path-dot"></div><span class="w5-path-text">Stakeholder Engagement</span></div>
+              <span class="w5-path-arr">›</span>
+              <div class="w5-path-node"><div class="w5-path-dot"></div><span class="w5-path-text">Expand Network</span></div>
+              <span class="w5-path-arr">›</span>
+              <div class="w5-path-node"><div class="w5-path-dot"></div><span class="w5-path-text">Executive Readiness</span></div>
+              <span class="w5-path-arr">›</span>
+              <div class="w5-path-node"><div class="w5-path-dot"></div><span class="w5-path-text">Re-engage Accounts</span></div>
+            </div>
+          </div>
+
+          <!-- Detailed Reflection -->
+          <div class="reflection-wrap">
+            <div class="ref-divider">
+              <div class="ref-divider-line" style="background:rgba(100,120,200,0.1)"></div>
+              <span class="ref-divider-label" style="color:#1a2258">Reflection · Week 5 · Jun 22–26</span>
+              <div class="ref-divider-line" style="background:rgba(100,120,200,0.1)"></div>
+            </div>
+            <div class="refl-w5">
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">⭐</span>
+                  <span class="ref-section-title">Highlights</span>
+                </div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets">
+                    <li>Met up with a college friend who works at Bangko Sentral ng Pilipinas (BSP), one of my assigned accounts. What started as a casual catch-up naturally turned into a mini discovery conversation. It reminded me that valuable customer insights don't always come from formal meetings. Sometimes, they're found through genuine relationships and curiosity. I even came away with a potential lead that I'll continue to qualify.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_0443.jpeg" alt="BSP discovery conversation catchup"/>
+                    </div>
+                    <p class="ref-photo-caption">Informal exploratory conversation with a friend from BSP</p>
+                    <li>Joined a customer meeting with New NAIA Infra Corp to finalize a year-long additional FUE opportunity. I saw how preparation and deep account knowledge helped the team confidently address customer questions and keep the discussion moving forward. Just as noticeable was the level of trust between the customer and SAP, with the conversation feeling open, collaborative, and relaxed.</li>
+                    <li>Attended a Robinsons Land SAP Ariba demo and several forecast sessions with AEs and FLSMs. These gave me a better appreciation of how discovery continues throughout the sales cycle and how successful forecasting depends on understanding customer processes, stakeholders, risks, and next steps, not just opportunity status.</li>
+                    <li>Facilitated my first internal VAT alignment meetings for Social Security System (SSS) and Bangko Sentral ng Pilipinas (BSP) after my mentor returned from leave. It felt rewarding to take ownership of coordinating discussions and ensuring everyone was aligned on account updates, opportunities, and next actions.</li>
+                    <li>Drafted my first executive briefing for National Grid Corporation of the Philippines (NGCP) and attended the PhilEnergy Expo. Both experiences deepened my understanding of the energy sector and reinforced that executive conversations should be grounded in industry context, business priorities, and long-term value, not just technology.</li>
+                    <div class="ref-photo">
+                      <img src="wk5.jpeg" alt="PhilEnergy Expo"/>
+                    </div>
+                    <p class="ref-photo-caption">PhilEnergy Expo — industry exposure and energy sector insights</p>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">💡</span>
+                  <span class="ref-section-title">Key Learnings</span>
+                </div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-learnings">
+                    <li>Opportunities can come from anywhere. Building genuine relationships and staying curious often reveal insights that formal meetings alone cannot.</li>
+                    <li>Executive conversations become more meaningful when they're built around the customer's business, industry, and strategic priorities rather than the solution itself.</li>
+                    <li>Great account management is proactive. Whether forecasting, preparing executive briefings, or facilitating internal discussions, anticipating what's next is just as important as responding to what's happening today.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">📈</span>
+                  <span class="ref-section-title">Field Experience Progress</span>
+                </div>
+                <div class="ref-section-body">
+                  <div class="ref-progress-items">
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Customer Discovery &amp; Networking</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">I'm becoming more comfortable initiating conversations and uncovering insights in both formal and informal settings. This week reinforced that relationship building is one of my natural strengths.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Business Acumen &amp; Customer Context</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">This week's activities helped me better understand how industry dynamics, customer priorities, and external factors shape executive conversations. I'm becoming more confident analyzing accounts from a business perspective.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Executive Communication &amp; Customer Engagement</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">I'm gaining more exposure to executive-level discussions and seeing how experienced AEs tailor conversations to business outcomes. There's still plenty to learn, but I'm starting to appreciate what makes these interactions effective.</div>
+                    </div>
+                    <div class="completed-tasks">
+                      <div class="completed-tasks-label">Major Activities</div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Conducted my first internal VAT alignment meetings for SSS and BSP.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Joined a customer meeting with New NAIA Infra Corp.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended SAP Ariba demo and forecast sessions.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Prepared executive briefing for NGCP.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended PhilEnergy Expo.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Continued account discovery and opportunity identification.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">🎯</span>
+                  <span class="ref-section-title">Focus for Next Week</span>
+                </div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-focus">
+                    <li>Continue progressing identified opportunities through deeper discovery and stakeholder engagement.</li>
+                    <li>Build confidence facilitating internal discussions and executive preparation.</li>
+                    <li>Expand network through formal and informal channels.</li>
+                    <li>Re-engage inactive public sector accounts.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head">
+                  <span class="ref-section-icon">🤝</span>
+                  <span class="ref-section-title">Support Needed</span>
+                </div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-support">
+                    <li>More exposure to executive-level conversations and strategy discussions.</li>
+                    <li>Guidance on qualifying early-stage opportunities and building business cases.</li>
+                    <li>Feedback on executive briefings and account planning.</li>
+                    <li>Additional learning on commercial topics.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `; },
+      },
       { id: 6,  label: 'Week 6',  title: 'The Strategy City',  subtitle: 'Week 6 · Urban',    icon: '🏛️', env: 'w6',  terrain: 'Urban',    terrainIcon: '🗺️', locked: true,  envBg: 'linear-gradient(160deg,#06080e 0%,#0e1222 100%)', buildScene() { return ''; } },
       { id: 7,  label: 'Week 7',  title: 'The Ocean Depths',   subtitle: 'Week 7 · Ocean',    icon: '🌊', env: 'w7',  terrain: 'Ocean',    terrainIcon: '🐚', locked: true,  envBg: 'linear-gradient(160deg,#0e0408 0%,#1e0810 100%)', buildScene() { return ''; } },
       { id: 8,  label: 'Week 8',  title: "The Volcano's Edge", subtitle: 'Week 8 · Volcano',  icon: '🌋', env: 'w8',  terrain: 'Volcano',  terrainIcon: '🔥', locked: true,  envBg: 'linear-gradient(160deg,#05050e 0%,#0e0e1e 100%)', buildScene() { return ''; } },
@@ -4289,7 +4741,7 @@
       // Draw connection paths in the SVG path-layer group
       const pathLayer = document.getElementById('path-layer');
       // Current week index (0-based). Paths up to this are "traveled".
-      const CURRENT_IDX = 3; // Week 4 = index 3
+      const CURRENT_IDX = 4; // Week 5 = index 4
 
       weeks.forEach((week, i) => {
         if (i === 0) return;
@@ -4376,7 +4828,7 @@
           btn.style.setProperty('--glow', t.nodeGlow + '66');
           btn.style.boxShadow   = `0 0 16px 4px ${t.nodeGlow}44, inset 0 1px 0 rgba(255,255,255,0.1)`;
           // Highlight current week (W3)
-          if (week.id === 4) {
+          if (week.id === 5) {
             btn.style.borderColor = '#ffcc44';
             btn.style.boxShadow   = `0 0 22px 6px rgba(255,200,40,0.5), inset 0 1px 0 rgba(255,255,255,0.1)`;
           }
@@ -4389,7 +4841,7 @@
         if (!week.locked) {
           const t = getTheme(week.env);
           badge.style.background  = t.nodeBg;
-          badge.style.borderColor = week.id === 4 ? '#ffcc44' : t.nodeGlow;
+          badge.style.borderColor = week.id === 5 ? '#ffcc44' : t.nodeGlow;
         } else {
           badge.style.background  = '#080d18';
           badge.style.borderColor = '#16213a';
@@ -4420,7 +4872,7 @@
         const caption = document.createElement('div');
         caption.className = 'node-caption';
         caption.textContent = week.locked ? week.terrain : week.title;
-        if (!week.locked) caption.style.color = week.id === 4 ? '#ffdd88' : getTheme(week.env).text;
+        if (!week.locked) caption.style.color = week.id === 5 ? '#ffdd88' : getTheme(week.env).text;
 
         wrap.appendChild(btn);
         wrap.appendChild(caption);
@@ -4435,7 +4887,7 @@
       });
 
       // ── Player avatar on Week 3 (current position) ──
-      const avatarPos  = NODE_POSITIONS[3]; // Week 4 — current position
+      const avatarPos  = NODE_POSITIONS[4]; // Week 5 — current position
       const avatarPct  = svgToPercent(avatarPos.x, avatarPos.y);
 
       const avatarWrap = document.createElement('div');
