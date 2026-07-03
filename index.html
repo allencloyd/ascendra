@@ -168,7 +168,7 @@
 
     .xp-bar-fill {
       height: 100%;
-      width: 50%;
+      width: 60%;
       background: linear-gradient(90deg, #3a6ecc, #7fb3ff);
       border-radius: 4px;
       box-shadow: 0 0 6px #4f7fe8;
@@ -1681,6 +1681,316 @@
 
 
 
+
+    /* ══════════════════════════════════════
+       WEEK 7 — OCEAN OF CONNECTIONS
+    ══════════════════════════════════════ */
+
+    .scene-w7 .scene-sky {
+      background:
+        radial-gradient(ellipse 110% 50% at 50% 100%, rgba(0,60,120,0.40) 0%, transparent 65%),
+        radial-gradient(ellipse  70% 35% at 20%  90%, rgba(0,40,100,0.22) 0%, transparent 58%),
+        radial-gradient(ellipse  70% 35% at 82%  90%, rgba(0,40,100,0.20) 0%, transparent 58%),
+        linear-gradient(180deg, #020610 0%, #040c1e 30%, #060e28 60%, #040a1e 100%);
+    }
+
+    /* Ocean shimmer overlay */
+    .scene-w7 .ocean-shimmer {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 130% 30% at 50% 100%, rgba(0,100,180,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse  80% 18% at 18% 100%, rgba(0,80,160,0.12)  0%, transparent 50%),
+        radial-gradient(ellipse  80% 18% at 84% 100%, rgba(0,80,160,0.12)  0%, transparent 50%);
+    }
+
+    /* Ocean title */
+    .w7-ocean-title {
+      position: absolute;
+      bottom: 38%; left: 50%;
+      transform: translateX(-50%);
+      z-index: 22; text-align: center; pointer-events: none; white-space: nowrap;
+    }
+    .w7-ocean-main {
+      font-family: var(--ui-font);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-weight: 800; line-height: 1; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #ffffff 0%, #88d8ff 45%, #2298cc 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(0,180,255,0.85)) drop-shadow(0 0 56px rgba(0,120,220,0.5));
+    }
+    .w7-ocean-rule {
+      display: block; width: 100%; height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(0,180,255,0.50), transparent);
+      margin: 6px auto 0;
+    }
+    .w7-ocean-sub {
+      font-family: var(--px-font); font-size: 0.3rem;
+      color: rgba(0,180,255,0.45); letter-spacing: 0.24em; margin-top: 5px;
+    }
+
+    /* Newly discovered islands — left column */
+    .w7-islands-col {
+      position: absolute; left: 3%; top: 0; bottom: 0;
+      width: 23%; z-index: 15; pointer-events: none;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 70px; gap: 8px;
+    }
+    .w7-island-entry {
+      border-left: 2px solid rgba(0,160,220,0.40);
+      padding: 5px 0 5px 10px;
+    }
+    .w7-island-num {
+      font-family: var(--px-font); font-size: 0.24rem;
+      color: #1a5a88; letter-spacing: 0.1em; margin-bottom: 2px;
+    }
+    .w7-island-text {
+      font-size: 0.72rem; font-weight: 700; color: #70b8d8; line-height: 1.3;
+    }
+
+    /* Lighthouse insights — right column */
+    .w7-lighthouse-col {
+      position: absolute; right: 3%; top: 0; bottom: 0;
+      width: 22%; z-index: 15; pointer-events: none;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 70px; gap: 8px;
+    }
+    .w7-lighthouse-header {
+      font-family: var(--px-font); font-size: 0.26rem;
+      color: #1a5a88; letter-spacing: 0.14em; margin-bottom: 4px;
+    }
+    .w7-lighthouse-item {
+      font-size: 0.72rem; font-weight: 700; color: #60a8c8;
+      line-height: 1.3; margin-bottom: 5px;
+      display: flex; gap: 6px; align-items: flex-start;
+    }
+    .w7-lighthouse-item::before { content: '🌊'; font-size: 0.55rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* Fleet development — right lower */
+    .w7-fleet-col {
+      position: absolute; right: 3%; bottom: 58%; width: 22%;
+      z-index: 15; pointer-events: none;
+    }
+    .w7-fleet-header {
+      font-family: var(--px-font); font-size: 0.26rem;
+      color: #1a5a88; letter-spacing: 0.12em; margin-bottom: 6px;
+    }
+    .w7-fleet-item {
+      font-size: 0.68rem; font-weight: 700;
+      line-height: 1.3; margin-bottom: 4px; display: flex; gap: 5px; align-items: flex-start;
+      color: #5098b8;
+    }
+    .w7-fleet-item::before { content: '⚓'; flex-shrink: 0; font-size: 0.65rem; }
+
+    /* Voyage path at bottom */
+    .w7-voyage-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 62px;
+      z-index: 16;
+      background: linear-gradient(to top, #020810 55%, transparent);
+      display: flex; align-items: center; padding: 0 22px; gap: 0; overflow: hidden;
+    }
+    .w7-voyage-strip::after {
+      content: '';
+      position: absolute; left: 0; right: 0; top: 36px; height: 2px;
+      background: repeating-linear-gradient(90deg,
+        transparent 0, transparent 22px,
+        rgba(0,160,220,0.20) 22px, rgba(0,160,220,0.20) 40px);
+    }
+    .w7-voyage-lbl {
+      font-family: var(--px-font); font-size: 0.24rem;
+      color: #0e3060; letter-spacing: 0.16em; white-space: nowrap;
+      margin-right: 14px; flex-shrink: 0; z-index: 1;
+    }
+    .w7-voyage-node { display: flex; align-items: center; gap: 5px; flex-shrink: 0; z-index: 1; }
+    .w7-voyage-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(0,80,140,0.6); box-shadow: 0 0 5px rgba(0,120,200,0.25);
+    }
+    .w7-voyage-dot.lit {
+      background: #22aaee;
+      box-shadow: 0 0 8px #22aaee, 0 0 18px rgba(0,170,230,0.45);
+    }
+    .w7-voyage-text { font-size: 0.68rem; font-weight: 700; color: #0e3060; white-space: nowrap; }
+    .w7-voyage-text.lit { color: #55ccff; }
+    .w7-voyage-arr { color: #081828; font-size: 0.65rem; margin: 0 4px; flex-shrink: 0; }
+
+    /* Reflection theme: ocean dark panels */
+    .refl-w7 .ref-section {
+      background: rgba(2,6,18,0.78);
+      border: 1px solid rgba(0,140,220,0.14);
+      border-radius: 12px; overflow: hidden; margin-bottom: 12px;
+    }
+    .refl-w7 .ref-section:last-child { margin-bottom: 0; }
+    .refl-w7 .ref-section-head {
+      background: rgba(4,10,30,0.72);
+      border-bottom: 1px solid rgba(0,140,220,0.12);
+      padding: 10px 18px; display: flex; align-items: center; gap: 8px;
+    }
+    .refl-w7 .ref-section-icon { font-size: 0.85rem; }
+    .refl-w7 .ref-section-title {
+      font-family: var(--px-font); font-size: 0.36rem; color: #2288cc; letter-spacing: 0.1em;
+    }
+    .refl-w7 .ref-section-body { padding: 14px 18px; }
+
+
+    /* ══════════════════════════════════════
+       WEEK 6 — CAPITAL OF CONNECTIONS
+    ══════════════════════════════════════ */
+
+    .scene-w6 .scene-sky {
+      background:
+        radial-gradient(ellipse 110% 50% at 50% 100%, rgba(30,10,80,0.40) 0%, transparent 65%),
+        radial-gradient(ellipse  70% 35% at 15%  90%, rgba(60,0,100,0.22) 0%, transparent 58%),
+        radial-gradient(ellipse  70% 35% at 85%  90%, rgba(0,30,100,0.20) 0%, transparent 58%),
+        linear-gradient(180deg, #020308 0%, #04040e 25%, #060618 55%, #050516 100%);
+    }
+
+    .scene-w6 .city-glow {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 130% 28% at 50% 100%, rgba(80,20,180,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse  80% 18% at 14% 100%, rgba(140,0,200,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse  80% 18% at 86% 100%, rgba(0,60,200,0.12)  0%, transparent 50%);
+    }
+
+    /* Capital title */
+    .w6-capital-title {
+      position: absolute; bottom: 38%; left: 50%;
+      transform: translateX(-50%);
+      z-index: 22; text-align: center; pointer-events: none; white-space: nowrap;
+    }
+    .w6-capital-main {
+      font-family: var(--ui-font);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-weight: 800; line-height: 1; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #ffffff 0%, #e0c8ff 40%, #aa66ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(160,80,255,0.85)) drop-shadow(0 0 56px rgba(100,30,220,0.5));
+    }
+    .w6-capital-rule {
+      display: block; width: 100%; height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(160,80,255,0.5), transparent);
+      margin: 6px auto 0;
+    }
+    .w6-capital-sub {
+      font-family: var(--px-font); font-size: 0.3rem;
+      color: rgba(160,100,255,0.45); letter-spacing: 0.24em; margin-top: 5px;
+    }
+
+    /* City milestones — left column */
+    .w6-milestone-col {
+      position: absolute; left: 3%; top: 0; bottom: 0;
+      width: 23%; z-index: 15; pointer-events: none;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 70px; gap: 8px;
+    }
+    .w6-milestone {
+      border-left: 2px solid rgba(160,80,255,0.38);
+      padding: 5px 0 5px 10px;
+    }
+    .w6-milestone-num {
+      font-family: var(--px-font); font-size: 0.24rem;
+      color: #5a2a88; letter-spacing: 0.1em; margin-bottom: 2px;
+    }
+    .w6-milestone-text {
+      font-size: 0.71rem; font-weight: 700; color: #b080e0; line-height: 1.3;
+    }
+
+    /* City signals — right column */
+    .w6-signal-col {
+      position: absolute; right: 3%; top: 0; bottom: 0;
+      width: 22%; z-index: 15; pointer-events: none;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 70px; gap: 8px;
+    }
+    .w6-signal-header {
+      font-family: var(--px-font); font-size: 0.26rem;
+      color: #5a2a88; letter-spacing: 0.14em; margin-bottom: 4px;
+    }
+    .w6-signal-item {
+      font-size: 0.71rem; font-weight: 700; color: #9a78cc;
+      line-height: 1.3; margin-bottom: 5px;
+      display: flex; gap: 6px; align-items: flex-start;
+    }
+    .w6-signal-item::before { content: '⚡'; font-size: 0.55rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* City growth index — right lower */
+    .w6-growth-col {
+      position: absolute; right: 3%; bottom: 58%; width: 22%;
+      z-index: 15; pointer-events: none;
+    }
+    .w6-growth-header {
+      font-family: var(--px-font); font-size: 0.26rem;
+      color: #5a2a88; letter-spacing: 0.12em; margin-bottom: 6px;
+    }
+    .w6-growth-item {
+      font-size: 0.68rem; font-weight: 700; color: #8860b8;
+      line-height: 1.3; margin-bottom: 4px; display: flex; gap: 5px; align-items: flex-start;
+    }
+    .w6-growth-item::before { content: '▲'; flex-shrink: 0; font-size: 0.6rem; color: #aa66ff; }
+
+    /* Transit routes at bottom */
+    .w6-transit-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 62px;
+      z-index: 16;
+      background: linear-gradient(to top, #020308 55%, transparent);
+      display: flex; align-items: center; padding: 0 22px; gap: 0; overflow: hidden;
+    }
+    .w6-transit-strip::after {
+      content: '';
+      position: absolute; left: 0; right: 0; top: 36px; height: 2px;
+      background: repeating-linear-gradient(90deg,
+        transparent 0, transparent 22px,
+        rgba(160,80,255,0.20) 22px, rgba(160,80,255,0.20) 40px);
+    }
+    .w6-transit-lbl {
+      font-family: var(--px-font); font-size: 0.24rem;
+      color: #300c50; letter-spacing: 0.16em; white-space: nowrap;
+      margin-right: 14px; flex-shrink: 0; z-index: 1;
+    }
+    .w6-transit-node { display: flex; align-items: center; gap: 5px; flex-shrink: 0; z-index: 1; }
+    .w6-transit-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(80,20,140,0.6); box-shadow: 0 0 5px rgba(120,40,200,0.25);
+    }
+    .w6-transit-dot.lit {
+      background: #cc88ff;
+      box-shadow: 0 0 8px #cc88ff, 0 0 18px rgba(180,80,255,0.45);
+    }
+    .w6-transit-text { font-size: 0.68rem; font-weight: 700; color: #300c50; white-space: nowrap; }
+    .w6-transit-text.lit { color: #dd99ff; }
+    .w6-transit-arr { color: #180828; font-size: 0.65rem; margin: 0 4px; flex-shrink: 0; }
+
+    /* Reflection panels — capital dark */
+    .refl-w6 .ref-section {
+      background: rgba(4,2,14,0.78);
+      border: 1px solid rgba(120,60,200,0.14);
+      border-radius: 12px; overflow: hidden; margin-bottom: 12px;
+    }
+    .refl-w6 .ref-section:last-child { margin-bottom: 0; }
+    .refl-w6 .ref-section-head {
+      background: rgba(10,5,28,0.72);
+      border-bottom: 1px solid rgba(120,60,200,0.12);
+      padding: 10px 18px; display: flex; align-items: center; gap: 8px;
+    }
+    .refl-w6 .ref-section-icon { font-size: 0.85rem; }
+    .refl-w6 .ref-section-title {
+      font-family: var(--px-font); font-size: 0.36rem; color: #9955dd; letter-spacing: 0.1em;
+    }
+    .refl-w6 .ref-section-body { padding: 14px 18px; }
+
+    /* Metro train animation */
+    @keyframes metro-move {
+      0%   { transform: translateX(-120px); }
+      100% { transform: translateX(1080px); }
+    }
+    @keyframes metro-move-rev {
+      0%   { transform: translateX(1080px) scaleX(-1); }
+      100% { transform: translateX(-120px) scaleX(-1); }
+    }
+    @keyframes data-pulse {
+      0%,100% { opacity:0.3; } 50% { opacity:0.8; }
+    }
+
     /* ══════════════════════════════════════
        WEEK 5 — MOUNTAIN OF CHALLENGE
     ══════════════════════════════════════ */
@@ -2315,11 +2625,11 @@
           <div class="hud-name">Allen Cloyd Malayo</div>
           <div class="hud-role">CS Academy Associate</div>
           <div class="hud-level-row">
-            <span class="level-badge">LV 5</span>
+            <span class="level-badge">LV 6</span>
             <div class="xp-bar-wrap">
               <div class="xp-bar-fill"></div>
             </div>
-            <span class="xp-fraction">5/10</span>
+            <span class="xp-fraction">6/10</span>
           </div>
         </div>
       </div>
@@ -2627,37 +2937,22 @@
 
         <!-- ══ LOCKED OVERLAYS (W5–W10) ══ -->
         <!-- W5 unlocked — overlay removed -->
-        <path d="M 618,210 C 614,186 626,164 648,154 C 670,144 696,142 720,150 C 744,158 764,174 770,196 C 776,218 766,242 746,256 C 726,270 698,274 672,266 C 646,258 622,242 616,220 C 614,216 614,214 618,210 Z" fill="url(#lock-fade)"/>
+        <!-- W6 unlocked -->
         <ellipse cx="852" cy="316" rx="66" ry="54" fill="url(#lock-fade)"/>
         <path d="M 584,436 C 580,410 592,388 614,378 C 636,368 664,368 686,378 C 706,388 720,408 722,430 C 724,452 712,472 692,480 C 672,488 646,486 626,476 C 602,464 586,450 584,436 Z" fill="url(#lock-fade)"/>
         <ellipse cx="384" cy="438" rx="94" ry="46" fill="url(#lock-fade)"/>
         <path d="M 28,468 C 24,440 38,414 62,402 C 86,390 114,388 140,396 C 166,404 188,422 196,446 C 204,470 196,496 176,510 C 156,524 126,528 98,520 C 68,510 44,492 32,472 C 28,470 28,470 28,468 Z" fill="url(#lock-fade)"/>
 
-        <!-- ══ SEA ROUTES (match new island positions) ══ -->
-        <!-- W1→W2: within Origin Isle -->
-        <path d="M 148,286 Q 168,272 188,262" stroke="#3a80cc" stroke-width="2.5" fill="none" opacity="0.55" stroke-dasharray="7 5">
-          <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="1.6s" repeatCount="indefinite"/>
-        </path>
-        <!-- W2→W3: within Origin Isle -->
-        <path d="M 208,258 Q 232,248 256,242" stroke="#3a80cc" stroke-width="2.5" fill="none" opacity="0.5" stroke-dasharray="7 5">
-          <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="1.6s" repeatCount="indefinite"/>
-        </path>
-        <!-- W3→W4: Origin to Forest -->
-        <path d="M 290,232 Q 336,218 382,210" stroke="#3a80cc" stroke-width="2.2" fill="none" opacity="0.45" stroke-dasharray="8 6">
-          <animate attributeName="stroke-dashoffset" from="0" to="-28" dur="1.8s" repeatCount="indefinite"/>
-        </path>
-        <!-- W4→W5: Forest to Peak -->
-        <path d="M 450,200 Q 490,180 525,172" stroke="#2a6aaa" stroke-width="2" fill="none" opacity="0.38" stroke-dasharray="7 5"/>
-        <!-- W5→W6: Peak to City -->
-        <path d="M 594,170 Q 640,186 680,200" stroke="#2a6aaa" stroke-width="2" fill="none" opacity="0.35" stroke-dasharray="7 5"/>
-        <!-- W6→W7: City to Ocean -->
-        <path d="M 754,216 Q 800,256 832,302" stroke="#2a5a8a" stroke-width="1.8" fill="none" opacity="0.32" stroke-dasharray="6 6"/>
-        <!-- W7→W8: Ocean to Volcano -->
-        <path d="M 814,340 Q 746,388 686,420" stroke="#2a5a8a" stroke-width="1.8" fill="none" opacity="0.3" stroke-dasharray="6 6"/>
-        <!-- W8→W9: Volcano to Sky Isles -->
-        <path d="M 606,432 Q 510,434 450,436" stroke="#2a5a8a" stroke-width="1.6" fill="none" opacity="0.28" stroke-dasharray="5 7"/>
-        <!-- W9→W10: Sky to Citadel -->
-        <path d="M 320,450 Q 230,458 156,462" stroke="#2a5a8a" stroke-width="1.6" fill="none" opacity="0.26" stroke-dasharray="5 7"/>
+        <!-- ══ SEA ROUTES — static background guides (JS path-layer handles animation) ══ -->
+        <path d="M 148,286 Q 168,272 188,262" stroke="#1a3a6a" stroke-width="1.5" fill="none" opacity="0.25" stroke-dasharray="5 6"/>
+        <path d="M 208,258 Q 232,248 256,242" stroke="#1a3a6a" stroke-width="1.5" fill="none" opacity="0.22" stroke-dasharray="5 6"/>
+        <path d="M 290,232 Q 336,218 382,210" stroke="#1a3a6a" stroke-width="1.5" fill="none" opacity="0.20" stroke-dasharray="5 6"/>
+        <path d="M 450,200 Q 490,180 525,172" stroke="#1a3a6a" stroke-width="1.5" fill="none" opacity="0.18" stroke-dasharray="5 6"/>
+        <path d="M 594,170 Q 640,186 680,200" stroke="#1a3a6a" stroke-width="1.5" fill="none" opacity="0.18" stroke-dasharray="5 6"/>
+        <path d="M 754,216 Q 800,256 832,302" stroke="#1a3060" stroke-width="1.5" fill="none" opacity="0.16" stroke-dasharray="4 7"/>
+        <path d="M 814,340 Q 746,388 686,420" stroke="#1a3060" stroke-width="1.5" fill="none" opacity="0.15" stroke-dasharray="4 7"/>
+        <path d="M 606,432 Q 510,434 450,436" stroke="#1a3060" stroke-width="1.4" fill="none" opacity="0.14" stroke-dasharray="4 7"/>
+        <path d="M 320,450 Q 230,458 156,462" stroke="#1a3060" stroke-width="1.4" fill="none" opacity="0.13" stroke-dasharray="4 7"/>
 
         <!-- ══ TERRITORY LABELS ══ -->
         <g font-family="Nunito, sans-serif" font-weight="800" text-anchor="middle">
@@ -2816,11 +3111,11 @@
     <div class="mod-section">
       <div class="mod-section-label">Character Core</div>
       <div class="char-level-row">
-        <span class="char-level-badge">LEVEL 5</span>
-        <span class="char-week-count">WEEK 5 OF 10</span>
+        <span class="char-level-badge">LEVEL 6</span>
+        <span class="char-week-count">WEEK 6 OF 10</span>
       </div>
-      <div class="char-xp-track"><div class="char-xp-fill" style="width:50%"></div></div>
-      <div class="char-xp-note">Journey 50% complete · 5 realms remaining</div>
+      <div class="char-xp-track"><div class="char-xp-fill" style="width:60%"></div></div>
+      <div class="char-xp-note">Journey 60% complete · 4 realms remaining</div>
     </div>
 
     <!-- INVENTORY -->
@@ -2848,6 +3143,38 @@
           <div class="inv-info">
             <div class="inv-name">AE Playbook</div>
             <div class="inv-type">Execution reference system</div>
+          </div>
+          <span class="inv-rarity common">COMMON</span>
+        </div>
+        <div class="inv-card">
+          <div class="inv-icon">🗝️</div>
+          <div class="inv-info">
+            <div class="inv-name">Discovery Key</div>
+            <div class="inv-type">Unlocks informal and formal insights from genuine relationships</div>
+          </div>
+          <span class="inv-rarity uncommon">UNCOMMON</span>
+        </div>
+        <div class="inv-card">
+          <div class="inv-icon">📋</div>
+          <div class="inv-info">
+            <div class="inv-name">Executive Brief</div>
+            <div class="inv-type">Industry-anchored narrative for leadership conversations</div>
+          </div>
+          <span class="inv-rarity rare">RARE</span>
+        </div>
+        <div class="inv-card">
+          <div class="inv-icon">🔗</div>
+          <div class="inv-info">
+            <div class="inv-name">Partner Network Token</div>
+            <div class="inv-type">Activates partner ecosystem coordination and deal momentum</div>
+          </div>
+          <span class="inv-rarity uncommon">UNCOMMON</span>
+        </div>
+        <div class="inv-card">
+          <div class="inv-icon">⚖️</div>
+          <div class="inv-info">
+            <div class="inv-name">Approval Map</div>
+            <div class="inv-type">Tracks internal coordination, approvals, and deal execution flow</div>
           </div>
           <span class="inv-rarity common">COMMON</span>
         </div>
@@ -3336,6 +3663,26 @@
       <div class="mod-section-label">Feedback Entries</div>
       <div class="feedback-list">
 
+        <div class="feedback-card" style="border-left-color:#6699ff">
+          <div class="fb-header">
+            <div class="fb-date">JUL 2 · WEEK 6</div>
+            <div class="fb-theme" style="color:#6699ff;background:rgba(60,100,220,0.12);border:1px solid rgba(80,120,240,0.28)">EXECUTION · OWNERSHIP · LEARNING AGILITY</div>
+          </div>
+          <div class="fb-giver">Kirs Yamoyam &nbsp;·&nbsp; Command Lead · First-Level Leader</div>
+          <div class="fb-summary">"Consistently receives positive feedback from the team. Organized, helpful, and demonstrates clear direction."</div>
+          <div class="fb-action"><strong>Action Taken:</strong> Continue shadowing customer engagements and account discussions to better understand how experienced sellers navigate objections, challenges, and stakeholder dynamics.</div>
+        </div>
+
+        <div class="feedback-card" style="border-left-color:#ffcc44">
+          <div class="fb-header">
+            <div class="fb-date">AUG 30 · WEEK 5</div>
+            <div class="fb-theme" style="color:#ccaa22;background:rgba(200,160,0,0.10);border:1px solid rgba(220,180,0,0.28)">INITIATIVE · PERSONAL BRANDING · NETWORKING</div>
+          </div>
+          <div class="fb-giver">Tommie Claravall &nbsp;·&nbsp; Field Partner · Account Executive</div>
+          <div class="fb-summary">"Shows initiative and is gradually building his presence within the organization."</div>
+          <div class="fb-action"><strong>Action Taken:</strong> Continue proactive account discovery, relationship-building, and outreach efforts while increasing visibility through strategic internal and external engagement.</div>
+        </div>
+
         <div class="feedback-card" style="border-left-color:#4aaa77">
           <div class="fb-header">
             <div class="fb-date">JUN 8 · WEEK 3</div>
@@ -3432,18 +3779,22 @@
       <div class="mod-section-label">Pipeline Progress</div>
       <div class="nexus-ring-wrap">
         <!--
-          Ring: full circle = €200,000 target
-          Filled arc = 42,000 / 200,000 = 21% of circumference
+          Ring: full circle = €400,000 target
+          Total identified ≈ €1.1M (exceeds target) → show ring as full / 100%
           Circle r=80 → circumference = 2π×80 ≈ 502.65
-          21% of 502.65 ≈ 105.6   (filled stroke)
-          remaining ≈ 397.1       (gap)
-          Start at top: rotate -90°
         -->
         <svg class="nexus-ring-svg" width="200" height="200" viewBox="0 0 200 200">
-          <!-- Background track -->
+          <defs>
+            <linearGradient id="nexusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#2a6aee"/>
+              <stop offset="100%" stop-color="#44ccff"/>
+            </linearGradient>
+            <filter id="nGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3"/>
+            </filter>
+          </defs>
           <circle cx="100" cy="100" r="80"
             fill="none" stroke="rgba(20,40,80,0.8)" stroke-width="14"/>
-          <!-- Tick marks at each 10% interval -->
           <g stroke="rgba(255,255,255,0.06)" stroke-width="2">
             <line x1="100" y1="16" x2="100" y2="26" transform="rotate(0 100 100)"/>
             <line x1="100" y1="16" x2="100" y2="22" transform="rotate(36 100 100)"/>
@@ -3456,41 +3807,27 @@
             <line x1="100" y1="16" x2="100" y2="22" transform="rotate(288 100 100)"/>
             <line x1="100" y1="16" x2="100" y2="22" transform="rotate(324 100 100)"/>
           </g>
-          <!-- Filled arc (21% = 105.6 of 502.65) -->
+          <!-- Filled arc: 100% full (pipeline exceeds €400K target) -->
           <circle cx="100" cy="100" r="80"
             fill="none"
             stroke="url(#nexusGrad)"
             stroke-width="14"
-            stroke-dasharray="105.6 397.05"
+            stroke-dasharray="502.65 0"
             stroke-dashoffset="125.66"
             stroke-linecap="round"/>
-          <!-- Gradient for filled arc -->
-          <defs>
-            <linearGradient id="nexusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"   stop-color="#2a6aee"/>
-              <stop offset="100%" stop-color="#44ccff"/>
-            </linearGradient>
-          </defs>
-          <!-- Glow dot at arc end -->
-          <!-- End point at 21% of circle from top: angle = -90 + 75.6° = -14.4° -->
-          <circle cx="177.6" cy="75.2" r="7"
-            fill="#44ccff" opacity="0.7"
-            filter="url(#nGlow)"
-            transform="rotate(-14.4 100 100)"/>
-          <defs>
-            <filter id="nGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3"/>
-            </filter>
-          </defs>
+          <!-- Glow dot at top (100% complete) -->
+          <circle cx="100" cy="20" r="7"
+            fill="#44ccff" opacity="0.9"
+            filter="url(#nGlow)"/>
           <!-- Centre text -->
-          <text x="100" y="90" text-anchor="middle"
-            font-family="Nunito,sans-serif" font-size="22" font-weight="800" fill="#e0f0ff">€42K</text>
+          <text x="100" y="86" text-anchor="middle"
+            font-family="Nunito,sans-serif" font-size="24" font-weight="800" fill="#e0f0ff">€1.1M</text>
           <text x="100" y="108" text-anchor="middle"
-            font-family="Nunito,sans-serif" font-size="11" font-weight="600" fill="#3a6888">of €200K target</text>
-          <text x="100" y="124" text-anchor="middle"
-            font-family="'Press Start 2P',monospace" font-size="7" fill="#2a5888">21% PIPELINE</text>
+            font-family="Nunito,sans-serif" font-size="10" font-weight="600" fill="#3a6888">of €400K target</text>
+          <text x="100" y="126" text-anchor="middle"
+            font-family="'Press Start 2P',monospace" font-size="9" fill="#44ccff">TARGET MET</text>
         </svg>
-        <div class="nexus-empty-label">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 5 SEGMENTS PENDING</div>
+        <div class="nexus-empty-label" style="color:#44ccff;opacity:0.7">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ €400K TARGET EXCEEDED</div>
       </div>
     </div>
 
@@ -3524,6 +3861,107 @@
         <div class="nexus-why-item">Supports scalable growth</div>
         <div class="nexus-why-item">Improves cost predictability</div>
       </div>
+
+      <!-- ── Opportunity 2 ── -->
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#3a9955">
+        <div class="nexus-opp-header">
+          <div class="nexus-opp-name">SMC GPHC</div>
+          <div class="nexus-opp-value" style="color:#4acc77">€100K</div>
+        </div>
+        <div class="nexus-opp-summary">
+          San Miguel Global Power Holdings Corp. relies on Excel-based financial planning with recurring issues around manual consolidation and limited visibility. SAP Analytics Cloud Planning to modernize processes and support faster decision-making.
+        </div>
+        <div class="nexus-detail-grid">
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">TYPE</div><div class="nexus-detail-val">SAP Analytics Cloud (Planning)</div></div>
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">VALUE</div><div class="nexus-detail-val">€100,000</div></div>
+          <div class="nexus-detail-item" style="grid-column:1/-1"><div class="nexus-detail-lbl">SOURCE</div><div class="nexus-detail-val">Discovery workshop &amp; customer engagement</div></div>
+        </div>
+        <div class="nexus-why-label">WHY IT MATTERS</div>
+        <div class="nexus-why-item">Reduces manual planning and consolidation effort</div>
+        <div class="nexus-why-item">Improves actual-versus-plan visibility</div>
+        <div class="nexus-why-item">Accelerates management reporting cycles</div>
+      </div>
+
+      <!-- ── Opportunity 3 ── -->
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#cc7830">
+        <div class="nexus-opp-header">
+          <div class="nexus-opp-name">SSS — GRC</div>
+          <div class="nexus-opp-value" style="color:#ee9944">€300K</div>
+        </div>
+        <div class="nexus-opp-summary">
+          SSS identified multiple audit findings related to access controls, segregation of duties, and user access governance. SAP GRC mapped to improve compliance, strengthen access management, and reduce recurring audit issues.
+        </div>
+        <div class="nexus-detail-grid">
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">TYPE</div><div class="nexus-detail-val">SAP Governance, Risk &amp; Compliance</div></div>
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">VALUE</div><div class="nexus-detail-val">€300,000</div></div>
+          <div class="nexus-detail-item" style="grid-column:1/-1"><div class="nexus-detail-lbl">SOURCE</div><div class="nexus-detail-val">Audit findings analysis &amp; account research</div></div>
+        </div>
+        <div class="nexus-why-label">WHY IT MATTERS</div>
+        <div class="nexus-why-item">Addresses documented audit findings</div>
+        <div class="nexus-why-item">Reduces compliance and security risks</div>
+        <div class="nexus-why-item">Improves access governance and control</div>
+      </div>
+
+      <!-- ── Opportunity 4 ── -->
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#cc7830">
+        <div class="nexus-opp-header">
+          <div class="nexus-opp-name">SSS — FP&amp;A</div>
+          <div class="nexus-opp-value" style="color:#ee9944">€300K</div>
+        </div>
+        <div class="nexus-opp-summary">
+          SSS faces long-term challenges around fund sustainability, investment complexity, and pension reforms. SAP Analytics Cloud FP&amp;A to support planning, forecasting, and scenario modeling for better long-term decisions.
+        </div>
+        <div class="nexus-detail-grid">
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">TYPE</div><div class="nexus-detail-val">SAP Analytics Cloud (FP&amp;A)</div></div>
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">VALUE</div><div class="nexus-detail-val">€300,000</div></div>
+          <div class="nexus-detail-item" style="grid-column:1/-1"><div class="nexus-detail-lbl">SOURCE</div><div class="nexus-detail-val">External research &amp; business analysis</div></div>
+        </div>
+        <div class="nexus-why-label">WHY IT MATTERS</div>
+        <div class="nexus-why-item">Improves long-range financial planning</div>
+        <div class="nexus-why-item">Supports pension reform scenario modeling</div>
+        <div class="nexus-why-item">Enhances investment and treasury decisions</div>
+      </div>
+
+      <!-- ── Opportunity 5 ── -->
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#3a88cc">
+        <div class="nexus-opp-header">
+          <div class="nexus-opp-name">BSP — Credit Management</div>
+          <div class="nexus-opp-value" style="color:#55bbff">€53K</div>
+        </div>
+        <div class="nexus-opp-summary">
+          BSP relies on manual credit reporting processes increasingly difficult to sustain amid evolving regulations. SAP Advanced Credit Management to modernize reporting, improve compliance, and reduce operational effort.
+        </div>
+        <div class="nexus-detail-grid">
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">TYPE</div><div class="nexus-detail-val">SAP Advanced Credit Management</div></div>
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">VALUE</div><div class="nexus-detail-val">€53,000</div></div>
+          <div class="nexus-detail-item" style="grid-column:1/-1"><div class="nexus-detail-lbl">SOURCE</div><div class="nexus-detail-val">Internal account intelligence &amp; process analysis</div></div>
+        </div>
+        <div class="nexus-why-label">WHY IT MATTERS</div>
+        <div class="nexus-why-item">Improves regulatory reporting efficiency</div>
+        <div class="nexus-why-item">Reduces manual processing and reconciliation</div>
+        <div class="nexus-why-item">Strengthens compliance and auditability</div>
+      </div>
+
+      <!-- ── Opportunity 6 ── -->
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#3a88cc">
+        <div class="nexus-opp-header">
+          <div class="nexus-opp-name">BSP — BTP Expansion</div>
+          <div class="nexus-opp-value" style="color:#55bbff">€300K</div>
+        </div>
+        <div class="nexus-opp-summary">
+          BSP is pursuing digital transformation including Open Finance, AI adoption, and regulatory automation. SAP BTP &amp; Business Data Cloud to support integration, data management, and future innovation initiatives.
+        </div>
+        <div class="nexus-detail-grid">
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">TYPE</div><div class="nexus-detail-val">SAP BTP / Business Data Cloud</div></div>
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">VALUE</div><div class="nexus-detail-val">€300,000</div></div>
+          <div class="nexus-detail-item" style="grid-column:1/-1"><div class="nexus-detail-lbl">SOURCE</div><div class="nexus-detail-val">Account planning &amp; strategic initiative mapping</div></div>
+        </div>
+        <div class="nexus-why-label">WHY IT MATTERS</div>
+        <div class="nexus-why-item">Supports Open Finance initiatives</div>
+        <div class="nexus-why-item">Strengthens integration and data foundations</div>
+        <div class="nexus-why-item">Enables future AI and automation use cases</div>
+      </div>
+
     </div>
 
   </div>
@@ -4668,7 +5106,439 @@
           </div>
         `; },
       },
-      { id: 6,  label: 'Week 6',  title: 'The Strategy City',  subtitle: 'Week 6 · Urban',    icon: '🏛️', env: 'w6',  terrain: 'Urban',    terrainIcon: '🗺️', locked: true,  envBg: 'linear-gradient(160deg,#06080e 0%,#0e1222 100%)', buildScene() { return ''; } },
+
+      {
+        id: 6, label: 'Week 6', title: 'Capital of Connections',
+        subtitle: 'FE1 Week 6 Reflection', icon: '🏛️', env: 'w6',
+        terrain: 'Urban', terrainIcon: '🗺️', locked: false,
+        envBg: 'linear-gradient(180deg,#020308 0%,#04040e 30%,#060618 60%,#050516 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w6" style="min-height:calc(100vh - var(--nav-h));overflow:hidden;">
+            <div class="scene-sky"></div>
+            <div class="city-glow"></div>
+            <div class="scan-line" style="background:linear-gradient(90deg,transparent,rgba(160,80,255,0.08) 50%,transparent);animation:scan 16s linear infinite;"></div>
+
+            <!-- ══ CAPITAL SVG ══ -->
+            <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:2"
+              viewBox="0 0 1000 580" preserveAspectRatio="xMidYMax meet"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="capFog" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#020308" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#010206" stop-opacity="0.95"/>
+                </linearGradient>
+                <linearGradient id="govG"  x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#1a1040"/><stop offset="100%" stop-color="#080620"/>
+                </linearGradient>
+                <linearGradient id="execG" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#280c58"/><stop offset="100%" stop-color="#0c0420"/>
+                </linearGradient>
+                <linearGradient id="partG" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#1a0c3a"/><stop offset="100%" stop-color="#080414"/>
+                </linearGradient>
+                <linearGradient id="exchG" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#200a50"/><stop offset="100%" stop-color="#0a0318"/>
+                </linearGradient>
+                <linearGradient id="opsG"  x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#160840"/><stop offset="100%" stop-color="#060210"/>
+                </linearGradient>
+                <filter id="vGlow" x="-25%"y="-25%"width="150%"height="150%">
+                  <feGaussianBlur stdDeviation="5"/></filter>
+                <filter id="vGlowS" x="-12%"y="-12%"width="124%"height="124%">
+                  <feGaussianBlur stdDeviation="2.5"/></filter>
+              </defs>
+
+              <!-- ── FAR BACKGROUND SKYLINE ── -->
+              <g fill="#0a0818" opacity="0.5">
+                <rect x="0"   y="320" width="18" height="260"/>
+                <rect x="20"  y="265" width="14" height="315"/>
+                <rect x="36"  y="285" width="20" height="295"/>
+                <rect x="58"  y="230" width="24" height="350"/>
+                <rect x="84"  y="270" width="16" height="310"/>
+                <rect x="250" y="245" width="18" height="335"/>
+                <rect x="270" y="205" width="22" height="375"/>
+                <rect x="294" y="240" width="16" height="340"/>
+                <rect x="580" y="250" width="20" height="330"/>
+                <rect x="602" y="210" width="18" height="370"/>
+                <rect x="622" y="255" width="16" height="325"/>
+                <rect x="850" y="260" width="18" height="320"/>
+                <rect x="870" y="220" width="22" height="360"/>
+                <rect x="894" y="250" width="16" height="330"/>
+                <rect x="912" y="270" width="20" height="310"/>
+                <rect x="934" y="290" width="18" height="290"/>
+                <rect x="954" y="310" width="16" height="270"/>
+                <rect x="972" y="280" width="28" height="300"/>
+              </g>
+
+              <!-- ── GOVERNMENT QUARTER (left) ── -->
+              <!-- Main gov dome/tower complex -->
+              <g filter="url(#vGlowS)">
+                <rect x="42"  y="310" width="50" height="270" fill="url(#govG)" opacity="0.95"/>
+                <rect x="30"  y="310" width="74" height="10"  fill="#1e1448" opacity="0.9"/>
+                <!-- Dome top -->
+                <ellipse cx="67" cy="310" rx="28" ry="16" fill="#1a1040" opacity="0.95"/>
+                <ellipse cx="67" cy="306" rx="22" ry="12" fill="#221458" opacity="0.9"/>
+                <rect x="63"  y="280" width="8"  height="30"  fill="#1e1040" opacity="0.95"/>
+                <ellipse cx="67" cy="278" rx="12" ry="8" fill="#2a1860" opacity="0.9"/>
+                <!-- Gov windows -->
+                <g fill="#6644aa" opacity="0.45">
+                  <rect x="50" y="324" width="8" height="7"/><rect x="64" y="324" width="8" height="7"/><rect x="78" y="324" width="8" height="7"/>
+                  <rect x="50" y="340" width="8" height="7"/><rect x="78" y="340" width="8" height="7"/>
+                  <rect x="50" y="356" width="8" height="7"/><rect x="64" y="356" width="8" height="7"/><rect x="78" y="356" width="8" height="7"/>
+                </g>
+                <!-- Admin wings -->
+                <rect x="100" y="355" width="35" height="225" fill="#120e38" opacity="0.9"/>
+                <rect x="0"   y="360" width="34" height="220" fill="#120e38" opacity="0.9"/>
+                <!-- Wing windows -->
+                <g fill="#4433aa" opacity="0.4">
+                  <rect x="6"   y="370" width="6" height="6"/><rect x="17"  y="370" width="6" height="6"/>
+                  <rect x="6"   y="384" width="6" height="6"/><rect x="17"  y="384" width="6" height="6"/>
+                  <rect x="106" y="368" width="6" height="6"/><rect x="118" y="368" width="6" height="6"/>
+                  <rect x="106" y="382" width="6" height="6"/><rect x="118" y="382" width="6" height="6"/>
+                </g>
+                <!-- Purple neon accent on gov complex -->
+                <rect x="30" y="310" width="74" height="3" fill="#aa66ff" opacity="0.5" filter="url(#vGlowS)"/>
+                <text x="67" y="301" text-anchor="middle" font-family="Nunito,sans-serif" font-size="7.5" fill="#8855cc" font-weight="800" opacity="0.65">GOV. QUARTER</text>
+              </g>
+
+              <!-- ── EXECUTIVE DISTRICT (left-centre) ── -->
+              <g filter="url(#vGlowS)">
+                <!-- Tall executive HQ tower -->
+                <rect x="168" y="200" width="64" height="380" fill="url(#execG)" opacity="0.95"/>
+                <!-- Crown structure -->
+                <rect x="180" y="162" width="40" height="42" fill="#220a4a" opacity="0.95"/>
+                <rect x="188" y="138" width="24" height="28" fill="#1c0840" opacity="0.95"/>
+                <!-- Antenna -->
+                <line x1="200" y1="138" x2="200" y2="100" stroke="#8844cc" stroke-width="2"/>
+                <circle cx="200" cy="98" r="5" fill="none" stroke="#cc88ff" stroke-width="1.5" filter="url(#vGlowS)"/>
+                <circle cx="200" cy="98" r="2.5" fill="#cc88ff" opacity="0.8" filter="url(#vGlow)"/>
+                <!-- Exec windows — bright -->
+                <g fill="#9966dd" opacity="0.55">
+                  <rect x="178" y="214" width="10" height="9"/><rect x="194" y="214" width="10" height="9"/><rect x="210" y="214" width="10" height="9"/><rect x="220" y="214" width="6"  height="9"/>
+                  <rect x="178" y="232" width="10" height="9"/><rect x="210" y="232" width="10" height="9"/><rect x="220" y="232" width="6"  height="9"/>
+                  <rect x="178" y="250" width="10" height="9"/><rect x="194" y="250" width="10" height="9"/><rect x="220" y="250" width="6"  height="9"/>
+                  <rect x="178" y="268" width="10" height="9"/><rect x="194" y="268" width="10" height="9"/><rect x="210" y="268" width="10" height="9"/>
+                  <rect x="178" y="286" width="10" height="9"/><rect x="220" y="286" width="6"  height="9"/>
+                </g>
+                <!-- Neon purple edge -->
+                <rect x="168" y="200" width="3"   height="380" fill="#9922cc" opacity="0.35" filter="url(#vGlowS)"/>
+                <rect x="229" y="200" width="3"   height="380" fill="#9922cc" opacity="0.25" filter="url(#vGlowS)"/>
+                <rect x="168" y="200" width="64"  height="4"   fill="#cc88ff" opacity="0.5"  filter="url(#vGlow)"/>
+                <text x="200" y="193" text-anchor="middle" font-family="Nunito,sans-serif" font-size="7.5" fill="#aa66ee" font-weight="800" filter="url(#vGlowS)">EXEC DISTRICT</text>
+                <text x="200" y="183" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8"   fill="#cc88ff" font-weight="800" filter="url(#vGlow)">RISE/GROW HQ</text>
+              </g>
+
+              <!-- Flanking exec towers -->
+              <g fill="#180840" opacity="0.88">
+                <rect x="248" y="280" width="36" height="300"/>
+                <rect x="128" y="295" width="32" height="285"/>
+              </g>
+              <g fill="#6644aa" opacity="0.38">
+                <rect x="254" y="292" width="7" height="7"/><rect x="266" y="292" width="7" height="7"/>
+                <rect x="254" y="308" width="7" height="7"/>
+                <rect x="134" y="305" width="6" height="6"/><rect x="146" y="305" width="6" height="6"/>
+              </g>
+
+              <!-- ── CENTRAL PLAZA & SKYBRIDGE ── -->
+              <!-- Elevated rail line -->
+              <rect x="0" y="295" width="1000" height="8" fill="#0e0828" opacity="0.7"/>
+              <rect x="0" y="295" width="1000" height="2" fill="#7722bb" opacity="0.4" filter="url(#vGlowS)"/>
+              <!-- Moving train 1 -->
+              <g style="animation:metro-move 8s linear infinite">
+                <rect x="0" y="285" width="80" height="14" rx="4" fill="#2a1060" opacity="0.9"/>
+                <rect x="2" y="287" width="76" height="10" rx="3" fill="#3a1878"/>
+                <g fill="#cc88ff" opacity="0.6">
+                  <rect x="8"  y="289" width="10" height="6" rx="1"/>
+                  <rect x="22" y="289" width="10" height="6" rx="1"/>
+                  <rect x="36" y="289" width="10" height="6" rx="1"/>
+                  <rect x="50" y="289" width="10" height="6" rx="1"/>
+                  <rect x="64" y="289" width="10" height="6" rx="1"/>
+                </g>
+              </g>
+              <!-- Moving train 2 (reverse, offset) -->
+              <g style="animation:metro-move-rev 11s 4s linear infinite">
+                <rect x="900" y="285" width="60" height="12" rx="3" fill="#1a0840" opacity="0.8"/>
+                <g fill="#9966cc" opacity="0.5">
+                  <rect x="906" y="287" width="8" height="6" rx="1"/>
+                  <rect x="918" y="287" width="8" height="6" rx="1"/>
+                  <rect x="930" y="287" width="8" height="6" rx="1"/>
+                  <rect x="942" y="287" width="8" height="6" rx="1"/>
+                </g>
+              </g>
+
+              <!-- ── PARTNERSHIP HUB (centre) ── -->
+              <g filter="url(#vGlowS)">
+                <!-- Twin towers connected by skybridge -->
+                <rect x="380" y="240" width="54" height="340" fill="url(#partG)" opacity="0.95"/>
+                <rect x="450" y="260" width="50" height="320" fill="url(#partG)" opacity="0.90"/>
+                <!-- Skybridge -->
+                <rect x="434" y="335" width="16" height="10" fill="#2a1058" opacity="0.9"/>
+                <rect x="434" y="336" width="16" height="3"  fill="#8844cc" opacity="0.5" filter="url(#vGlowS)"/>
+                <!-- Partner tower windows -->
+                <g fill="#7755bb" opacity="0.48">
+                  <rect x="388" y="254" width="9" height="8"/><rect x="402" y="254" width="9" height="8"/><rect x="416" y="254" width="9" height="8"/>
+                  <rect x="388" y="270" width="9" height="8"/><rect x="416" y="270" width="9" height="8"/>
+                  <rect x="388" y="286" width="9" height="8"/><rect x="402" y="286" width="9" height="8"/><rect x="416" y="286" width="9" height="8"/>
+                  <rect x="458" y="274" width="8" height="8"/><rect x="472" y="274" width="8" height="8"/>
+                  <rect x="458" y="290" width="8" height="8"/><rect x="480" y="290" width="8" height="8"/>
+                  <rect x="458" y="306" width="8" height="8"/><rect x="472" y="306" width="8" height="8"/>
+                </g>
+                <!-- Partner neon -->
+                <rect x="380" y="240" width="54" height="3" fill="#9966ff" opacity="0.45" filter="url(#vGlow)"/>
+                <rect x="450" y="260" width="50" height="3" fill="#9966ff" opacity="0.40" filter="url(#vGlow)"/>
+                <text x="432" y="232" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" fill="#9966dd" font-weight="800" filter="url(#vGlowS)">PARTNER HUB</text>
+                <text x="432" y="222" text-anchor="middle" font-family="Nunito,sans-serif" font-size="7.5" fill="#bb88ff" font-weight="800" filter="url(#vGlow)">BlackLine ∙ SAP</text>
+              </g>
+
+              <!-- ── OPPORTUNITY EXCHANGE (centre-right) ── -->
+              <g filter="url(#vGlowS)">
+                <!-- Wide exchange building -->
+                <rect x="556" y="220" width="100" height="360" fill="url(#exchG)" opacity="0.95"/>
+                <!-- Colosseum-style tiered facade -->
+                <rect x="548" y="220" width="116" height="12" fill="#1e0848" opacity="0.9"/>
+                <rect x="540" y="232" width="4"   height="348" fill="#260a56" opacity="0.8"/>
+                <rect x="660" y="232" width="4"   height="348" fill="#260a56" opacity="0.8"/>
+                <!-- Exchange windows — grid pattern -->
+                <g fill="#8855cc" opacity="0.42">
+                  <rect x="564" y="236" width="9" height="7"/><rect x="578" y="236" width="9" height="7"/><rect x="592" y="236" width="9" height="7"/><rect x="606" y="236" width="9" height="7"/><rect x="620" y="236" width="9" height="7"/><rect x="634" y="236" width="9" height="7"/><rect x="648" y="236" width="7" height="7"/>
+                  <rect x="564" y="250" width="9" height="7"/><rect x="592" y="250" width="9" height="7"/><rect x="620" y="250" width="9" height="7"/><rect x="648" y="250" width="7" height="7"/>
+                  <rect x="564" y="264" width="9" height="7"/><rect x="578" y="264" width="9" height="7"/><rect x="606" y="264" width="9" height="7"/><rect x="634" y="264" width="9" height="7"/><rect x="648" y="264" width="7" height="7"/>
+                  <rect x="564" y="278" width="9" height="7"/><rect x="592" y="278" width="9" height="7"/><rect x="620" y="278" width="9" height="7"/>
+                  <rect x="564" y="292" width="9" height="7"/><rect x="578" y="292" width="9" height="7"/><rect x="606" y="292" width="9" height="7"/><rect x="634" y="292" width="9" height="7"/><rect x="648" y="292" width="7" height="7"/>
+                </g>
+                <!-- Exchange ticker/marquee strip -->
+                <rect x="548" y="306" width="116" height="10" fill="#180840" opacity="0.9"/>
+                <rect x="548" y="307" width="116" height="3"  fill="#dd44ff" opacity="0.35" filter="url(#vGlowS)"/>
+                <!-- Exchange neon top -->
+                <rect x="548" y="220" width="116" height="4" fill="#dd44ff" opacity="0.5" filter="url(#vGlow)"/>
+                <text x="606" y="212" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" fill="#cc66ee" font-weight="800" filter="url(#vGlowS)">OPP. EXCHANGE</text>
+                <text x="606" y="201" text-anchor="middle" font-family="Nunito,sans-serif" font-size="9" fill="#ee88ff" font-weight="800" filter="url(#vGlow)">€1.1M · 6 DEALS</text>
+              </g>
+
+              <!-- ── OPERATIONS CENTER (right) ── -->
+              <g filter="url(#vGlowS)">
+                <!-- Low-wide ops complex -->
+                <rect x="710" y="320" width="90" height="260" fill="url(#opsG)" opacity="0.95"/>
+                <!-- Control tower -->
+                <rect x="742" y="248" width="26" height="76" fill="#120638" opacity="0.95"/>
+                <rect x="738" y="244" width="34" height="10" fill="#160840" opacity="0.95"/>
+                <!-- Tower antenna -->
+                <line x1="755" y1="244" x2="755" y2="212" stroke="#5522aa" stroke-width="2"/>
+                <circle cx="755" cy="210" r="4" fill="none" stroke="#9955ff" stroke-width="1.5" filter="url(#vGlowS)"/>
+                <circle cx="755" cy="210" r="2" fill="#9955ff" opacity="0.8" filter="url(#vGlow)"/>
+                <!-- Signal rings -->
+                <circle cx="755" cy="210" r="10" fill="none" stroke="#7733cc" stroke-width="1" opacity="0.28"/>
+                <circle cx="755" cy="210" r="18" fill="none" stroke="#7733cc" stroke-width="0.8" opacity="0.18"/>
+                <!-- Ops windows -->
+                <g fill="#5533aa" opacity="0.45">
+                  <rect x="718" y="332" width="8" height="7"/><rect x="732" y="332" width="8" height="7"/><rect x="762" y="332" width="8" height="7"/><rect x="776" y="332" width="8" height="7"/><rect x="790" y="332" width="8" height="7"/>
+                  <rect x="718" y="348" width="8" height="7"/><rect x="748" y="348" width="8" height="7"/><rect x="776" y="348" width="8" height="7"/>
+                  <rect x="748" y="258" width="6" height="6"/><rect x="758" y="258" width="6" height="6"/>
+                  <rect x="748" y="270" width="6" height="6"/>
+                </g>
+                <rect x="710" y="320" width="90" height="3" fill="#8833ee" opacity="0.45" filter="url(#vGlow)"/>
+                <text x="755" y="312" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" fill="#7744cc" font-weight="800" filter="url(#vGlowS)">OPS CENTER</text>
+              </g>
+
+              <!-- ── DATA ROUTES (connecting districts) ── -->
+              <!-- Gov → Exec -->
+              <line x1="134" y1="350" x2="168" y2="350" stroke="#7722bb" stroke-width="1.5" opacity="0.4" stroke-dasharray="5 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="-18" dur="1.5s" repeatCount="indefinite"/>
+              </line>
+              <!-- Exec → Partner -->
+              <line x1="284" y1="340" x2="380" y2="340" stroke="#7722bb" stroke-width="1.5" opacity="0.38" stroke-dasharray="5 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="-18" dur="1.8s" repeatCount="indefinite"/>
+              </line>
+              <!-- Partner → Exchange -->
+              <line x1="500" y1="340" x2="556" y2="340" stroke="#aa33ff" stroke-width="1.5" opacity="0.4" stroke-dasharray="5 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="-18" dur="1.4s" repeatCount="indefinite"/>
+              </line>
+              <!-- Exchange → Ops -->
+              <line x1="656" y1="340" x2="710" y2="340" stroke="#aa33ff" stroke-width="1.5" opacity="0.4" stroke-dasharray="5 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="-18" dur="1.6s" repeatCount="indefinite"/>
+              </line>
+
+              <!-- ── SKYBRIDGES ── -->
+              <rect x="284" y="330" width="96"  height="7" rx="3" fill="#1e0c44" opacity="0.7"/>
+              <rect x="284" y="332" width="96"  height="2" fill="#8833cc" opacity="0.45" filter="url(#vGlowS)"/>
+              <rect x="500" y="336" width="56"  height="6" rx="3" fill="#1e0c44" opacity="0.7"/>
+              <rect x="500" y="338" width="56"  height="2" fill="#8833cc" opacity="0.4"  filter="url(#vGlowS)"/>
+              <rect x="656" y="332" width="54"  height="6" rx="3" fill="#1e0c44" opacity="0.7"/>
+              <rect x="656" y="334" width="54"  height="2" fill="#8833cc" opacity="0.38" filter="url(#vGlowS)"/>
+
+              <!-- ── STREET LEVEL ACTIVITY ── -->
+              <rect x="0" y="565" width="1000" height="15" fill="#010206"/>
+              <!-- Street lines -->
+              <rect x="0" y="556" width="1000" height="12" fill="#04021a" opacity="0.9"/>
+              <!-- Street light posts -->
+              <g stroke="#3a1a60" stroke-width="1.5" opacity="0.6">
+                <line x1="80"  y1="540" x2="80"  y2="558"/><circle cx="80"  cy="539" r="3" fill="#9955ff" opacity="0.5" filter="url(#vGlowS)"/>
+                <line x1="200" y1="540" x2="200" y2="558"/><circle cx="200" cy="539" r="3" fill="#9955ff" opacity="0.5" filter="url(#vGlowS)"/>
+                <line x1="340" y1="540" x2="340" y2="558"/><circle cx="340" cy="539" r="3" fill="#9955ff" opacity="0.5" filter="url(#vGlowS)"/>
+                <line x1="480" y1="540" x2="480" y2="558"/><circle cx="480" cy="539" r="3" fill="#9955ff" opacity="0.5" filter="url(#vGlowS)"/>
+                <line x1="620" y1="540" x2="620" y2="558"/><circle cx="620" cy="539" r="3" fill="#9955ff" opacity="0.5" filter="url(#vGlowS)"/>
+                <line x1="760" y1="540" x2="760" y2="558"/><circle cx="760" cy="539" r="3" fill="#9955ff" opacity="0.5" filter="url(#vGlowS)"/>
+                <line x1="900" y1="540" x2="900" y2="558"/><circle cx="900" cy="539" r="3" fill="#9955ff" opacity="0.5" filter="url(#vGlowS)"/>
+              </g>
+
+              <!-- Depth fog -->
+              <rect x="0" y="0" width="1000" height="580" fill="url(#capFog)" opacity="0.45"/>
+            </svg>
+
+            <!-- ══ CAPITAL TITLE ══ -->
+            <div class="w6-capital-title">
+              <span class="w6-capital-main">Capital of Connections</span>
+              <span class="w6-capital-rule"></span>
+              <span class="w6-capital-sub">Week 6 &nbsp;·&nbsp; Jun 29–Jul 3, 2025 &nbsp;·&nbsp; FE1 Field Experience</span>
+            </div>
+
+            <!-- ══ CITY MILESTONES — left ══ -->
+            <div class="w6-milestone-col">
+              <div style="font-family:var(--px-font);font-size:0.26rem;color:#3a1260;letter-spacing:0.16em;margin-bottom:4px;">— CITY MILESTONES —</div>
+              <div class="w6-milestone"><div class="w6-milestone-num">01</div><div class="w6-milestone-text">BSP Core Renewals Supported</div></div>
+              <div class="w6-milestone"><div class="w6-milestone-num">02</div><div class="w6-milestone-text">Six Opportunities Identified (€1.1M)</div></div>
+              <div class="w6-milestone"><div class="w6-milestone-num">03</div><div class="w6-milestone-text">DepEd Engagement Opened</div></div>
+              <div class="w6-milestone"><div class="w6-milestone-num">04</div><div class="w6-milestone-text">First Executive Deal Review</div></div>
+              <div class="w6-milestone"><div class="w6-milestone-num">05</div><div class="w6-milestone-text">First In-Person Discovery Session</div></div>
+              <div class="w6-milestone"><div class="w6-milestone-num">06</div><div class="w6-milestone-text">Joule Enablement Alignment</div></div>
+              <div class="w6-milestone"><div class="w6-milestone-num">07</div><div class="w6-milestone-text">SSS ERP Modernization Planning</div></div>
+              <div class="w6-milestone"><div class="w6-milestone-num">08</div><div class="w6-milestone-text">Public Sector Planning Exposure</div></div>
+            </div>
+
+            <!-- ══ CITY SIGNALS — right ══ -->
+            <div class="w6-signal-col">
+              <div class="w6-signal-header">— CITY SIGNALS —</div>
+              <div class="w6-signal-item">Enterprise sales extends beyond customer meetings</div>
+              <div class="w6-signal-item">Preparation creates meaningful conversations</div>
+              <div class="w6-signal-item">Business outcomes drive technology discussions</div>
+              <div class="w6-signal-item">Partner ecosystems create momentum</div>
+              <div class="w6-signal-item">Alignment accelerates execution</div>
+            </div>
+
+            <!-- ══ CITY GROWTH INDEX — right lower ══ -->
+            <div class="w6-growth-col">
+              <div class="w6-growth-header">— CITY GROWTH INDEX —</div>
+              <div class="w6-growth-item">Opp. Mgmt &amp; Execution <span style="color:#5a2a88;font-style:italic;margin-left:4px">★★★★☆ Expanding</span></div>
+              <div class="w6-growth-item">Customer &amp; Executive Convos <span style="color:#5a2a88;font-style:italic;margin-left:4px">★★★★☆ Strengthening</span></div>
+              <div class="w6-growth-item">Public Sector &amp; Ecosystem <span style="color:#5a2a88;font-style:italic;margin-left:4px">★★★☆☆ Emerging</span></div>
+            </div>
+
+            <!-- ══ TRANSIT ROUTES ══ -->
+            <div class="w6-transit-strip">
+              <span class="w6-transit-lbl">TRANSIT ROUTES</span>
+              <div class="w6-transit-node"><div class="w6-transit-dot lit"></div><span class="w6-transit-text lit">Active Opportunities</span></div>
+              <span class="w6-transit-arr">›</span>
+              <div class="w6-transit-node"><div class="w6-transit-dot"></div><span class="w6-transit-text">Account Coordination</span></div>
+              <span class="w6-transit-arr">›</span>
+              <div class="w6-transit-node"><div class="w6-transit-dot"></div><span class="w6-transit-text">Public Sector</span></div>
+              <span class="w6-transit-arr">›</span>
+              <div class="w6-transit-node"><div class="w6-transit-dot"></div><span class="w6-transit-text">Ecosystem Mgmt</span></div>
+              <span class="w6-transit-arr">›</span>
+              <div class="w6-transit-node"><div class="w6-transit-dot"></div><span class="w6-transit-text">Execution Ownership</span></div>
+            </div>
+          </div>
+
+          <!-- Detailed Reflection -->
+          <div class="reflection-wrap">
+            <div class="ref-divider">
+              <div class="ref-divider-line" style="background:rgba(120,60,200,0.1)"></div>
+              <span class="ref-divider-label" style="color:#3a1260">Reflection · Week 6 · Jun 29–Jul 3</span>
+              <div class="ref-divider-line" style="background:rgba(120,60,200,0.1)"></div>
+            </div>
+            <div class="refl-w6">
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">⭐</span><span class="ref-section-title">Highlights</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets">
+                    <li>Became more involved in active opportunities this week by supporting two BSP Core renewal deals with different partners while also logging a total of six opportunities worth €1.1M in the Field Activity Tracker. Beyond opportunity generation, I gained a better appreciation of the internal coordination, approvals, and sales operations required to move deals toward execution.</li>
+                    <li>Finally received a response from one of my assigned Public Sector accounts, the Department of Education, after reaching out through LinkedIn. Using the MATATAG agenda as a conversation starter reinforced the importance of doing meaningful account research before engaging customers.</li>
+                    <li>Attended my first RISE/GROW Deal Review with SAP Philippines' Managing Director and observed how executive deal reviews are conducted. What stood out most was the emphasis on understanding the business problem first, followed by a concise discussion of deal status, risks, and next steps.</li>
+                    <li>Joined my first in-person discovery session with Robinsons Retail Holdings together with BlackLine. Although the discussion was more capability-driven due to NDA restrictions, it reinforced that discovery is ultimately about understanding business outcomes and creating a vision for transformation rather than presenting product features.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_6320.jpeg" alt="Robinsons Retail Holdings discovery session with BlackLine"/>
+                    </div>
+                    <p class="ref-photo-caption">First in-person discovery session — Robinsons Retail Holdings with BlackLine</p>
+                    <li>Participated in several strategic internal discussions, including the SSS ERP Modernization planning session, Public Sector Planning, and Joule Enablement for NNIC. These sessions highlighted how successful enterprise sales rely on strong partner ecosystems, stakeholder alignment, and thoughtful planning long before implementation or procurement begins.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_6336.jpeg" alt="SSS ERP Modernization planning session"/>
+                    </div>
+                    <p class="ref-photo-caption">SSS ERP Modernization planning discussion — internal strategic alignment</p>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">💡</span><span class="ref-section-title">Key Learnings</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-learnings">
+                    <li>Enterprise sales extends far beyond customer meetings. Internal coordination, approvals, partner management, and execution all play a significant role in moving opportunities forward.</li>
+                    <li>Strong customer engagement starts with preparation. Relevant research and understanding the customer's priorities create more meaningful conversations and open more doors.</li>
+                    <li>Technology discussions are most effective when anchored on business outcomes. Whether in discovery sessions or executive reviews, the focus should always remain on solving business problems rather than showcasing product capabilities.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">📈</span><span class="ref-section-title">Field Experience Progress</span></div>
+                <div class="ref-section-body">
+                  <div class="ref-progress-items">
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Opportunity Management &amp; Sales Execution</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">This week gave me greater exposure to how opportunities progress internally, from approvals and partner coordination to deal reviews. I'm beginning to understand the operational discipline required to move deals forward.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Customer Discovery &amp; Executive Conversations</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Observing executive discussions and participating in my first in-person discovery session helped me better appreciate how experienced AEs guide conversations around business value instead of technology.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Public Sector &amp; Ecosystem Understanding</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">The Public Sector Planning and SSS discussions broadened my understanding of how procurement, partner strategy, governance, and stakeholder alignment influence opportunities long before implementation begins.</div>
+                    </div>
+                    <div class="completed-tasks">
+                      <div class="completed-tasks-label">Activities</div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Supported BSP Core renewal opportunities with partner coordination and approval monitoring.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Logged six opportunities with a combined potential value of €1.1M in the Field Activity Tracker.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Conducted outreach to the Department of Education and secured an initial customer response.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended the RISE/GROW Deal Review with SAP Philippines leadership.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Facilitated the internal Joule Enablement alignment for NNIC.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Joined the Robinsons Retail Holdings discovery session with BlackLine.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended the SSS ERP Modernization planning discussion and Public Sector Planning session.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🎯</span><span class="ref-section-title">Focus for Next Week</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-focus">
+                    <li>Continue taking on more responsibility in active opportunities and internal account coordination.</li>
+                    <li>Deepen my understanding of public sector sales strategies and partner ecosystem management.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🤝</span><span class="ref-section-title">Support Needed</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-support">
+                    <li>More opportunities to participate actively in customer discovery sessions and deal execution activities.</li>
+                    <li>Guidance on balancing customer needs, partner strategy, and internal processes throughout the sales cycle.</li>
+                    <li>Explore opportunities with public sector accounts and continue engagement initiatives.</li>
+                    <li>Continued coaching on identifying where I can contribute more proactively within active opportunities.</li>
+                    <li>Learning sessions on commercial topics.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `; },
+      },
       { id: 7,  label: 'Week 7',  title: 'The Ocean Depths',   subtitle: 'Week 7 · Ocean',    icon: '🌊', env: 'w7',  terrain: 'Ocean',    terrainIcon: '🐚', locked: true,  envBg: 'linear-gradient(160deg,#0e0408 0%,#1e0810 100%)', buildScene() { return ''; } },
       { id: 8,  label: 'Week 8',  title: "The Volcano's Edge", subtitle: 'Week 8 · Volcano',  icon: '🌋', env: 'w8',  terrain: 'Volcano',  terrainIcon: '🔥', locked: true,  envBg: 'linear-gradient(160deg,#05050e 0%,#0e0e1e 100%)', buildScene() { return ''; } },
       { id: 9,  label: 'Week 9',  title: 'The Sky Reaches',    subtitle: 'Week 9 · Sky',      icon: '☁️', env: 'w9',  terrain: 'Sky',      terrainIcon: '⚡', locked: true,  envBg: 'linear-gradient(160deg,#050810 0%,#0a1220 100%)', buildScene() { return ''; } },
@@ -4741,7 +5611,7 @@
       // Draw connection paths in the SVG path-layer group
       const pathLayer = document.getElementById('path-layer');
       // Current week index (0-based). Paths up to this are "traveled".
-      const CURRENT_IDX = 4; // Week 5 = index 4
+      const CURRENT_IDX = 5; // Week 6 = index 5
 
       weeks.forEach((week, i) => {
         if (i === 0) return;
@@ -4771,15 +5641,16 @@
         path.setAttribute('stroke-linecap', 'round');
 
         if (traveled) {
-          // Bright solid traveled path
-          path.setAttribute('stroke', 'rgba(100,200,255,0.85)');
+          // All traveled paths: uniform animated moving dashes
+          // Glow underlay already drawn above — path on top
+          path.setAttribute('stroke', 'rgba(100,190,255,0.72)');
           path.setAttribute('stroke-width', '2.5');
-          path.setAttribute('stroke-dasharray', 'none');
-          // Animated shimmer on traveled path
+          path.setAttribute('stroke-dasharray', '7 5');
           const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-          anim.setAttribute('attributeName', 'stroke-opacity');
-          anim.setAttribute('values', '0.85;0.55;0.85');
-          anim.setAttribute('dur', '3s');
+          anim.setAttribute('attributeName', 'stroke-dashoffset');
+          anim.setAttribute('from', '0');
+          anim.setAttribute('to', '-24');
+          anim.setAttribute('dur', '1.8s');
           anim.setAttribute('repeatCount', 'indefinite');
           path.appendChild(anim);
         } else if (unlocked) {
@@ -4828,7 +5699,7 @@
           btn.style.setProperty('--glow', t.nodeGlow + '66');
           btn.style.boxShadow   = `0 0 16px 4px ${t.nodeGlow}44, inset 0 1px 0 rgba(255,255,255,0.1)`;
           // Highlight current week (W3)
-          if (week.id === 5) {
+          if (week.id === 6) {
             btn.style.borderColor = '#ffcc44';
             btn.style.boxShadow   = `0 0 22px 6px rgba(255,200,40,0.5), inset 0 1px 0 rgba(255,255,255,0.1)`;
           }
@@ -4841,7 +5712,7 @@
         if (!week.locked) {
           const t = getTheme(week.env);
           badge.style.background  = t.nodeBg;
-          badge.style.borderColor = week.id === 5 ? '#ffcc44' : t.nodeGlow;
+          badge.style.borderColor = week.id === 6 ? '#ffcc44' : t.nodeGlow;
         } else {
           badge.style.background  = '#080d18';
           badge.style.borderColor = '#16213a';
@@ -4872,7 +5743,7 @@
         const caption = document.createElement('div');
         caption.className = 'node-caption';
         caption.textContent = week.locked ? week.terrain : week.title;
-        if (!week.locked) caption.style.color = week.id === 5 ? '#ffdd88' : getTheme(week.env).text;
+        if (!week.locked) caption.style.color = week.id === 6 ? '#ffdd88' : getTheme(week.env).text;
 
         wrap.appendChild(btn);
         wrap.appendChild(caption);
@@ -4887,7 +5758,7 @@
       });
 
       // ── Player avatar on Week 3 (current position) ──
-      const avatarPos  = NODE_POSITIONS[4]; // Week 5 — current position
+      const avatarPos  = NODE_POSITIONS[5]; // Week 6 — current position
       const avatarPct  = svgToPercent(avatarPos.x, avatarPos.y);
 
       const avatarWrap = document.createElement('div');
