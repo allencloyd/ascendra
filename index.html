@@ -168,7 +168,7 @@
 
     .xp-bar-fill {
       height: 100%;
-      width: 60%;
+      width: 70%;
       background: linear-gradient(90deg, #3a6ecc, #7fb3ff);
       border-radius: 4px;
       box-shadow: 0 0 6px #4f7fe8;
@@ -1682,154 +1682,203 @@
 
 
 
+
+
+
+
+
     /* ══════════════════════════════════════
-       WEEK 7 — OCEAN OF CONNECTIONS
+       WEEK 7 — OCEAN OF INFLUENCE  v5
+       Full underwater world
     ══════════════════════════════════════ */
 
-    .scene-w7 .scene-sky {
-      background:
-        radial-gradient(ellipse 110% 50% at 50% 100%, rgba(0,60,120,0.40) 0%, transparent 65%),
-        radial-gradient(ellipse  70% 35% at 20%  90%, rgba(0,40,100,0.22) 0%, transparent 58%),
-        radial-gradient(ellipse  70% 35% at 82%  90%, rgba(0,40,100,0.20) 0%, transparent 58%),
-        linear-gradient(180deg, #020610 0%, #040c1e 30%, #060e28 60%, #040a1e 100%);
+    /* Nav bar — deep underwater */
+    #detail-screen.w7-active .nav-bar {
+      background: linear-gradient(90deg, #0e6090, #1478a8 50%, #0e6090);
+      border-bottom: 1px solid rgba(100,220,255,0.22);
     }
 
-    /* Ocean shimmer overlay */
+    /* Underwater sky/surface — seen from below */
+    .scene-w7 .scene-sky {
+      background:
+        radial-gradient(ellipse 90% 50% at 50% 0%, rgba(100,220,255,0.55) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 40% at 75% 5%,  rgba(255,220,80,0.25)  0%, transparent 50%),
+        linear-gradient(180deg,
+          #55d8f8 0%,
+          #2ab4e8 10%,
+          #1098cc 24%,
+          #0a80b0 42%,
+          #076898 60%,
+          #0a5a8a 78%,
+          #0d4e80 100%);
+    }
+
+    /* Deep water glow */
     .scene-w7 .ocean-shimmer {
       position: absolute; inset: 0; z-index: 1; pointer-events: none;
       background:
-        radial-gradient(ellipse 130% 30% at 50% 100%, rgba(0,100,180,0.18) 0%, transparent 55%),
-        radial-gradient(ellipse  80% 18% at 18% 100%, rgba(0,80,160,0.12)  0%, transparent 50%),
-        radial-gradient(ellipse  80% 18% at 84% 100%, rgba(0,80,160,0.12)  0%, transparent 50%);
+        radial-gradient(ellipse 100% 40% at 50% 0%,   rgba(100,230,255,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse  80% 25% at 20% 100%, rgba(0,100,160,0.18)   0%, transparent 50%),
+        radial-gradient(ellipse  80% 25% at 80% 100%, rgba(0,100,160,0.18)   0%, transparent 50%);
     }
 
-    /* Ocean title */
+    /* Animations */
+    @keyframes ray-pulse    { 0%,100%{opacity:0.12;} 50%{opacity:0.28;} }
+    @keyframes fish-r       { from{transform:translateX(-60px);} to{transform:translateX(1100px);} }
+    @keyframes fish-l       { from{transform:translateX(1100px) scaleX(-1);} to{transform:translateX(-60px) scaleX(-1);} }
+    @keyframes bubble-up    { from{transform:translateY(0) scale(1);opacity:0.45;} to{transform:translateY(-180px) scale(1.4);opacity:0;} }
+    @keyframes plant-sway   { 0%,100%{transform:rotate(-8deg);} 50%{transform:rotate(8deg);} }
+    @keyframes turtle-swim  { 0%{transform:translateX(-80px) translateY(0);} 30%{transform:translateX(280px) translateY(-14px);} 70%{transform:translateX(560px) translateY(10px);} 100%{transform:translateX(1100px) translateY(-4px);} }
+    @keyframes biolum-pulse { 0%,100%{opacity:0.4; r:3;} 50%{opacity:0.9; r:5;} }
+    @keyframes current-drift{
+      0%   { stroke-dashoffset:0; opacity:0.18; }
+      50%  { opacity:0.32; }
+      100% { stroke-dashoffset:-80; opacity:0.18; }
+    }
+
+    /* Title */
     .w7-ocean-title {
       position: absolute;
-      bottom: 38%; left: 50%;
-      transform: translateX(-50%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 22; text-align: center; pointer-events: none; white-space: nowrap;
     }
     .w7-ocean-main {
       font-family: var(--ui-font);
-      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-      font-weight: 800; line-height: 1; letter-spacing: 0.02em;
-      background: linear-gradient(180deg, #ffffff 0%, #88d8ff 45%, #2298cc 100%);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800; line-height: 1;
+      background: linear-gradient(180deg, #ffffff 0%, #ccf0ff 50%, #88ddff 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      filter: drop-shadow(0 0 28px rgba(0,180,255,0.85)) drop-shadow(0 0 56px rgba(0,120,220,0.5));
+      filter: drop-shadow(0 0 24px rgba(0,200,255,0.8)) drop-shadow(0 0 50px rgba(0,150,220,0.45));
     }
     .w7-ocean-rule {
       display: block; width: 100%; height: 1.5px;
-      background: linear-gradient(90deg, transparent, rgba(0,180,255,0.50), transparent);
+      background: linear-gradient(90deg, transparent, rgba(100,220,255,0.55), transparent);
       margin: 6px auto 0;
     }
     .w7-ocean-sub {
       font-family: var(--px-font); font-size: 0.3rem;
-      color: rgba(0,180,255,0.45); letter-spacing: 0.24em; margin-top: 5px;
+      color: rgba(180,240,255,0.65); letter-spacing: 0.24em; margin-top: 5px;
     }
 
-    /* Newly discovered islands — left column */
+    /* Left: Islands Charted */
     .w7-islands-col {
-      position: absolute; left: 3%; top: 0; bottom: 0;
-      width: 23%; z-index: 15; pointer-events: none;
-      display: flex; flex-direction: column;
-      justify-content: flex-start; padding-top: 70px; gap: 8px;
+      position: absolute; left: 3%; top: 0; bottom: 0; width: 21%; z-index: 15;
+      pointer-events: none; display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 70px; gap: 7px;
     }
-    .w7-island-entry {
-      border-left: 2px solid rgba(0,160,220,0.40);
-      padding: 5px 0 5px 10px;
-    }
-    .w7-island-num {
-      font-family: var(--px-font); font-size: 0.24rem;
-      color: #1a5a88; letter-spacing: 0.1em; margin-bottom: 2px;
-    }
-    .w7-island-text {
-      font-size: 0.72rem; font-weight: 700; color: #70b8d8; line-height: 1.3;
-    }
+    .w7-island-entry { border-left: 2px solid rgba(100,230,255,0.45); padding: 5px 0 5px 10px; }
+    .w7-island-num   { font-family:var(--px-font); font-size:0.24rem; color:rgba(180,240,255,0.75); letter-spacing:0.1em; margin-bottom:2px; }
+    .w7-island-text  { font-size:0.73rem; font-weight:700; color:#ffffff; line-height:1.32; text-shadow:0 1px 6px rgba(0,0,0,0.7); }
 
-    /* Lighthouse insights — right column */
+    /* Right top: Lighthouse Insights */
     .w7-lighthouse-col {
-      position: absolute; right: 3%; top: 0; bottom: 0;
-      width: 22%; z-index: 15; pointer-events: none;
-      display: flex; flex-direction: column;
-      justify-content: flex-start; padding-top: 70px; gap: 8px;
+      position: absolute; right: 3%; top: 0; width: 21%; z-index: 15;
+      pointer-events: none; display: flex; flex-direction: column;
+      padding-top: 70px; gap: 7px;
     }
-    .w7-lighthouse-header {
-      font-family: var(--px-font); font-size: 0.26rem;
-      color: #1a5a88; letter-spacing: 0.14em; margin-bottom: 4px;
-    }
+    .w7-lighthouse-header { font-family:var(--px-font); font-size:0.27rem; color:rgba(180,240,255,0.80); letter-spacing:0.14em; margin-bottom:5px; }
     .w7-lighthouse-item {
-      font-size: 0.72rem; font-weight: 700; color: #60a8c8;
-      line-height: 1.3; margin-bottom: 5px;
-      display: flex; gap: 6px; align-items: flex-start;
+      font-size:0.73rem; font-weight:700; color:#ffffff;
+      line-height:1.32; margin-bottom:5px;
+      display:flex; gap:6px; align-items:flex-start;
+      text-shadow:0 1px 6px rgba(0,0,0,0.7);
     }
-    .w7-lighthouse-item::before { content: '🌊'; font-size: 0.55rem; flex-shrink: 0; margin-top: 1px; }
+    .w7-lighthouse-item::before { content:'✦'; font-size:0.58rem; flex-shrink:0; margin-top:2px; color:#88ddff; }
 
-    /* Fleet development — right lower */
+    /* Right lower: Fleet Status */
     .w7-fleet-col {
-      position: absolute; right: 3%; bottom: 58%; width: 22%;
-      z-index: 15; pointer-events: none;
+      position: absolute; right: 3%; bottom: 68px; width: 21%; z-index: 15; pointer-events: none;
     }
-    .w7-fleet-header {
-      font-family: var(--px-font); font-size: 0.26rem;
-      color: #1a5a88; letter-spacing: 0.12em; margin-bottom: 6px;
-    }
-    .w7-fleet-item {
-      font-size: 0.68rem; font-weight: 700;
-      line-height: 1.3; margin-bottom: 4px; display: flex; gap: 5px; align-items: flex-start;
-      color: #5098b8;
-    }
-    .w7-fleet-item::before { content: '⚓'; flex-shrink: 0; font-size: 0.65rem; }
+    .w7-fleet-header { font-family:var(--px-font); font-size:0.27rem; color:rgba(180,240,255,0.80); letter-spacing:0.12em; margin-bottom:7px; }
+    .w7-fleet-item   { font-size:0.72rem; font-weight:700; color:#ffffff; line-height:1.32; margin-bottom:5px; display:flex; gap:5px; align-items:flex-start; text-shadow:0 1px 6px rgba(0,0,0,0.7); }
+    .w7-fleet-item::before { content:'⚓'; flex-shrink:0; font-size:0.62rem; }
 
-    /* Voyage path at bottom */
+    /* Voyage strip */
     .w7-voyage-strip {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 62px;
-      z-index: 16;
-      background: linear-gradient(to top, #020810 55%, transparent);
-      display: flex; align-items: center; padding: 0 22px; gap: 0; overflow: hidden;
+      position: absolute; bottom: 0; left: 0; right: 0; height: 62px; z-index: 16;
+      background: linear-gradient(to top, #083860 55%, transparent);
+      display: flex; align-items: center; padding: 0 22px; overflow: hidden;
     }
     .w7-voyage-strip::after {
-      content: '';
-      position: absolute; left: 0; right: 0; top: 36px; height: 2px;
-      background: repeating-linear-gradient(90deg,
-        transparent 0, transparent 22px,
-        rgba(0,160,220,0.20) 22px, rgba(0,160,220,0.20) 40px);
+      content:''; position:absolute; left:0; right:0; top:36px; height:2px;
+      background: repeating-linear-gradient(90deg, transparent 0, transparent 22px, rgba(100,220,255,0.22) 22px, rgba(100,220,255,0.22) 40px);
     }
-    .w7-voyage-lbl {
-      font-family: var(--px-font); font-size: 0.24rem;
-      color: #0e3060; letter-spacing: 0.16em; white-space: nowrap;
-      margin-right: 14px; flex-shrink: 0; z-index: 1;
-    }
-    .w7-voyage-node { display: flex; align-items: center; gap: 5px; flex-shrink: 0; z-index: 1; }
-    .w7-voyage-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(0,80,140,0.6); box-shadow: 0 0 5px rgba(0,120,200,0.25);
-    }
-    .w7-voyage-dot.lit {
-      background: #22aaee;
-      box-shadow: 0 0 8px #22aaee, 0 0 18px rgba(0,170,230,0.45);
-    }
-    .w7-voyage-text { font-size: 0.68rem; font-weight: 700; color: #0e3060; white-space: nowrap; }
-    .w7-voyage-text.lit { color: #55ccff; }
-    .w7-voyage-arr { color: #081828; font-size: 0.65rem; margin: 0 4px; flex-shrink: 0; }
+    .w7-voyage-lbl  { font-family:var(--px-font); font-size:0.24rem; color:rgba(180,240,255,0.55); letter-spacing:0.16em; white-space:nowrap; margin-right:14px; flex-shrink:0; z-index:1; }
+    .w7-voyage-node { display:flex; align-items:center; gap:5px; flex-shrink:0; z-index:1; }
+    .w7-voyage-dot  { width:6px; height:6px; border-radius:50%; background:rgba(100,220,255,0.35); }
+    .w7-voyage-dot.lit { background:#44ddff; box-shadow:0 0 8px #44ddff, 0 0 18px rgba(0,200,230,0.45); }
+    .w7-voyage-text { font-size:0.68rem; font-weight:700; color:rgba(255,255,255,0.48); white-space:nowrap; }
+    .w7-voyage-text.lit { color:#44ddff; }
+    .w7-voyage-arr  { color:rgba(255,255,255,0.22); font-size:0.65rem; margin:0 4px; flex-shrink:0; }
 
-    /* Reflection theme: ocean dark panels */
+    /* ══ ONE CONTINUOUS UNDERWATER GRADIENT ══ */
+    .page-wrapper.env-w7 {
+      /* Full-bleed ocean depth gradient — edge to edge, no dark gutters */
+      background: linear-gradient(180deg,
+        #42C6F5 0%,
+        #2AABDA 10%,
+        #1E98C8 22%,
+        #1688B8 34%,
+        #1275A5 48%,
+        #1060A0 60%,
+        #0e4e8c 72%,
+        #0c4278 84%,
+        #0a3868 92%,
+        #083060 100%);
+      width: 100%;
+    }
+
+    /* Override page-content padding to keep full-width bg visible */
+    .page-wrapper.env-w7 .page-content {
+      background: transparent;
+    }
+    .page-wrapper.env-w7 .reflection-wrap {
+      background: transparent !important;
+    }
+
+
+
+    /* Divider */
+    .refl-w7-wrap { background: transparent !important; }
+    .refl-w7-divider .ref-divider-line  { background: rgba(255,255,255,0.25); }
+    .refl-w7-divider .ref-divider-label { color: rgba(255,255,255,0.75); }
+
+    /* ── Reflection cards — underwater glass ── */
     .refl-w7 .ref-section {
-      background: rgba(2,6,18,0.78);
-      border: 1px solid rgba(0,140,220,0.14);
-      border-radius: 12px; overflow: hidden; margin-bottom: 12px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 14px; overflow: hidden; margin-bottom: 14px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.12);
     }
     .refl-w7 .ref-section:last-child { margin-bottom: 0; }
     .refl-w7 .ref-section-head {
-      background: rgba(4,10,30,0.72);
-      border-bottom: 1px solid rgba(0,140,220,0.12);
-      padding: 10px 18px; display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border-bottom: 1px solid rgba(255,255,255,0.16);
+      padding: 11px 18px; display: flex; align-items: center; gap: 8px;
     }
-    .refl-w7 .ref-section-icon { font-size: 0.85rem; }
-    .refl-w7 .ref-section-title {
-      font-family: var(--px-font); font-size: 0.36rem; color: #2288cc; letter-spacing: 0.1em;
-    }
-    .refl-w7 .ref-section-body { padding: 14px 18px; }
+    .refl-w7 .ref-section-icon  { font-size: 0.9rem; }
+    .refl-w7 .ref-section-title { font-family:var(--px-font); font-size:0.38rem; color:#ffffff; letter-spacing:0.1em; text-shadow:0 1px 4px rgba(0,0,0,0.4); }
+    .refl-w7 .ref-section-body  { padding: 16px 20px; }
+
+    /* Text */
+    .refl-w7 .ref-bullets li      { color:#ffffff; font-size:0.9rem; }
+    .refl-w7 .ref-bullets li::before { color:#88eeff; }
+    .refl-w7 .ref-learnings li    { color:#e8fff5; }
+    .refl-w7 .ref-learnings li::before { color:#44ee88; }
+    .refl-w7 .ref-focus li        { color:#e8f4ff; }
+    .refl-w7 .ref-focus li::before { content:'→'; color:#88ccff; }
+    .refl-w7 .ref-support li      { color:#f0e8ff; }
+    .refl-w7 .ref-support li::before { content:'◈'; color:#cc99ff; }
+    .refl-w7 .progress-item-name  { color:#ffffff; font-size:0.84rem; font-weight:800; }
+    .refl-w7 .progress-item-note  { color:rgba(220,240,255,0.85); font-size:0.85rem; }
+    .refl-w7 .star.filled { color:#ffe840; }
+    .refl-w7 .star.empty  { color:rgba(255,255,255,0.20); }
+    .refl-w7 .completed-tasks      { border-top:1px solid rgba(255,255,255,0.15); }
+    .refl-w7 .completed-tasks-label { color:rgba(180,240,255,0.75); }
+    .refl-w7 .task-check { color:#44ee88; }
+    .refl-w7 .task-row   { color:rgba(220,245,255,0.88); }
 
 
     /* ══════════════════════════════════════
@@ -2625,11 +2674,11 @@
           <div class="hud-name">Allen Cloyd Malayo</div>
           <div class="hud-role">CS Academy Associate</div>
           <div class="hud-level-row">
-            <span class="level-badge">LV 6</span>
+            <span class="level-badge">LV 7</span>
             <div class="xp-bar-wrap">
               <div class="xp-bar-fill"></div>
             </div>
-            <span class="xp-fraction">6/10</span>
+            <span class="xp-fraction">7/10</span>
           </div>
         </div>
       </div>
@@ -2938,7 +2987,7 @@
         <!-- ══ LOCKED OVERLAYS (W5–W10) ══ -->
         <!-- W5 unlocked — overlay removed -->
         <!-- W6 unlocked -->
-        <ellipse cx="852" cy="316" rx="66" ry="54" fill="url(#lock-fade)"/>
+        <!-- W7 unlocked -->
         <path d="M 584,436 C 580,410 592,388 614,378 C 636,368 664,368 686,378 C 706,388 720,408 722,430 C 724,452 712,472 692,480 C 672,488 646,486 626,476 C 602,464 586,450 584,436 Z" fill="url(#lock-fade)"/>
         <ellipse cx="384" cy="438" rx="94" ry="46" fill="url(#lock-fade)"/>
         <path d="M 28,468 C 24,440 38,414 62,402 C 86,390 114,388 140,396 C 166,404 188,422 196,446 C 204,470 196,496 176,510 C 156,524 126,528 98,520 C 68,510 44,492 32,472 C 28,470 28,470 28,468 Z" fill="url(#lock-fade)"/>
@@ -3111,11 +3160,11 @@
     <div class="mod-section">
       <div class="mod-section-label">Character Core</div>
       <div class="char-level-row">
-        <span class="char-level-badge">LEVEL 6</span>
-        <span class="char-week-count">WEEK 6 OF 10</span>
+        <span class="char-level-badge">LEVEL 7</span>
+        <span class="char-week-count">WEEK 7 OF 10</span>
       </div>
-      <div class="char-xp-track"><div class="char-xp-fill" style="width:60%"></div></div>
-      <div class="char-xp-note">Journey 60% complete · 4 realms remaining</div>
+      <div class="char-xp-track"><div class="char-xp-fill" style="width:70%"></div></div>
+      <div class="char-xp-note">Journey 70% complete · 3 realms remaining</div>
     </div>
 
     <!-- INVENTORY -->
@@ -3820,14 +3869,16 @@
             fill="#44ccff" opacity="0.9"
             filter="url(#nGlow)"/>
           <!-- Centre text -->
-          <text x="100" y="86" text-anchor="middle"
-            font-family="Nunito,sans-serif" font-size="24" font-weight="800" fill="#e0f0ff">€1.1M</text>
-          <text x="100" y="108" text-anchor="middle"
+          <text x="100" y="84" text-anchor="middle"
+            font-family="Nunito,sans-serif" font-size="22" font-weight="800" fill="#e0f0ff">€1.39M</text>
+          <text x="100" y="105" text-anchor="middle"
             font-family="Nunito,sans-serif" font-size="10" font-weight="600" fill="#3a6888">of €400K target</text>
-          <text x="100" y="126" text-anchor="middle"
-            font-family="'Press Start 2P',monospace" font-size="9" fill="#44ccff">TARGET MET</text>
+          <text x="100" y="120" text-anchor="middle"
+            font-family="'Press Start 2P',monospace" font-size="8" fill="#44ccff">TARGET EXCEEDED</text>
+          <text x="100" y="133" text-anchor="middle"
+            font-family="Nunito,sans-serif" font-size="9" font-weight="700" fill="#44ee88">+€990K over target</text>
         </svg>
-        <div class="nexus-empty-label" style="color:#44ccff;opacity:0.7">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ €400K TARGET EXCEEDED</div>
+        <div class="nexus-empty-label" style="color:#44ee88;opacity:0.85;font-size:0.36rem">✦ €1.39M IDENTIFIED · €990K OVER TARGET ✦</div>
       </div>
     </div>
 
@@ -3923,10 +3974,10 @@
       </div>
 
       <!-- ── Opportunity 5 ── -->
-      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#3a88cc">
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#8B5CF6">
         <div class="nexus-opp-header">
           <div class="nexus-opp-name">BSP — Credit Management</div>
-          <div class="nexus-opp-value" style="color:#55bbff">€53K</div>
+          <div class="nexus-opp-value" style="color:#a78bfa">€53K</div>
         </div>
         <div class="nexus-opp-summary">
           BSP relies on manual credit reporting processes increasingly difficult to sustain amid evolving regulations. SAP Advanced Credit Management to modernize reporting, improve compliance, and reduce operational effort.
@@ -3943,10 +3994,10 @@
       </div>
 
       <!-- ── Opportunity 6 ── -->
-      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#3a88cc">
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#8B5CF6">
         <div class="nexus-opp-header">
           <div class="nexus-opp-name">BSP — BTP Expansion</div>
-          <div class="nexus-opp-value" style="color:#55bbff">€300K</div>
+          <div class="nexus-opp-value" style="color:#a78bfa">€300K</div>
         </div>
         <div class="nexus-opp-summary">
           BSP is pursuing digital transformation including Open Finance, AI adoption, and regulatory automation. SAP BTP &amp; Business Data Cloud to support integration, data management, and future innovation initiatives.
@@ -3960,6 +4011,46 @@
         <div class="nexus-why-item">Supports Open Finance initiatives</div>
         <div class="nexus-why-item">Strengthens integration and data foundations</div>
         <div class="nexus-why-item">Enables future AI and automation use cases</div>
+      </div>
+
+      <!-- ── Opportunity 7 ── -->
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#38BDF8">
+        <div class="nexus-opp-header">
+          <div class="nexus-opp-name">NNIC — Finance Planning &amp; Analytics + Concur</div>
+          <div class="nexus-opp-value" style="color:#7dd3fc">€280K</div>
+        </div>
+        <div class="nexus-opp-summary">
+          New NAIA Infrastructure Corp. is managing a major airport modernization with significant capital investments and complex procurement. Identified through NNIC's operating model and planned infrastructure projects — SAP FP&amp;A and Concur to strengthen financial planning, forecasting, and spend management.
+        </div>
+        <div class="nexus-detail-grid">
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">TYPE</div><div class="nexus-detail-val">SAP Analytics Cloud Planning + Concur</div></div>
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">VALUE</div><div class="nexus-detail-val">€280,000</div></div>
+          <div class="nexus-detail-item" style="grid-column:1/-1"><div class="nexus-detail-lbl">SOURCE</div><div class="nexus-detail-val">Account research, TAO analysis &amp; infrastructure expansion planning</div></div>
+        </div>
+        <div class="nexus-why-label">WHY IT MATTERS</div>
+        <div class="nexus-why-item">Improves planning and forecasting accuracy</div>
+        <div class="nexus-why-item">Strengthens procurement and spend visibility</div>
+        <div class="nexus-why-item">Supports large-scale infrastructure investments</div>
+      </div>
+
+      <!-- ── Opportunity 8 ── -->
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#EF4444">
+        <div class="nexus-opp-header">
+          <div class="nexus-opp-name">Aboitiz InfraCapital — Additional FUEs</div>
+          <div class="nexus-opp-value" style="color:#fca5a5">€15K</div>
+        </div>
+        <div class="nexus-opp-summary">
+          Aboitiz InfraCapital is operating beyond its allocated SAP RISE FUE capacity as business growth continues. Identified through proactive consumption monitoring — opportunity to expand entitlement and bring usage back into compliance while supporting future growth.
+        </div>
+        <div class="nexus-detail-grid">
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">TYPE</div><div class="nexus-detail-val">SAP RISE FUE Expansion</div></div>
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">VALUE</div><div class="nexus-detail-val">€15,000</div></div>
+          <div class="nexus-detail-item" style="grid-column:1/-1"><div class="nexus-detail-lbl">SOURCE</div><div class="nexus-detail-val">Consumption monitoring &amp; utilization analysis</div></div>
+        </div>
+        <div class="nexus-why-label">WHY IT MATTERS</div>
+        <div class="nexus-why-item">Eliminates overconsumption risk</div>
+        <div class="nexus-why-item">Maintains licensing compliance</div>
+        <div class="nexus-why-item">Supports continued SAP adoption</div>
       </div>
 
     </div>
@@ -5312,7 +5403,7 @@
                 <!-- Exchange neon top -->
                 <rect x="548" y="220" width="116" height="4" fill="#dd44ff" opacity="0.5" filter="url(#vGlow)"/>
                 <text x="606" y="212" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" fill="#cc66ee" font-weight="800" filter="url(#vGlowS)">OPP. EXCHANGE</text>
-                <text x="606" y="201" text-anchor="middle" font-family="Nunito,sans-serif" font-size="9" fill="#ee88ff" font-weight="800" filter="url(#vGlow)">€1.1M · 6 DEALS</text>
+                <text x="606" y="201" text-anchor="middle" font-family="Nunito,sans-serif" font-size="9" fill="#ee88ff" font-weight="800" filter="url(#vGlow)">€1.39M · 8 DEALS</text>
               </g>
 
               <!-- ── OPERATIONS CENTER (right) ── -->
@@ -5539,7 +5630,455 @@
           </div>
         `; },
       },
-      { id: 7,  label: 'Week 7',  title: 'The Ocean Depths',   subtitle: 'Week 7 · Ocean',    icon: '🌊', env: 'w7',  terrain: 'Ocean',    terrainIcon: '🐚', locked: true,  envBg: 'linear-gradient(160deg,#0e0408 0%,#1e0810 100%)', buildScene() { return ''; } },
+      {
+        id: 7, label: 'Week 7', title: 'Ocean of Influence',
+        subtitle: 'FE1 Week 7 Reflection', icon: '🌊', env: 'w7',
+        terrain: 'Ocean', terrainIcon: '🐚', locked: false,
+        envBg: 'linear-gradient(180deg,#010508 0%,#030b18 30%,#050e22 60%,#040c1e 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w7" style="min-height:calc(100vh - var(--nav-h));overflow:hidden;">
+            <div class="scene-sky"></div>
+            <div class="ocean-shimmer"></div>
+            <div class="scan-line" style="background:linear-gradient(90deg,transparent,rgba(0,200,255,0.07) 50%,transparent);animation:scan 18s linear infinite;"></div>
+
+            <!-- ══ UNDERWATER WORLD SVG ══ -->
+            <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:2"
+              viewBox="0 0 1000 580" preserveAspectRatio="xMidYMax meet"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="depthG" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#42C6F5" stop-opacity="0"/>
+                  <stop offset="60%"  stop-color="#0e6090" stop-opacity="0.30"/>
+                  <stop offset="100%" stop-color="#083860" stop-opacity="0.55"/>
+                </linearGradient>
+                <radialGradient id="sunTop" cx="72%"cy="0%"r="35%">
+                  <stop offset="0%"   stop-color="#fffbe0" stop-opacity="0.7"/>
+                  <stop offset="60%"  stop-color="#88ddff" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#0088bb" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="rayG" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#fffbe0" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#44aacc" stop-opacity="0"/>
+                </linearGradient>
+                <radialGradient id="coralGlow" cx="50%"cy="100%"r="50%">
+                  <stop offset="0%"   stop-color="#ff6644" stop-opacity="0.30"/>
+                  <stop offset="100%" stop-color="#ff6644" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="bioGlow" cx="50%"cy="50%"r="50%">
+                  <stop offset="0%"   stop-color="#44ffcc" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#44ffcc" stop-opacity="0"/>
+                </radialGradient>
+                <filter id="ug" x="-20%"y="-20%"width="140%"height="140%"><feGaussianBlur stdDeviation="4"/></filter>
+                <filter id="ugs" x="-10%"y="-10%"width="120%"height="120%"><feGaussianBlur stdDeviation="2"/></filter>
+              </defs>
+
+              <!-- ── SURFACE RIPPLE (top) ── -->
+              <g stroke="#ffffff" fill="none" opacity="0.20" stroke-linecap="round">
+                <path d="M 0,28  Q 100,22 200,28 Q 300,34 400,26 Q 500,18 600,28 Q 700,38 800,26 Q 900,14 1000,28" stroke-width="1.2"/>
+                <path d="M 0,44  Q 80,38  160,44 Q 240,50 320,42 Q 400,34 480,44 Q 560,54 640,42 Q 720,30 800,44 Q 880,56 1000,42" stroke-width="0.8"/>
+              </g>
+
+              <!-- Sun through water (top) -->
+              <circle cx="720" cy="0" r="60" fill="url(#sunTop)" opacity="0.9"/>
+              <rect x="0" y="0" width="1000" height="580" fill="url(#sunTop)" opacity="0.35"/>
+
+              <!-- Sun rays penetrating down -->
+              <g style="animation:ray-pulse 3s ease-in-out infinite">
+                <polygon points="680,0 730,0 520,580 470,580" fill="url(#rayG)" opacity="0.18"/>
+                <polygon points="750,0 790,0 600,580 560,580" fill="url(#rayG)" opacity="0.13"/>
+                <polygon points="820,0 848,0 670,580 644,580" fill="url(#rayG)" opacity="0.09"/>
+              </g>
+              <g style="animation:ray-pulse 4.2s 1.4s ease-in-out infinite">
+                <polygon points="700,0 730,0 540,580 510,580" fill="url(#rayG)" opacity="0.11"/>
+                <polygon points="780,0 804,0 636,580 612,580" fill="url(#rayG)" opacity="0.08"/>
+              </g>
+
+              <!-- ── OCEAN CURRENTS ── -->
+              <path d="M 0,120 Q 200,108 400,122 Q 600,136 800,118 Q 900,110 1000,122"
+                stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-dasharray="12 10"
+                opacity="0.14" style="animation:current-drift 5s linear infinite"/>
+              <path d="M 0,240 Q 180,228 360,242 Q 540,256 720,238 Q 860,226 1000,242"
+                stroke="#88ddff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-dasharray="10 12"
+                opacity="0.12" style="animation:current-drift 7s 2s linear infinite"/>
+              <path d="M 0,380 Q 200,368 400,382 Q 600,396 800,378 Q 900,370 1000,382"
+                stroke="#44aacc" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="8 14"
+                opacity="0.10" style="animation:current-drift 9s 4s linear infinite"/>
+
+              <!-- ── CORAL REEF STRUCTURES ── -->
+              <!-- Left reef cluster -->
+              <g filter="url(#ugs)">
+                <rect x="0"   y="580" width="300" height="580" fill="url(#coralGlow)" opacity="0.35"/>
+                <ellipse cx="48"  cy="540" rx="22" ry="32" fill="#d43a28" opacity="0.85"/>
+                <ellipse cx="68"  cy="534" rx="16" ry="24" fill="#ee5522" opacity="0.85"/>
+                <ellipse cx="86"  cy="542" rx="20" ry="28" fill="#cc2e18" opacity="0.85"/>
+                <ellipse cx="106" cy="538" rx="14" ry="20" fill="#ee6633" opacity="0.85"/>
+                <ellipse cx="130" cy="546" rx="18" ry="26" fill="#dd3322" opacity="0.85"/>
+                <ellipse cx="52"  cy="518" rx="8"  ry="6"  fill="#ff9977" opacity="0.65"/>
+                <ellipse cx="88"  cy="520" rx="7"  ry="5"  fill="#ff8866" opacity="0.60"/>
+                <ellipse cx="130" cy="525" rx="8"  ry="5"  fill="#ff9977" opacity="0.60"/>
+                <!-- Fan coral -->
+                <path d="M 168,570 Q 155,545 148,518 Q 155,540 168,545 Q 180,540 185,518 Q 180,545 168,570"
+                  fill="#ff5533" opacity="0.55"/>
+                <path d="M 200,575 Q 190,552 186,528 Q 192,548 200,553 Q 208,548 212,528 Q 208,552 200,575"
+                  fill="#ee4422" opacity="0.50"/>
+              </g>
+
+              <!-- Right reef cluster -->
+              <g filter="url(#ugs)">
+                <rect x="700" y="580" width="300" height="580" fill="url(#coralGlow)" opacity="0.30"/>
+                <ellipse cx="824" cy="545" rx="20" ry="28" fill="#cc2e18" opacity="0.82"/>
+                <ellipse cx="848" cy="538" rx="16" ry="23" fill="#ee5522" opacity="0.82"/>
+                <ellipse cx="868" cy="542" rx="22" ry="30" fill="#d43a28" opacity="0.82"/>
+                <ellipse cx="896" cy="536" rx="15" ry="22" fill="#ee6633" opacity="0.82"/>
+                <ellipse cx="920" cy="544" rx="18" ry="26" fill="#cc2e18" opacity="0.82"/>
+                <ellipse cx="950" cy="548" rx="14" ry="20" fill="#dd3322" opacity="0.80"/>
+                <ellipse cx="826" cy="522" rx="8" ry="5" fill="#ff9977" opacity="0.60"/>
+                <ellipse cx="870" cy="518" rx="7" ry="5" fill="#ff8866" opacity="0.58"/>
+                <path d="M 760,575 Q 748,550 742,524 Q 750,546 760,551 Q 770,546 774,524 Q 768,550 760,575"
+                  fill="#ee4422" opacity="0.52"/>
+              </g>
+
+              <!-- Centre mid-water reef -->
+              <g filter="url(#ugs)">
+                <ellipse cx="420" cy="545" rx="18" ry="24" fill="#22aabb" opacity="0.75"/>
+                <ellipse cx="442" cy="540" rx="14" ry="19" fill="#33cccc" opacity="0.75"/>
+                <ellipse cx="460" cy="548" rx="16" ry="22" fill="#1a8899" opacity="0.75"/>
+                <ellipse cx="484" cy="542" rx="12" ry="17" fill="#22aabb" opacity="0.70"/>
+                <ellipse cx="504" cy="546" rx="15" ry="20" fill="#33bbcc" opacity="0.70"/>
+                <ellipse cx="524" cy="540" rx="11" ry="15" fill="#1a9aaa" opacity="0.68"/>
+                <ellipse cx="444" cy="526" rx="6"  ry="4"  fill="#88eeff" opacity="0.55"/>
+                <ellipse cx="480" cy="524" rx="5"  ry="3.5"fill="#88eeff" opacity="0.50"/>
+                <!-- Tall sponge towers -->
+                <ellipse cx="560" cy="520" rx="10" ry="35" fill="#7744aa" opacity="0.65"/>
+                <ellipse cx="574" cy="525" rx="8"  ry="28" fill="#8855bb" opacity="0.60"/>
+                <ellipse cx="590" cy="518" rx="10" ry="38" fill="#6633aa" opacity="0.65"/>
+                <ellipse cx="560" cy="490" rx="7"  ry="5"  fill="#cc99ff" opacity="0.45"/>
+                <ellipse cx="590" cy="486" rx="7"  ry="5"  fill="#cc99ff" opacity="0.40"/>
+              </g>
+
+              <!-- ── SEA GRASS (mid-scene) ── -->
+              <g stroke="#1a8840" fill="none" stroke-linecap="round" opacity="0.38">
+                <path d="M 260,580 Q 264,556 260,538 Q 256,520 260,500" stroke-width="2.5" style="transform-origin:260px 580px;animation:plant-sway 3.8s ease-in-out infinite"/>
+                <path d="M 274,580 Q 280,558 276,540" stroke-width="2" style="transform-origin:274px 580px;animation:plant-sway 4.2s 0.6s ease-in-out infinite"/>
+                <path d="M 252,580 Q 246,560 250,542" stroke-width="2" style="transform-origin:252px 580px;animation:plant-sway 3.4s 1.2s ease-in-out infinite"/>
+                <path d="M 680,580 Q 684,555 680,536 Q 676,517 680,498" stroke-width="2.5" stroke="#1a9840" style="transform-origin:680px 580px;animation:plant-sway 4s 0.4s ease-in-out infinite"/>
+                <path d="M 694,580 Q 700,556 696,538" stroke-width="2" stroke="#1a9840" style="transform-origin:694px 580px;animation:plant-sway 3.6s 0.9s ease-in-out infinite"/>
+                <path d="M 672,580 Q 666,558 670,540" stroke-width="2" stroke="#1a8030" style="transform-origin:672px 580px;animation:plant-sway 4.4s 0.2s ease-in-out infinite"/>
+              </g>
+
+              <!-- ── FISH SCHOOLS ── -->
+              <!-- Vivid tropical fish R -->
+              <g style="animation:fish-r 12s 0s linear infinite" opacity="0.60">
+                <ellipse cx="0"   cy="180" rx="12" ry="6"   fill="#ff8844"/>
+                <polygon points="12,180 22,175 22,185" fill="#ff8844"/>
+                <ellipse cx="-20" cy="192" rx="10" ry="5"   fill="#ffaa44"/>
+                <polygon points="-10,192 0,188 0,196" fill="#ffaa44"/>
+                <ellipse cx="18"  cy="196" rx="9"  ry="4.5" fill="#ff6622"/>
+                <polygon points="27,196 36,192 36,200" fill="#ff6622"/>
+                <ellipse cx="-8"  cy="204" rx="8"  ry="4"   fill="#ff9933"/>
+                <polygon points="0,204 8,200 8,208" fill="#ff9933"/>
+              </g>
+              <!-- Blue fish L -->
+              <g style="animation:fish-l 16s 5s linear infinite" opacity="0.50">
+                <ellipse cx="1000" cy="290" rx="11" ry="5.5" fill="#44aaff"/>
+                <polygon points="989,290 980,286 980,294" fill="#44aaff"/>
+                <ellipse cx="1020" cy="300" rx="9"  ry="4.5" fill="#66ccff"/>
+                <polygon points="1011,300 1002,296 1002,304" fill="#66ccff"/>
+                <ellipse cx="984"  cy="308" rx="8"  ry="4"   fill="#2288ff"/>
+                <polygon points="976,308 968,304 968,312" fill="#2288ff"/>
+              </g>
+              <!-- Deep yellow fish R, deeper layer -->
+              <g style="animation:fish-r 20s 8s linear infinite" opacity="0.40">
+                <ellipse cx="0"  cy="400" rx="10" ry="5" fill="#ffdd44"/>
+                <polygon points="10,400 18,396 18,404" fill="#ffdd44"/>
+                <ellipse cx="-16"cy="410" rx="8"  ry="4" fill="#ffcc22"/>
+                <polygon points="-8,410 0,406 0,414"  fill="#ffcc22"/>
+              </g>
+
+              <!-- ── SEA TURTLE ── -->
+              <g style="animation:turtle-swim 35s 6s linear infinite" opacity="0.45">
+                <ellipse cx="0" cy="340" rx="24" ry="15" fill="#3a8840"/>
+                <ellipse cx="0" cy="340" rx="17" ry="11" fill="#4aaa50" opacity="0.85"/>
+                <ellipse cx="0" cy="340" rx="9"  ry="7"  fill="none" stroke="#2a6830" stroke-width="1.2"/>
+                <ellipse cx="-22" cy="334" rx="14" ry="5.5" fill="#3a8840" transform="rotate(-28,-22,334)"/>
+                <ellipse cx="22"  cy="334" rx="14" ry="5.5" fill="#3a8840" transform="rotate(28,22,334)"/>
+                <ellipse cx="-20" cy="348" rx="12" ry="5"   fill="#3a8840" transform="rotate(22,-20,348)"/>
+                <ellipse cx="20"  cy="348" rx="12" ry="5"   fill="#3a8840" transform="rotate(-22,20,348)"/>
+                <ellipse cx="24"  cy="340" rx="8"  ry="7"   fill="#4aaa50"/>
+              </g>
+
+              <!-- ── JELLYFISH ── -->
+              <g opacity="0.45" style="animation:bubble-up 8s 0s ease-in-out infinite">
+                <ellipse cx="350" cy="460" rx="18" ry="12" fill="#dd88ff" opacity="0.55"/>
+                <ellipse cx="350" cy="460" rx="14" ry="8"  fill="#eeb0ff" opacity="0.45"/>
+                <g stroke="#dd88ff" stroke-width="1" opacity="0.4" stroke-linecap="round">
+                  <path d="M 340,470 Q 337,488 340,502"/>
+                  <path d="M 346,472 Q 344,490 347,506"/>
+                  <path d="M 352,472 Q 353,490 351,506"/>
+                  <path d="M 358,470 Q 361,488 359,502"/>
+                </g>
+              </g>
+              <g opacity="0.38" style="animation:bubble-up 11s 4s ease-in-out infinite">
+                <ellipse cx="680" cy="380" rx="14" ry="9" fill="#88ccff" opacity="0.50"/>
+                <ellipse cx="680" cy="380" rx="10" ry="6" fill="#aaddff" opacity="0.40"/>
+                <g stroke="#88ccff" stroke-width="1" opacity="0.38" stroke-linecap="round">
+                  <path d="M 673,387 Q 671,402 673,414"/>
+                  <path d="M 679,389 Q 678,404 680,418"/>
+                  <path d="M 685,387 Q 687,402 686,414"/>
+                </g>
+              </g>
+
+              <!-- ── BIOLUMINESCENT MARKERS (opportunity nodes) ── -->
+              <g filter="url(#ug)">
+                <circle cx="200" cy="320" r="6" fill="#44ffcc" opacity="0.7" style="animation:biolum-pulse 2.5s 0s ease-in-out infinite"/>
+                <circle cx="380" cy="280" r="5" fill="#44ffcc" opacity="0.65" style="animation:biolum-pulse 3s 0.8s ease-in-out infinite"/>
+                <circle cx="500" cy="350" r="7" fill="#44ffcc" opacity="0.8" style="animation:biolum-pulse 2.2s 0.3s ease-in-out infinite"/>
+                <circle cx="660" cy="290" r="5" fill="#44ffcc" opacity="0.62" style="animation:biolum-pulse 3.2s 1.2s ease-in-out infinite"/>
+                <circle cx="820" cy="340" r="6" fill="#44ffcc" opacity="0.68" style="animation:biolum-pulse 2.8s 0.6s ease-in-out infinite"/>
+                <circle cx="130" cy="260" r="4" fill="#88aaff" opacity="0.55" style="animation:biolum-pulse 4s 1.5s ease-in-out infinite"/>
+                <circle cx="760" cy="250" r="4" fill="#88aaff" opacity="0.55" style="animation:biolum-pulse 3.5s 2s ease-in-out infinite"/>
+              </g>
+              <!-- Connection routes between nodes (influence currents) -->
+              <g stroke="#44ffcc" stroke-width="1.5" fill="none" opacity="0.22" stroke-linecap="round" stroke-dasharray="8 10">
+                <path d="M 200,320 Q 290,300 380,280">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2.5s" repeatCount="indefinite"/>
+                </path>
+                <path d="M 380,280 Q 440,310 500,350">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2.8s" repeatCount="indefinite"/>
+                </path>
+                <path d="M 500,350 Q 580,320 660,290">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2.3s" repeatCount="indefinite"/>
+                </path>
+                <path d="M 660,290 Q 740,316 820,340">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="3s" repeatCount="indefinite"/>
+                </path>
+                <path d="M 130,260 Q 165,288 200,320">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2s" repeatCount="indefinite"/>
+                </path>
+              </g>
+
+              <!-- ── BUBBLES ── -->
+              <g fill="rgba(255,255,255,0.42)">
+                <circle cx="320" cy="500" r="3.5" style="animation:bubble-up 4.5s 0s ease-in infinite"/>
+                <circle cx="580" cy="480" r="2.5" style="animation:bubble-up 5.8s 1.8s ease-in infinite"/>
+                <circle cx="440" cy="510" r="2"   style="animation:bubble-up 4s 0.9s ease-in infinite"/>
+                <circle cx="730" cy="490" r="3"   style="animation:bubble-up 5s 2.4s ease-in infinite"/>
+                <circle cx="145" cy="470" r="2.5" style="animation:bubble-up 6s 3.2s ease-in infinite"/>
+                <circle cx="860" cy="500" r="2"   style="animation:bubble-up 4.8s 0.5s ease-in infinite"/>
+                <circle cx="660" cy="455" r="3.5" style="animation:bubble-up 5.5s 1.1s ease-in infinite"/>
+                <circle cx="240" cy="440" r="2"   style="animation:bubble-up 3.8s 2.8s ease-in infinite"/>
+              </g>
+
+              <!-- ── LARGE MARINE CREATURES ── -->
+              <!-- Whale shark — enormous silhouette, upper-left, very slow -->
+              <g style="animation:fish-r 55s 0s linear infinite" opacity="0.22">
+                <!-- Body -->
+                <ellipse cx="0" cy="130" rx="95" ry="32" fill="#0a3050"/>
+                <!-- Dorsal fin -->
+                <polygon points="-10,100 12,68 34,100" fill="#0a3050"/>
+                <!-- Tail -->
+                <polygon points="-95,130 -125,108 -125,152" fill="#0a3050"/>
+                <!-- Pectoral fins -->
+                <ellipse cx="-20" cy="118" rx="38" ry="12" fill="#0a3050" transform="rotate(-22,-20,118)"/>
+                <ellipse cx="-20" cy="142" rx="34" ry="10" fill="#0a3050" transform="rotate(18,-20,142)"/>
+                <!-- Spot pattern -->
+                <g fill="#1a5078" opacity="0.4">
+                  <circle cx="10"  cy="120" r="5"/><circle cx="28"  cy="112" r="4"/>
+                  <circle cx="46"  cy="122" r="5"/><circle cx="20"  cy="140" r="4"/>
+                  <circle cx="40"  cy="134" r="3"/><circle cx="60"  cy="128" r="4"/>
+                  <circle cx="72"  cy="118" r="3"/><circle cx="80"  cy="138" r="3"/>
+                </g>
+              </g>
+
+              <!-- Manta ray — wide silhouette, crosses mid-deep, very slow reversed -->
+              <g style="animation:fish-l 48s 18s linear infinite" opacity="0.18">
+                <path d="M 1000,360 Q 1060,340 1120,360 Q 1060,395 1000,360 Z" fill="#062840"/>
+                <!-- Wing tips -->
+                <path d="M 1000,360 Q 960,318 940,300 Q 970,332 1000,360" fill="#062840"/>
+                <path d="M 1000,360 Q 960,402 940,420 Q 970,388 1000,360" fill="#062840"/>
+                <!-- Second wing -->
+                <path d="M 1000,360 Q 1040,318 1060,300 Q 1030,332 1000,360" fill="#062840"/>
+                <path d="M 1000,360 Q 1040,402 1060,420 Q 1030,388 1000,360" fill="#062840"/>
+                <!-- Cephalic fins -->
+                <path d="M 1115,354 Q 1138,348 1148,356 Q 1136,362 1115,358 Z" fill="#062840"/>
+                <path d="M 1115,366 Q 1138,372 1148,364 Q 1136,358 1115,362 Z" fill="#062840"/>
+                <!-- Tail -->
+                <line x1="940" y1="360" x2="890" y2="354" stroke="#062840" stroke-width="4"/>
+                <line x1="940" y1="360" x2="888" y2="367" stroke="#062840" stroke-width="2.5"/>
+              </g>
+
+              <!-- Whale — massive silhouette, lower zone, extremely slow -->
+              <g style="animation:fish-r 80s 30s linear infinite" opacity="0.14">
+                <ellipse cx="0" cy="490" rx="120" ry="38" fill="#051824"/>
+                <!-- Head flatter than body -->
+                <ellipse cx="110" cy="490" rx="32" ry="28" fill="#051824"/>
+                <!-- Tail fluke -->
+                <path d="M -120,490 Q -155,468 -168,458 Q -150,478 -120,490 Z" fill="#051824"/>
+                <path d="M -120,490 Q -155,512 -168,522 Q -150,502 -120,490 Z" fill="#051824"/>
+                <!-- Pectoral fins -->
+                <ellipse cx="-30" cy="472" rx="48" ry="14" fill="#051824" transform="rotate(-18,-30,472)"/>
+                <!-- Belly lighter -->
+                <ellipse cx="20" cy="500" rx="70" ry="18" fill="#0a2c3c" opacity="0.5"/>
+              </g>
+
+              <!-- Depth fade overlay -->
+              <rect x="0" y="0" width="1000" height="580" fill="url(#depthG)" opacity="0.50"/>
+            </svg>
+
+            <!-- ══ TITLE — top of scene ══ -->
+            <div class="w7-ocean-title">
+              <span class="w7-ocean-main">Ocean of Influence</span>
+              <span class="w7-ocean-rule"></span>
+              <span class="w7-ocean-sub">Week 7 &nbsp;·&nbsp; Jul 6–10, 2025 &nbsp;·&nbsp; FE1 Field Experience</span>
+            </div>
+
+            <!-- ══ LEFT: Key Moments ══ -->
+            <div class="w7-islands-col">
+              <div style="font-family:var(--px-font);font-size:0.26rem;color:rgba(100,220,255,0.65);letter-spacing:0.16em;margin-bottom:5px;">— KEY MOMENTS —</div>
+              <div class="w7-island-entry"><div class="w7-island-num">01</div><div class="w7-island-text">SSS Partner Briefing Completed</div></div>
+              <div class="w7-island-entry"><div class="w7-island-num">02</div><div class="w7-island-text">DepEd Microsite Delivered</div></div>
+              <div class="w7-island-entry"><div class="w7-island-num">03</div><div class="w7-island-text">Meralco CIS Value POV Developed</div></div>
+              <div class="w7-island-entry"><div class="w7-island-num">04</div><div class="w7-island-text">SMC Beer Discovery Session</div></div>
+              <div class="w7-island-entry"><div class="w7-island-num">05</div><div class="w7-island-text">AI GTM Leadership Session</div></div>
+              <div class="w7-island-entry"><div class="w7-island-num">06</div><div class="w7-island-text">Two New Opportunities (€295K)</div></div>
+            </div>
+
+            <!-- ══ RIGHT TOP: Insights ══ -->
+            <div class="w7-lighthouse-col">
+              <div class="w7-lighthouse-header">— DEPTH SIGNALS —</div>
+              <div class="w7-lighthouse-item">AI needs data, governance, and adoption</div>
+              <div class="w7-lighthouse-item">Business outcomes drive discovery depth</div>
+              <div class="w7-lighthouse-item">Customer value requires research and validation</div>
+              <div class="w7-lighthouse-item">Relationships create opportunities</div>
+              <div class="w7-lighthouse-item">Influence shapes outcomes</div>
+            </div>
+
+            <!-- ══ RIGHT LOWER: Fleet ══ -->
+            <div class="w7-fleet-col">
+              <div class="w7-fleet-header">— DEPTH PROGRESS —</div>
+              <div class="w7-fleet-item">AI &amp; Business Transformation <span style="color:rgba(100,220,255,0.55);font-style:italic;margin-left:4px">★★★☆☆ Exploring</span></div>
+              <div class="w7-fleet-item">Discovery &amp; Value Positioning <span style="color:rgba(100,220,255,0.55);font-style:italic;margin-left:4px">★★★★☆ Expanding</span></div>
+              <div class="w7-fleet-item">Enterprise Sales Strategy <span style="color:rgba(100,220,255,0.55);font-style:italic;margin-left:4px">★★★☆☆ Increasing</span></div>
+            </div>
+
+            <!-- ══ VOYAGE STRIP ══ -->
+            <div class="w7-voyage-strip">
+              <span class="w7-voyage-lbl">DEPTH ROUTES</span>
+              <div class="w7-voyage-node"><div class="w7-voyage-dot lit"></div><span class="w7-voyage-text lit">Public Sector Plans</span></div>
+              <span class="w7-voyage-arr">›</span>
+              <div class="w7-voyage-node"><div class="w7-voyage-dot"></div><span class="w7-voyage-text">Value Positioning</span></div>
+              <span class="w7-voyage-arr">›</span>
+              <div class="w7-voyage-node"><div class="w7-voyage-dot"></div><span class="w7-voyage-text">Executive Messaging</span></div>
+              <span class="w7-voyage-arr">›</span>
+              <div class="w7-voyage-node"><div class="w7-voyage-dot"></div><span class="w7-voyage-text">AI Exposure</span></div>
+              <span class="w7-voyage-arr">›</span>
+              <div class="w7-voyage-node"><div class="w7-voyage-dot"></div><span class="w7-voyage-text">Capstone Opps</span></div>
+            </div>
+          </div>
+
+          <!-- Detailed Reflection -->
+          <div class="reflection-wrap refl-w7-wrap">
+
+            <div class="ref-divider refl-w7-divider">
+              <div class="ref-divider-line"></div>
+              <span class="ref-divider-label">Reflection · Week 7 · Jul 6–10</span>
+              <div class="ref-divider-line"></div>
+            </div>
+            <div class="refl-w7">
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">⭐</span><span class="ref-section-title">Highlights</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets">
+                    <li>Attended the SSS Partner Briefing for the upcoming RISE implementation. Having followed the account from discovery sessions to executive playback and now partner onboarding, I gained a better appreciation of how large public sector opportunities evolve and the amount of coordination required across customers, partners, and SAP teams.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_6577.jpeg" alt="SSS Partner Briefing — RISE implementation"/>
+                    </div>
+                    <p class="ref-photo-caption">SSS Partner Briefing — RISE implementation onboarding, Week 7</p>
+                    <li>Joined the SMC Beer IBP discovery session and observed how an initial discussion on forecast accuracy evolved into broader conversations around demand planning, operational efficiency, and business outcomes. It reinforced that effective discovery goes beyond the stated problem to uncover the customer's underlying business challenges.</li>
+                    <li>Created a customer microsite for the Department of Education after receiving a positive response from the Undersecretary through my outreach efforts. The microsite was designed as a pre-read for the upcoming courtesy meeting, introducing SAP, highlighting DepEd's priorities, and setting the stage for a more informed and relevant executive conversation.</li>
+                    <div class="ref-photo">
+                      <img src="deped_microsite.png" alt="Department of Education customer microsite"/>
+                    </div>
+                    <p class="ref-photo-caption">Customer microsite created for the Department of Education — pre-read for executive courtesy meeting</p>
+                    <li>Developed an Outside-in Point of View (POV) for Meralco's CIS opportunity using the customer's RFP and SAP's Value Lifecycle Manager. It was my first opportunity to structure a value-driven narrative around a real opportunity, requiring both industry research and customer-specific validation.</li>
+                    <li>Attended a Get to Know session with Varun Thamba, Global VP &amp; Head of AI GTM. It was inspiring to hear SAP's vision for the Autonomous Enterprise and how AI becomes truly valuable when embedded directly into business processes rather than existing as a standalone tool. His perspective reinforced the importance of data readiness, governance, and user adoption as the foundation of any AI transformation.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">💡</span><span class="ref-section-title">Key Learnings</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-learnings">
+                    <li>AI transformation is not simply about deploying new technology. Success depends on quality data, strong governance, and making AI easy for people to adopt within their daily work.</li>
+                    <li>Discovery conversations should focus on understanding business outcomes rather than stopping at the customer's stated problem. The deeper the discussion goes, the stronger the value proposition becomes.</li>
+                    <li>Creating customer value requires balancing research with validation. Tools can accelerate the process, but meaningful recommendations still depend on understanding the customer's industry, priorities, and business context.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">📈</span><span class="ref-section-title">Field Experience Progress</span></div>
+                <div class="ref-section-body">
+                  <div class="ref-progress-items">
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">AI &amp; Business Transformation</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">This week's sessions helped me better understand how SAP positions AI within enterprise processes. I'm becoming more confident connecting AI capabilities to real business value rather than viewing them as standalone features.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Customer Discovery &amp; Value Positioning</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">The SMC Beer discovery session and Meralco POV exercise strengthened my understanding of how to uncover customer priorities and build value-driven conversations.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Enterprise Sales Strategy</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Following opportunities like SSS and learning SAP's commercial programs gave me a broader appreciation of how enterprise deals progress through collaboration, partner ecosystems, and long-term planning.</div>
+                    </div>
+                    <div class="completed-tasks">
+                      <div class="completed-tasks-label">Activities</div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Logged two opportunities with a combined potential value of €295K in the Field Activity Tracker.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Created a customer microsite for the Department of Education to support the upcoming executive courtesy meeting.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Participated in the SSS Partner Briefing for the RISE implementation.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Joined the SMC Beer IBP discovery session.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Completed enablement sessions on Cloud Extension, CCFlex, and Transformation Incentive.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Developed an Outside-in POV for the Meralco CIS opportunity using SAP's Value Lifecycle Manager.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended the Get to Know session with Varun Thamba, Global VP &amp; Head of AI GTM.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🎯</span><span class="ref-section-title">Focus for Next Week</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-focus">
+                    <li>Co-create public sector account plan for deeper understanding and penetration of this segment.</li>
+                    <li>Continue strengthening my ability to position SAP solutions around customer business outcomes.</li>
+                    <li>Build more confidence developing value-driven account strategies and executive messaging.</li>
+                    <li>Seek additional exposure to AI and transformation conversations with customers.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🤝</span><span class="ref-section-title">Support Needed</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-support">
+                    <li>More opportunities to contribute to customer discovery and value proposition development.</li>
+                    <li>Continued coaching on crafting customer-specific POVs and executive messaging.</li>
+                    <li>Additional exposure to how experienced AEs position AI and business transformation during customer engagements.</li>
+                    <li>Guidance in finding opportunities as candidates for the capstone project.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `; },
+      },
       { id: 8,  label: 'Week 8',  title: "The Volcano's Edge", subtitle: 'Week 8 · Volcano',  icon: '🌋', env: 'w8',  terrain: 'Volcano',  terrainIcon: '🔥', locked: true,  envBg: 'linear-gradient(160deg,#05050e 0%,#0e0e1e 100%)', buildScene() { return ''; } },
       { id: 9,  label: 'Week 9',  title: 'The Sky Reaches',    subtitle: 'Week 9 · Sky',      icon: '☁️', env: 'w9',  terrain: 'Sky',      terrainIcon: '⚡', locked: true,  envBg: 'linear-gradient(160deg,#050810 0%,#0a1220 100%)', buildScene() { return ''; } },
       { id: 10, label: 'Week 10', title: 'The Iron Citadel',   subtitle: 'Week 10 · Citadel', icon: '🏰', env: 'w10', terrain: 'Citadel',  terrainIcon: '⚔️', locked: true,  envBg: 'linear-gradient(160deg,#050508 0%,#0a0a12 100%)', buildScene() { return ''; } },
@@ -5611,7 +6150,7 @@
       // Draw connection paths in the SVG path-layer group
       const pathLayer = document.getElementById('path-layer');
       // Current week index (0-based). Paths up to this are "traveled".
-      const CURRENT_IDX = 5; // Week 6 = index 5
+      const CURRENT_IDX = 6; // Week 7 = index 6
 
       weeks.forEach((week, i) => {
         if (i === 0) return;
@@ -5699,7 +6238,7 @@
           btn.style.setProperty('--glow', t.nodeGlow + '66');
           btn.style.boxShadow   = `0 0 16px 4px ${t.nodeGlow}44, inset 0 1px 0 rgba(255,255,255,0.1)`;
           // Highlight current week (W3)
-          if (week.id === 6) {
+          if (week.id === 7) {
             btn.style.borderColor = '#ffcc44';
             btn.style.boxShadow   = `0 0 22px 6px rgba(255,200,40,0.5), inset 0 1px 0 rgba(255,255,255,0.1)`;
           }
@@ -5712,7 +6251,7 @@
         if (!week.locked) {
           const t = getTheme(week.env);
           badge.style.background  = t.nodeBg;
-          badge.style.borderColor = week.id === 6 ? '#ffcc44' : t.nodeGlow;
+          badge.style.borderColor = week.id === 7 ? '#ffcc44' : t.nodeGlow;
         } else {
           badge.style.background  = '#080d18';
           badge.style.borderColor = '#16213a';
@@ -5743,7 +6282,7 @@
         const caption = document.createElement('div');
         caption.className = 'node-caption';
         caption.textContent = week.locked ? week.terrain : week.title;
-        if (!week.locked) caption.style.color = week.id === 6 ? '#ffdd88' : getTheme(week.env).text;
+        if (!week.locked) caption.style.color = week.id === 7 ? '#ffdd88' : getTheme(week.env).text;
 
         wrap.appendChild(btn);
         wrap.appendChild(caption);
@@ -5758,7 +6297,7 @@
       });
 
       // ── Player avatar on Week 3 (current position) ──
-      const avatarPos  = NODE_POSITIONS[5]; // Week 6 — current position
+      const avatarPos  = NODE_POSITIONS[6]; // Week 7 — current position
       const avatarPct  = svgToPercent(avatarPos.x, avatarPos.y);
 
       const avatarWrap = document.createElement('div');
@@ -5852,6 +6391,10 @@
       const detail = document.getElementById('detail-screen');
       detail.classList.add('active', 'entering');
       setTimeout(() => detail.classList.remove('entering'), 450);
+      // Apply realm-specific class to detail screen for nav bar theming
+      detail.className = detail.className.replace(/\brealm-w\d+\b/g, '');
+      const week = weeks.find(w => w.id === id);
+      if (week) detail.classList.add('w' + week.env + '-active');
     }
 
     function renderDetail(id) {
