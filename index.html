@@ -168,7 +168,7 @@
 
     .xp-bar-fill {
       height: 100%;
-      width: 70%;
+      width: 80%;
       background: linear-gradient(90deg, #3a6ecc, #7fb3ff);
       border-radius: 4px;
       box-shadow: 0 0 6px #4f7fe8;
@@ -1687,6 +1687,178 @@
 
 
 
+
+    /* ══════════════════════════════════════
+       WEEK 8 — FORGE OF MOMENTUM
+    ══════════════════════════════════════ */
+
+    .scene-w8 .scene-sky {
+      background:
+        radial-gradient(ellipse 80% 45% at 50% 100%, rgba(255,80,0,0.42) 0%, transparent 62%),
+        radial-gradient(ellipse 60% 35% at 20%  95%, rgba(200,40,0,0.24) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 35% at 82%  90%, rgba(180,60,0,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 100% 35% at 50% 0%,  rgba(80,10,0,0.20)  0%, transparent 50%),
+        linear-gradient(180deg, #2a0800 0%, #200600 18%, #1a0500 38%, #200700 58%, #180600 80%, #140402 100%);
+    }
+
+    .scene-w8 .forge-glow {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 120% 35% at 50% 100%, rgba(255,90,0,0.22) 0%, transparent 58%),
+        radial-gradient(ellipse  90% 22% at 20% 100%, rgba(200,50,0,0.14) 0%, transparent 50%),
+        radial-gradient(ellipse  90% 22% at 82% 100%, rgba(200,50,0,0.14) 0%, transparent 50%);
+    }
+
+    /* Title */
+    .w8-forge-title {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 22; text-align: center; pointer-events: none; white-space: nowrap;
+    }
+    .w8-forge-main {
+      font-family: var(--ui-font);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-weight: 800; line-height: 1; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #ffffff 0%, #ffcc88 40%, #ff8822 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(255,120,0,0.9)) drop-shadow(0 0 56px rgba(200,60,0,0.5));
+    }
+    .w8-forge-rule {
+      display: block; width: 100%; height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(255,120,0,0.55), transparent);
+      margin: 6px auto 0;
+    }
+    .w8-forge-sub {
+      font-family: var(--px-font); font-size: 0.3rem;
+      color: rgba(255,160,60,0.55); letter-spacing: 0.24em; margin-top: 5px;
+    }
+
+    /* Left: Forged Achievements */
+    .w8-achieve-col {
+      position: absolute; left: 3%; top: 0; bottom: 0; width: 22%; z-index: 15;
+      pointer-events: none; display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 68px; gap: 7px;
+    }
+    .w8-achieve-entry { border-left: 2px solid rgba(255,140,0,0.45); padding: 5px 0 5px 10px; }
+    .w8-achieve-num   { font-family:var(--px-font); font-size:0.24rem; color:rgba(255,160,60,0.75); letter-spacing:0.1em; margin-bottom:2px; }
+    .w8-achieve-text  { font-size:0.72rem; font-weight:700; color:#ffffff; line-height:1.32; text-shadow:0 1px 5px rgba(0,0,0,0.75); }
+
+    /* Right top: Molten Insights */
+    .w8-insight-col {
+      position: absolute; right: 3%; top: 0; width: 22%; z-index: 15;
+      pointer-events: none; display: flex; flex-direction: column;
+      padding-top: 68px; gap: 7px;
+    }
+    .w8-insight-header { font-family:var(--px-font); font-size:0.27rem; color:rgba(255,160,60,0.80); letter-spacing:0.14em; margin-bottom:5px; }
+    .w8-insight-item {
+      font-size:0.72rem; font-weight:700; color:#ffffff;
+      line-height:1.32; margin-bottom:5px;
+      display:flex; gap:6px; align-items:flex-start;
+      text-shadow:0 1px 5px rgba(0,0,0,0.75);
+    }
+    .w8-insight-item::before { content:'🔥'; font-size:0.55rem; flex-shrink:0; margin-top:1px; }
+
+    /* Right lower: Momentum Index */
+    .w8-momentum-col {
+      position: absolute; right: 3%; bottom: 68px; width: 22%; z-index: 15; pointer-events: none;
+    }
+    .w8-momentum-header { font-family:var(--px-font); font-size:0.27rem; color:rgba(255,160,60,0.80); letter-spacing:0.12em; margin-bottom:7px; }
+    .w8-momentum-item {
+      font-size:0.72rem; font-weight:700; color:#ffffff;
+      line-height:1.32; margin-bottom:5px; display:flex; gap:5px; align-items:flex-start;
+      text-shadow:0 1px 5px rgba(0,0,0,0.75);
+    }
+    .w8-momentum-item::before { content:'⚒️'; flex-shrink:0; font-size:0.62rem; }
+
+    /* Bottom path strip */
+    .w8-path-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 62px; z-index: 16;
+      background: linear-gradient(to top, #100200 55%, transparent);
+      display: flex; align-items: center; padding: 0 22px; overflow: hidden;
+    }
+    .w8-path-strip::after {
+      content:''; position:absolute; left:0; right:0; top:36px; height:2px;
+      background: repeating-linear-gradient(90deg, transparent 0, transparent 22px, rgba(255,140,0,0.22) 22px, rgba(255,140,0,0.22) 40px);
+    }
+    .w8-path-lbl  { font-family:var(--px-font); font-size:0.24rem; color:rgba(255,140,0,0.55); letter-spacing:0.16em; white-space:nowrap; margin-right:14px; flex-shrink:0; z-index:1; }
+    .w8-path-node { display:flex; align-items:center; gap:5px; flex-shrink:0; z-index:1; }
+    .w8-path-dot  { width:6px; height:6px; border-radius:50%; background:rgba(180,60,0,0.6); }
+    .w8-path-dot.lit { background:#ff8822; box-shadow:0 0 8px #ff8822, 0 0 18px rgba(255,100,0,0.45); }
+    .w8-path-text { font-size:0.68rem; font-weight:700; color:rgba(255,255,255,0.45); white-space:nowrap; }
+    .w8-path-text.lit { color:#ff8822; }
+    .w8-path-arr  { color:rgba(255,255,255,0.20); font-size:0.65rem; margin:0 4px; flex-shrink:0; }
+
+    /* Page background */
+    .page-wrapper.env-w8 {
+      /* One continuous volcanic world — molten surface to deep obsidian */
+      background: linear-gradient(180deg,
+        #2a0800 0%,
+        #220600 7%,
+        #1e0500 16%,
+        #1a0400 26%,
+        #180400 38%,
+        #140300 52%,
+        #100302 66%,
+        #0c0201 80%,
+        #080201 90%,
+        #060101 100%);
+      width: 100%;
+    }
+    .page-wrapper.env-w8 .page-content { background: transparent; }
+    .page-wrapper.env-w8 .reflection-wrap { background: transparent !important; }
+
+    /* Reflection cards — forge metal glass */
+    .refl-w8-wrap { background: transparent !important; }
+    .refl-w8-divider .ref-divider-line  { background: rgba(255,120,0,0.22); }
+    .refl-w8-divider .ref-divider-label { color: rgba(255,180,80,0.65); }
+
+    .refl-w8 .ref-section {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,120,0,0.18);
+      border-radius: 14px; overflow: hidden; margin-bottom: 14px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.30);
+    }
+    .refl-w8 .ref-section:last-child { margin-bottom: 0; }
+    .refl-w8 .ref-section-head {
+      background: rgba(180,60,0,0.14);
+      border-bottom: 1px solid rgba(255,120,0,0.14);
+      padding: 11px 18px; display: flex; align-items: center; gap: 8px;
+    }
+    .refl-w8 .ref-section-icon  { font-size: 0.9rem; }
+    .refl-w8 .ref-section-title { font-family:var(--px-font); font-size:0.38rem; color:#ffaa44; letter-spacing:0.1em; }
+    .refl-w8 .ref-section-body  { padding: 16px 20px; }
+
+    .refl-w8 .ref-bullets li      { color:#fff0e0; font-size:0.9rem; }
+    .refl-w8 .ref-bullets li::before { color:#ff8822; }
+    .refl-w8 .ref-learnings li    { color:#ffe8cc; }
+    .refl-w8 .ref-learnings li::before { color:#ffaa44; }
+    .refl-w8 .ref-focus li        { color:#fff0e0; }
+    .refl-w8 .ref-focus li::before { content:'→'; color:#ff9944; }
+    .refl-w8 .ref-support li      { color:#ffe8d8; }
+    .refl-w8 .ref-support li::before { content:'◈'; color:#cc6622; }
+    .refl-w8 .progress-item-name  { color:#fff0e0; font-size:0.84rem; font-weight:800; }
+    .refl-w8 .progress-item-note  { color:rgba(255,220,180,0.78); font-size:0.85rem; }
+    .refl-w8 .star.filled { color:#ff8822; }
+    .refl-w8 .star.empty  { color:rgba(255,255,255,0.18); }
+    .refl-w8 .completed-tasks      { border-top:1px solid rgba(255,120,0,0.15); }
+    .refl-w8 .completed-tasks-label { color:rgba(255,180,80,0.72); }
+    .refl-w8 .task-check { color:#ff8822; }
+    .refl-w8 .task-row   { color:rgba(255,230,200,0.84); }
+
+    /* Lava flow animation */
+    @keyframes lava-flow {
+      0%   { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -80; }
+    }
+    @keyframes forge-pulse {
+      0%,100% { opacity:0.6; } 50% { opacity:1.0; }
+    }
+    @keyframes ember-rise {
+      0%   { transform:translateY(0) scale(1); opacity:0.7; }
+      100% { transform:translateY(-90px) scale(0.5); opacity:0; }
+    }
+
     /* ══════════════════════════════════════
        WEEK 7 — OCEAN OF INFLUENCE  v5
        Full underwater world
@@ -2674,11 +2846,11 @@
           <div class="hud-name">Allen Cloyd Malayo</div>
           <div class="hud-role">CS Academy Associate</div>
           <div class="hud-level-row">
-            <span class="level-badge">LV 7</span>
+            <span class="level-badge">LV 8</span>
             <div class="xp-bar-wrap">
               <div class="xp-bar-fill"></div>
             </div>
-            <span class="xp-fraction">7/10</span>
+            <span class="xp-fraction">8/10</span>
           </div>
         </div>
       </div>
@@ -2988,7 +3160,7 @@
         <!-- W5 unlocked — overlay removed -->
         <!-- W6 unlocked -->
         <!-- W7 unlocked -->
-        <path d="M 584,436 C 580,410 592,388 614,378 C 636,368 664,368 686,378 C 706,388 720,408 722,430 C 724,452 712,472 692,480 C 672,488 646,486 626,476 C 602,464 586,450 584,436 Z" fill="url(#lock-fade)"/>
+        <!-- W8 unlocked -->
         <ellipse cx="384" cy="438" rx="94" ry="46" fill="url(#lock-fade)"/>
         <path d="M 28,468 C 24,440 38,414 62,402 C 86,390 114,388 140,396 C 166,404 188,422 196,446 C 204,470 196,496 176,510 C 156,524 126,528 98,520 C 68,510 44,492 32,472 C 28,470 28,470 28,468 Z" fill="url(#lock-fade)"/>
 
@@ -2999,7 +3171,7 @@
         <path d="M 450,200 Q 490,180 525,172" stroke="#1a3a6a" stroke-width="1.5" fill="none" opacity="0.18" stroke-dasharray="5 6"/>
         <path d="M 594,170 Q 640,186 680,200" stroke="#1a3a6a" stroke-width="1.5" fill="none" opacity="0.18" stroke-dasharray="5 6"/>
         <path d="M 754,216 Q 800,256 832,302" stroke="#1a3060" stroke-width="1.5" fill="none" opacity="0.16" stroke-dasharray="4 7"/>
-        <path d="M 814,340 Q 746,388 686,420" stroke="#1a3060" stroke-width="1.5" fill="none" opacity="0.15" stroke-dasharray="4 7"/>
+        <!-- W7→W8 static guide removed — curved override handles this segment -->
         <path d="M 606,432 Q 510,434 450,436" stroke="#1a3060" stroke-width="1.4" fill="none" opacity="0.14" stroke-dasharray="4 7"/>
         <path d="M 320,450 Q 230,458 156,462" stroke="#1a3060" stroke-width="1.4" fill="none" opacity="0.13" stroke-dasharray="4 7"/>
 
@@ -3160,11 +3332,11 @@
     <div class="mod-section">
       <div class="mod-section-label">Character Core</div>
       <div class="char-level-row">
-        <span class="char-level-badge">LEVEL 7</span>
-        <span class="char-week-count">WEEK 7 OF 10</span>
+        <span class="char-level-badge">LEVEL 8</span>
+        <span class="char-week-count">WEEK 8 OF 10</span>
       </div>
-      <div class="char-xp-track"><div class="char-xp-fill" style="width:70%"></div></div>
-      <div class="char-xp-note">Journey 70% complete · 3 realms remaining</div>
+      <div class="char-xp-track"><div class="char-xp-fill" style="width:80%"></div></div>
+      <div class="char-xp-note">Journey 80% complete · 2 realms remaining</div>
     </div>
 
     <!-- INVENTORY -->
@@ -3870,15 +4042,15 @@
             filter="url(#nGlow)"/>
           <!-- Centre text -->
           <text x="100" y="84" text-anchor="middle"
-            font-family="Nunito,sans-serif" font-size="22" font-weight="800" fill="#e0f0ff">€1.39M</text>
+            font-family="Nunito,sans-serif" font-size="20" font-weight="800" fill="#e0f0ff">€1.615M</text>
           <text x="100" y="105" text-anchor="middle"
             font-family="Nunito,sans-serif" font-size="10" font-weight="600" fill="#3a6888">of €400K target</text>
           <text x="100" y="120" text-anchor="middle"
             font-family="'Press Start 2P',monospace" font-size="8" fill="#44ccff">TARGET EXCEEDED</text>
           <text x="100" y="133" text-anchor="middle"
-            font-family="Nunito,sans-serif" font-size="9" font-weight="700" fill="#44ee88">+€990K over target</text>
+            font-family="Nunito,sans-serif" font-size="9" font-weight="700" fill="#44ee88">+€1.215M over target</text>
         </svg>
-        <div class="nexus-empty-label" style="color:#44ee88;opacity:0.85;font-size:0.36rem">✦ €1.39M IDENTIFIED · €990K OVER TARGET ✦</div>
+        <div class="nexus-empty-label" style="color:#44ee88;opacity:0.85;font-size:0.36rem">✦ €1.615M IDENTIFIED · €1.215M OVER TARGET ✦</div>
       </div>
     </div>
 
@@ -4051,6 +4223,27 @@
         <div class="nexus-why-item">Eliminates overconsumption risk</div>
         <div class="nexus-why-item">Maintains licensing compliance</div>
         <div class="nexus-why-item">Supports continued SAP adoption</div>
+      </div>
+
+      <!-- ── Opportunity 9 — MWC ── -->
+      <div class="nexus-opp-card" style="margin-top:10px;border-left-color:#FBBF24">
+        <div class="nexus-opp-header">
+          <div class="nexus-opp-name">Manila Water Company</div>
+          <div class="nexus-opp-value" style="color:#FBBF24">€225K</div>
+        </div>
+        <div class="nexus-opp-summary">
+          Manila Water's SAP usage is steadily increasing as digital initiatives evolve. Through RISE consumption monitoring, additional capacity requirements were identified before becoming an operational risk. The conversation expanded beyond FUE growth into optimization and proactive support through SAP Max Success Plan — positioning SAP as a long-term strategic partner.
+        </div>
+        <div class="nexus-detail-grid">
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">TYPE</div><div class="nexus-detail-val">RISE FUE Expansion + SAP Max Success Plan</div></div>
+          <div class="nexus-detail-item"><div class="nexus-detail-lbl">VALUE</div><div class="nexus-detail-val">€225,000</div></div>
+          <div class="nexus-detail-item" style="grid-column:1/-1"><div class="nexus-detail-lbl">SOURCE</div><div class="nexus-detail-val">Consumption analysis &amp; optimization discussion</div></div>
+        </div>
+        <div class="nexus-why-label">WHY IT MATTERS</div>
+        <div class="nexus-why-item">Prevents overconsumption risk</div>
+        <div class="nexus-why-item">Improves operational resilience</div>
+        <div class="nexus-why-item">Provides proactive SAP expert guidance</div>
+        <div class="nexus-why-item">Maximizes value from existing SAP investments</div>
       </div>
 
     </div>
@@ -6079,7 +6272,422 @@
           </div>
         `; },
       },
-      { id: 8,  label: 'Week 8',  title: "The Volcano's Edge", subtitle: 'Week 8 · Volcano',  icon: '🌋', env: 'w8',  terrain: 'Volcano',  terrainIcon: '🔥', locked: true,  envBg: 'linear-gradient(160deg,#05050e 0%,#0e0e1e 100%)', buildScene() { return ''; } },
+      {
+        id: 8, label: 'Week 8', title: 'Forge of Momentum',
+        subtitle: 'FE1 Week 8 Reflection', icon: '🌋', env: 'w8',
+        terrain: 'Volcano', terrainIcon: '🔥', locked: false,
+        envBg: 'linear-gradient(180deg,#1a0600 0%,#200700 30%,#180500 60%,#0e0302 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w8" style="min-height:calc(100vh - var(--nav-h));overflow:hidden;">
+            <div class="scene-sky"></div>
+            <div class="forge-glow"></div>
+            <div class="scan-line" style="background:linear-gradient(90deg,transparent,rgba(255,80,0,0.06) 50%,transparent);animation:scan 20s linear infinite;"></div>
+
+            <!-- ══ VOLCANIC REGION SVG ══ -->
+            <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:2"
+              viewBox="0 0 1000 580" preserveAspectRatio="xMidYMax meet"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="lavRiv" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#ff6600" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#880800" stop-opacity="0.95"/>
+                </linearGradient>
+                <linearGradient id="obsG8" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#220800"/><stop offset="100%" stop-color="#080100"/>
+                </linearGradient>
+                <linearGradient id="steelG8" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#2e1004"/><stop offset="100%" stop-color="#100400"/>
+                </linearGradient>
+                <linearGradient id="skyF8" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#1a0400" stop-opacity="0"/>
+                  <stop offset="70%"  stop-color="#0e0200" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#080100" stop-opacity="0.50"/>
+                </linearGradient>
+                <radialGradient id="craterHot" cx="50%"cy="100%"r="50%">
+                  <stop offset="0%"   stop-color="#ff9900" stop-opacity="0.9"/>
+                  <stop offset="55%"  stop-color="#cc4400" stop-opacity="0.45"/>
+                  <stop offset="100%" stop-color="#440800" stop-opacity="0"/>
+                </radialGradient>
+                <filter id="fG8" x="-25%"y="-25%"width="150%"height="150%"><feGaussianBlur stdDeviation="6"/></filter>
+                <filter id="fGs8" x="-12%"y="-12%"width="124%"height="124%"><feGaussianBlur stdDeviation="2.5"/></filter>
+              </defs>
+
+              <!-- ── BACKGROUND HAZE / SMOKE ── -->
+              <ellipse cx="500" cy="160" rx="450" ry="140" fill="#220400" opacity="0.45"/>
+              <ellipse cx="200" cy="260" rx="200" ry="100" fill="#1a0300" opacity="0.35"/>
+              <ellipse cx="800" cy="220" rx="200" ry="110" fill="#1a0300" opacity="0.35"/>
+
+              <!-- ── FAR-LEFT DORMANT VOLCANO ── -->
+              <g opacity="0.50">
+                <polygon points="0,580 75,300 150,580" fill="#180400"/>
+                <polygon points="20,580 75,304 130,580" fill="#220600" opacity="0.6"/>
+                <!-- Small lava trickle -->
+                <path d="M 75,305 Q 68,360 62,430 Q 58,490 55,540" stroke="#cc3300" stroke-width="3" fill="none" opacity="0.55"/>
+                <!-- Ash cloud (dormant, grey) -->
+                <ellipse cx="75" cy="295" rx="18" ry="10" fill="#1a0800" opacity="0.60"/>
+                <ellipse cx="68" cy="280" rx="12" ry="8"  fill="#150600" opacity="0.45"/>
+              </g>
+
+              <!-- ── NEAR-LEFT ACTIVE VOLCANO ── -->
+              <g opacity="0.72">
+                <polygon points="180,580 315,200 450,580" fill="#1e0600"/>
+                <polygon points="200,580 315,204 430,580" fill="#280800" opacity="0.55"/>
+                <!-- Lava channels -->
+                <path d="M 315,208 Q 295,310 280,430 Q 272,500 268,555" stroke="#ff5500" stroke-width="5" fill="none" opacity="0.65"/>
+                <path d="M 315,208 Q 335,320 345,440 Q 350,510 352,558" stroke="#cc2200" stroke-width="3.5" fill="none" opacity="0.50"/>
+                <!-- Crater -->
+                <ellipse cx="315" cy="203" rx="26" ry="16" fill="#ff7700" opacity="0.80" filter="url(#fGs8)"/>
+                <ellipse cx="315" cy="203" rx="14" ry="8"  fill="#ffaa00" opacity="0.90"/>
+                <!-- Eruption plume -->
+                <ellipse cx="315" cy="178" rx="20" ry="14" fill="#cc4400" opacity="0.50" filter="url(#fG8)"/>
+                <ellipse cx="308" cy="156" rx="15" ry="10" fill="#882200" opacity="0.38"/>
+                <!-- Lava burst sparks -->
+                <g fill="#ff8800" opacity="0.6">
+                  <polygon points="315,188 310,170 320,178"/><polygon points="315,188 322,172 318,182"/>
+                </g>
+              </g>
+
+              <!-- ── MAIN CENTRAL VOLCANO (dominant) ── -->
+              <!-- Base glow bloom -->
+              <ellipse cx="500" cy="580" rx="280" ry="60" fill="url(#craterHot)" opacity="0.55" filter="url(#fG8)"/>
+              <!-- Body faces -->
+              <polygon points="240,580 500,52 760,580" fill="#1c0500" opacity="0.98"/>
+              <polygon points="240,580 500,52 500,580" fill="#280700" opacity="0.65"/>
+              <polygon points="500,52 760,580 500,580" fill="#120300" opacity="0.88"/>
+              <!-- Rock strata bands -->
+              <polygon points="260,540 500,130 740,540 720,555 500,148 280,555" fill="#200600" opacity="0.55"/>
+              <polygon points="300,490 500,200 700,490 682,508 500,218 318,508" fill="#1a0500" opacity="0.45"/>
+              <!-- Lava channels -->
+              <g stroke="url(#lavRiv)" stroke-linecap="round" fill="none" opacity="0.75">
+                <path d="M 500,65 Q 464,175 445,300 Q 428,415 420,530" stroke-width="6">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-40" dur="2.2s" repeatCount="indefinite"/>
+                </path>
+                <path d="M 500,65 Q 536,188 550,315 Q 562,425 568,532" stroke-width="5" opacity="0.65">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-40" dur="2.6s" repeatCount="indefinite"/>
+                </path>
+                <path d="M 500,65 Q 486,215 478,345 Q 470,445 462,535" stroke-width="4" opacity="0.55">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-40" dur="3s" repeatCount="indefinite"/>
+                </path>
+              </g>
+              <!-- Glow on channels -->
+              <g stroke="#ff9900" stroke-linecap="round" fill="none" opacity="0.30" filter="url(#fGs8)">
+                <path d="M 500,65 Q 464,175 445,300 Q 428,415 420,530" stroke-width="3"/>
+                <path d="M 500,65 Q 536,188 550,315 Q 562,425 568,532" stroke-width="2.5"/>
+              </g>
+              <!-- Main crater -->
+              <ellipse cx="500" cy="60"  rx="40" ry="25" fill="#ff7700" opacity="0.88" filter="url(#fG8)"/>
+              <ellipse cx="500" cy="60"  rx="24" ry="15" fill="#ffbb00" opacity="0.95"/>
+              <ellipse cx="500" cy="57"  rx="12" ry="7"  fill="#ffffff"  opacity="0.65"/>
+              <!-- Eruption -->
+              <ellipse cx="500" cy="34"  rx="32" ry="20" fill="#dd4400" opacity="0.55" filter="url(#fG8)"/>
+              <ellipse cx="494" cy="14"  rx="22" ry="15" fill="#991100" opacity="0.42"/>
+              <ellipse cx="510" cy="2"   rx="16" ry="12" fill="#660800" opacity="0.35"/>
+              <!-- Lava bursts at peak -->
+              <g fill="#ff8800" opacity="0.70">
+                <polygon points="500,55 492,32 508,42"/><polygon points="500,55 515,34 506,46"/>
+                <polygon points="500,55 484,38 498,48"/>
+              </g>
+
+              <!-- ── FAR-RIGHT ACTIVE VOLCANO ── -->
+              <g opacity="0.68">
+                <polygon points="580,580 720,220 860,580" fill="#1e0500"/>
+                <polygon points="600,580 720,224 840,580" fill="#260700" opacity="0.55"/>
+                <!-- Lava -->
+                <path d="M 720,228 Q 705,320 695,425 Q 688,500 684,558" stroke="#ee4400" stroke-width="4.5" fill="none" opacity="0.60"/>
+                <path d="M 720,228 Q 738,325 745,425 Q 748,500 750,558" stroke="#cc2200" stroke-width="3" fill="none" opacity="0.50"/>
+                <!-- Crater -->
+                <ellipse cx="720" cy="222" rx="28" ry="18" fill="#ff7700" opacity="0.78" filter="url(#fGs8)"/>
+                <ellipse cx="720" cy="222" rx="16" ry="10" fill="#ffaa00" opacity="0.88"/>
+                <!-- Plume -->
+                <ellipse cx="720" cy="195" rx="22" ry="16" fill="#cc4400" opacity="0.48" filter="url(#fG8)"/>
+                <ellipse cx="714" cy="174" rx="16" ry="12" fill="#882200" opacity="0.36"/>
+              </g>
+
+              <!-- ── FAR-RIGHT BACKGROUND VOLCANO ── -->
+              <g opacity="0.38">
+                <polygon points="830,580 930,310 1000,580" fill="#160300"/>
+                <path d="M 930,318 Q 922,380 916,460 Q 912,520 908,560" stroke="#aa2200" stroke-width="3" fill="none" opacity="0.45"/>
+                <ellipse cx="930" cy="305" rx="16" ry="10" fill="#ff5500" opacity="0.55" filter="url(#fGs8)"/>
+              </g>
+
+              <!-- ── OBSIDIAN SPIRE CLUSTER (left) ── -->
+              <g filter="url(#fGs8)">
+                <!-- Tall central obsidian spire -->
+                <polygon points="68,340 82,580 54,580" fill="#1a0604" opacity="0.95"/>
+                <polygon points="68,340 82,580 68,580" fill="#260a08" opacity="0.75"/>
+                <!-- Left shorter spire -->
+                <polygon points="42,390 54,580 30,580" fill="#160504" opacity="0.90"/>
+                <polygon points="42,390 54,580 42,580" fill="#200808" opacity="0.65"/>
+                <!-- Right spire -->
+                <polygon points="104,368 118,580 90,580" fill="#1c0604" opacity="0.88"/>
+                <polygon points="104,368 118,580 104,580" fill="#240a06" opacity="0.68"/>
+                <!-- Far right short spire -->
+                <polygon points="138,400 148,580 128,580" fill="#140404" opacity="0.80"/>
+                <!-- Lava glow pools at bases -->
+                <ellipse cx="68"  cy="575" rx="28" ry="8"  fill="#ff5500" opacity="0.40" filter="url(#fGs8)"/>
+                <ellipse cx="42"  cy="575" rx="18" ry="6"  fill="#cc3300" opacity="0.32"/>
+                <ellipse cx="104" cy="575" rx="22" ry="7"  fill="#ff4400" opacity="0.35"/>
+                <!-- Lava seeping up spire cracks -->
+                <path d="M 68,380 Q 65,430 63,480 Q 61,520 60,558" stroke="#ff6600" stroke-width="1.5" fill="none" opacity="0.50"/>
+                <path d="M 104,400 Q 102,448 101,498 Q 100,535 100,558" stroke="#cc4400" stroke-width="1.2" fill="none" opacity="0.42"/>
+                <!-- Vent glow at spire tips -->
+                <ellipse cx="68" cy="344" rx="7"  ry="5"  fill="#ff7700" opacity="0.55" filter="url(#fGs8)"/>
+                <ellipse cx="42" cy="394" rx="5"  ry="4"  fill="#ff5500" opacity="0.45"/>
+                <ellipse cx="104" cy="372" rx="6" ry="4.5" fill="#ff6600" opacity="0.50"/>
+              </g>
+
+              <!-- ── OBSIDIAN SPIRE CLUSTER (right) ── -->
+              <g filter="url(#fGs8)">
+                <!-- Tall central right spire -->
+                <polygon points="932,332 946,580 918,580" fill="#1a0604" opacity="0.95"/>
+                <polygon points="932,332 946,580 932,580" fill="#260a08" opacity="0.72"/>
+                <!-- Flanking spires -->
+                <polygon points="900,358 912,580 888,580" fill="#160504" opacity="0.90"/>
+                <polygon points="900,358 912,580 900,580" fill="#200808" opacity="0.62"/>
+                <polygon points="962,372 974,580 950,580" fill="#1c0604" opacity="0.88"/>
+                <polygon points="962,372 974,580 962,580" fill="#240a06" opacity="0.66"/>
+                <!-- Far right short spire -->
+                <polygon points="992,396 1000,580 984,580" fill="#140404" opacity="0.78"/>
+                <!-- Lava pools at bases -->
+                <ellipse cx="932" cy="575" rx="30" ry="8"  fill="#ff5500" opacity="0.40" filter="url(#fGs8)"/>
+                <ellipse cx="900" cy="575" rx="20" ry="6"  fill="#cc3300" opacity="0.30"/>
+                <ellipse cx="962" cy="575" rx="22" ry="7"  fill="#ff4400" opacity="0.35"/>
+                <!-- Lava cracks -->
+                <path d="M 932,372 Q 930,420 928,475 Q 926,520 926,558" stroke="#ff6600" stroke-width="1.5" fill="none" opacity="0.48"/>
+                <path d="M 900,395 Q 898,445 897,495 Q 896,532 896,558" stroke="#cc4400" stroke-width="1.2" fill="none" opacity="0.40"/>
+                <!-- Vent tips -->
+                <ellipse cx="932" cy="336" rx="7"  ry="5"  fill="#ff7700" opacity="0.55" filter="url(#fGs8)"/>
+                <ellipse cx="900" cy="362" rx="5"  ry="4"  fill="#ff5500" opacity="0.45"/>
+                <ellipse cx="962" cy="376" rx="6"  ry="4.5" fill="#ff6600" opacity="0.50"/>
+              </g>
+
+              <!-- ── LAVA RIVERS (foreground) ── -->
+              <!-- Main river -->
+              <path d="M 0,548 Q 150,530 300,545 Q 450,560 500,540 Q 550,520 700,538 Q 850,556 1000,538"
+                fill="none" stroke="#ff6600" stroke-width="20" stroke-linecap="round" opacity="0.52">
+                <animate attributeName="stroke-dashoffset" from="0" to="-60" dur="2.4s" repeatCount="indefinite"/>
+              </path>
+              <!-- Bright surface of river -->
+              <path d="M 0,548 Q 150,530 300,545 Q 450,560 500,540 Q 550,520 700,538 Q 850,556 1000,538"
+                fill="none" stroke="#ffaa22" stroke-width="7" stroke-linecap="round" opacity="0.45"/>
+              <!-- Secondary side river -->
+              <path d="M 0,565 Q 100,558 200,564 Q 320,572 420,560 Q 500,550 580,562 Q 700,576 800,562 Q 900,550 1000,560"
+                fill="none" stroke="#cc3300" stroke-width="10" stroke-linecap="round" opacity="0.38"/>
+              <!-- Lava floor glow -->
+              <rect x="0" y="560" width="1000" height="20" fill="#cc3300" opacity="0.28"/>
+              <ellipse cx="500" cy="572" rx="480" ry="22" fill="url(#craterHot)" opacity="0.38" filter="url(#fG8)"/>
+
+              <!-- Lava channels connecting structures to river -->
+              <path d="M 85,575 Q 85,568 85,558" stroke="#ff6600" stroke-width="8" fill="none" opacity="0.55"/>
+              <path d="M 920,572 Q 920,566 920,556" stroke="#ff5500" stroke-width="8" fill="none" opacity="0.50"/>
+
+              <!-- ── LAVA ROCK ARCH FORMATIONS ── -->
+              <!-- Left arch: hardened lava flow over old channel -->
+              <path d="M 130,490 Q 200,455 270,470 Q 310,478 360,490" stroke="#2a0c04" stroke-width="14" fill="none" opacity="0.88" stroke-linecap="round"/>
+              <path d="M 130,490 Q 200,455 270,470 Q 310,478 360,490" stroke="#440e04" stroke-width="6"  fill="none" opacity="0.55" stroke-linecap="round"/>
+              <!-- Lava seeping under arch -->
+              <path d="M 155,490 Q 215,470 275,478 Q 315,484 345,490" stroke="#ff5500" stroke-width="2.5" fill="none" opacity="0.35"/>
+              <!-- Right arch -->
+              <path d="M 640,485 Q 710,450 780,465 Q 820,474 870,488" stroke="#2a0c04" stroke-width="14" fill="none" opacity="0.85" stroke-linecap="round"/>
+              <path d="M 640,485 Q 710,450 780,465 Q 820,474 870,488" stroke="#440e04" stroke-width="6"  fill="none" opacity="0.50" stroke-linecap="round"/>
+              <path d="M 665,486 Q 725,466 785,474 Q 825,480 858,488" stroke="#ff4400" stroke-width="2.5" fill="none" opacity="0.32"/>
+              <!-- Scattered boulders / cooled lava rocks -->
+              <g fill="#1c0804" opacity="0.82">
+                <ellipse cx="185" cy="500" rx="14" ry="8"/><ellipse cx="230" cy="495" rx="10" ry="6"/>
+                <ellipse cx="275" cy="502" rx="12" ry="7"/><ellipse cx="320" cy="498" rx="9"  ry="5.5"/>
+                <ellipse cx="670" cy="497" rx="12" ry="7"/><ellipse cx="714" cy="494" rx="9"  ry="5.5"/>
+                <ellipse cx="758" cy="500" rx="13" ry="7.5"/><ellipse cx="800" cy="496" rx="10" ry="6"/>
+              </g>
+              <!-- Boulder lava glow -->
+              <g fill="#ff5500" opacity="0.18">
+                <ellipse cx="185" cy="503" rx="8" ry="4"/><ellipse cx="275" cy="505" rx="7" ry="3.5"/>
+                <ellipse cx="670" cy="500" rx="7" ry="3.5"/><ellipse cx="758" cy="503" rx="8" ry="4"/>
+              </g>
+
+              <!-- ── VOLCANIC VENTS across ground ── -->
+              <g fill="#ff6600" opacity="0.45" filter="url(#fGs8)">
+                <ellipse cx="180" cy="555" rx="12" ry="5"/>
+                <ellipse cx="350" cy="552" rx="10" ry="4.5"/>
+                <ellipse cx="650" cy="550" rx="10" ry="4.5"/>
+                <ellipse cx="820" cy="553" rx="12" ry="5"/>
+              </g>
+
+              <!-- ── EMBERS ── -->
+              <g fill="#ff8800">
+                <circle cx="305" cy="430" r="2.5" opacity="0.70" style="animation:ember-rise 3.2s 0s ease-in infinite"/>
+                <circle cx="370" cy="395" r="2"   opacity="0.60" style="animation:ember-rise 4.0s 0.8s ease-in infinite"/>
+                <circle cx="455" cy="360" r="2.5" opacity="0.65" style="animation:ember-rise 3.6s 0.3s ease-in infinite"/>
+                <circle cx="545" cy="368" r="2"   opacity="0.60" style="animation:ember-rise 4.3s 1.1s ease-in infinite"/>
+                <circle cx="620" cy="405" r="2.5" opacity="0.65" style="animation:ember-rise 3.9s 0.7s ease-in infinite"/>
+                <circle cx="685" cy="438" r="2"   opacity="0.55" style="animation:ember-rise 5.1s 1.9s ease-in infinite"/>
+                <circle cx="420" cy="285" r="1.5" opacity="0.50" style="animation:ember-rise 4.6s 2.2s ease-in infinite"/>
+                <circle cx="350" cy="350" r="1.5" opacity="0.45" style="animation:ember-rise 5.5s 0.5s ease-in infinite"/>
+              </g>
+
+              <!-- ── ASCENDING PATH ── -->
+              <!-- Curved route from right forge toward Skyrealm -->
+              <path d="M 860,380 Q 900,300 920,220 Q 935,170 945,125 Q 952,90 958,60"
+                stroke="#ff8822" stroke-width="2.5" fill="none" opacity="0.32" stroke-dasharray="10 8">
+                <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="3s" repeatCount="indefinite"/>
+              </path>
+              <text x="930" y="170" font-family="Nunito,sans-serif" font-size="7.5" fill="#ff9944" opacity="0.45" transform="rotate(-58,930,170)">Skyrealm Ahead</text>
+
+              <!-- Subtle warm depth haze only — no black overlay -->
+              <rect x="0" y="0" width="1000" height="200" fill="#0e0200" opacity="0.18"/>
+            </svg>
+
+            <!-- ══ FORGE TITLE ══ -->
+            <div class="w8-forge-title">
+              <span class="w8-forge-main">Forge of Momentum</span>
+              <span class="w8-forge-rule"></span>
+              <span class="w8-forge-sub">Week 8 &nbsp;·&nbsp; Jul 12–17, 2025 &nbsp;·&nbsp; FE1 Field Experience</span>
+            </div>
+
+            <!-- ══ LEFT: Forged Achievements ══ -->
+            <div class="w8-achieve-col">
+              <div style="font-family:var(--px-font);font-size:0.26rem;color:rgba(255,120,0,0.65);letter-spacing:0.16em;margin-bottom:5px;">— FORGED ARTIFACTS —</div>
+              <div class="w8-achieve-entry"><div class="w8-achieve-num">01</div><div class="w8-achieve-text">14-Account Stakeholder Map Created</div></div>
+              <div class="w8-achieve-entry"><div class="w8-achieve-num">02</div><div class="w8-achieve-text">cACV &amp; Value Realization Learned</div></div>
+              <div class="w8-achieve-entry"><div class="w8-achieve-num">03</div><div class="w8-achieve-text">Enterprise 2 QBR Attended</div></div>
+              <div class="w8-achieve-entry"><div class="w8-achieve-num">04</div><div class="w8-achieve-text">SSS GSI Briefing Joined</div></div>
+              <div class="w8-achieve-entry"><div class="w8-achieve-num">05</div><div class="w8-achieve-text">MWC Opportunity Logged (€225K)</div></div>
+            </div>
+
+            <!-- ══ RIGHT TOP: Molten Insights ══ -->
+            <div class="w8-insight-col">
+              <div class="w8-insight-header">— MOLTEN INSIGHTS —</div>
+              <div class="w8-insight-item">The right stakeholder can move an opportunity fast</div>
+              <div class="w8-insight-item">Customer value doesn't stop at go-live</div>
+              <div class="w8-insight-item">Adoption with proper utilization creates expansion opportunities</div>
+              <div class="w8-insight-item">Complex deals are won through coordination</div>
+            </div>
+
+            <!-- ══ RIGHT LOWER: Momentum Index ══ -->
+            <div class="w8-momentum-col">
+              <div class="w8-momentum-header">— MOMENTUM INDEX —</div>
+              <div class="w8-momentum-item">Commercial Readiness <span style="color:rgba(255,140,0,0.55);font-style:italic;margin-left:4px">→ Forging</span></div>
+              <div class="w8-momentum-item">Public Sector Strategy <span style="color:rgba(255,140,0,0.55);font-style:italic;margin-left:4px">→ Strengthening</span></div>
+              <div class="w8-momentum-item">Opportunity Qualification <span style="color:rgba(255,140,0,0.55);font-style:italic;margin-left:4px">→ Refining</span></div>
+            </div>
+
+            <!-- ══ PATH STRIP ══ -->
+            <div class="w8-path-strip">
+              <span class="w8-path-lbl">PATH OF ASCENSION</span>
+              <div class="w8-path-node"><div class="w8-path-dot lit"></div><span class="w8-path-text lit">Progress Opportunities</span></div>
+              <span class="w8-path-arr">›</span>
+              <div class="w8-path-node"><div class="w8-path-dot"></div><span class="w8-path-text">FE1 Presentation</span></div>
+              <span class="w8-path-arr">›</span>
+              <div class="w8-path-node"><div class="w8-path-dot"></div><span class="w8-path-text">Capstone Definition</span></div>
+              <span class="w8-path-arr">›</span>
+              <div class="w8-path-node"><div class="w8-path-dot"></div><span class="w8-path-text">Skyrealm of Vision</span></div>
+              <span class="w8-path-arr">›</span>
+              <div class="w8-path-node"><div class="w8-path-dot"></div><span class="w8-path-text">Ascendant Citadel</span></div>
+            </div>
+          </div>
+
+          <!-- Detailed Reflection -->
+          <div class="reflection-wrap refl-w8-wrap" style="background:transparent">
+            <div class="ref-divider refl-w8-divider">
+              <div class="ref-divider-line"></div>
+              <span class="ref-divider-label">Reflection · Week 8 · Jul 12–17</span>
+              <div class="ref-divider-line"></div>
+            </div>
+            <div class="refl-w8">
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">⭐</span><span class="ref-section-title">Highlights</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets">
+                    <li>Met with SMITS, San Miguel's technology arm, for an enablement session. I realized that some customers have internal technology organizations that also need to be engaged. Keeping them aligned with SAP's priorities is important since they heavily influence internal technology decisions and customer conversations.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_6651.jpeg" alt="Visit to San Miguel Corporation"/>
+                    </div>
+                    <p class="ref-photo-caption">San Miguel Corporation — Contract handover visit</p>
+                    <li>Created a stakeholder map for 14 Public Sector accounts. The exercise showed me how much more complex government organizations are compared to private companies. While SAP's current coverage is limited, I see this as an opportunity to proactively build relationships before opportunities formally arise.</li>
+                    <li>Attended the Enterprise 2 QBR, which gave me a clearer view of executive-level account management. I learned that success depends not only on pipeline updates but also on anticipating risks, engaging the right stakeholders, and presenting a credible strategy to move opportunities forward.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_6666.jpeg" alt="Enterprise 2 Quarterly Business Review"/>
+                    </div>
+                    <p class="ref-photo-caption">Enterprise 2 Quarterly Business Review — Jul 16, 2026</p>
+                    <li>Joined the SSS briefing with the GSI team for the ongoing RISE opportunity. It was insightful to see how SAP brings together global experts to support complex deals. It reinforced that winning strategic opportunities relies on knowing when to leverage the right expertise, not just individual effort.</li>
+                    <li>Attended a cACV session with the RevOps team and learned that an AE's role extends well beyond closing a deal. Understanding customer consumption and adoption is critical to driving renewals, expansion, and long-term value. It also reinforced why AI adoption has become a key part of customer success conversations and SAP's overall strategy.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">💡</span><span class="ref-section-title">Key Learnings</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-learnings">
+                    <li>Customer value does not end at go-live. Driving solution adoption, AI usage, and measurable business outcomes is just as important as winning the initial deal, as these directly influence renewals and expansion opportunities.</li>
+                    <li>Successful account management depends on engaging the right stakeholders early. Whether they are customer executives, internal technology teams, partners, or SAP experts, knowing who to involve and when is critical to moving opportunities forward.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">📈</span><span class="ref-section-title">Field Experience Progress</span></div>
+                <div class="ref-section-body">
+                  <div class="ref-progress-items">
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Customer Success &amp; Value Realization</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Learning about cACV, roadmapping, and Success Plans helped me better understand that an AE's responsibility continues long after a deal closes. I'm becoming more aware of how customer adoption directly impacts long-term account success.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Strategic Account &amp; Ecosystem Management</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Working on stakeholder mapping and participating in partner enablement sessions broadened my understanding of the wider ecosystem involved in enterprise sales, from implementation partners to executive sponsors.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Enterprise Deal Strategy</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">The Enterprise 2 QBR and GSI briefing provided valuable exposure to how SAP approaches complex opportunities through structured planning, executive alignment, and cross-functional collaboration.</div>
+                    </div>
+                    <div class="completed-tasks">
+                      <div class="completed-tasks-label">Activities</div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Logged an opportunity worth €225K in the Field Activity Tracker.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended the cACV session with the RevOps team.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Participated in the SMITS enablement session for San Miguel.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Visited San Miguel to hand over the final signed contract.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Met with PICI to finalize BOM line items for user sizing.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Created a stakeholder mapping for 14 Public Sector accounts.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended the Enterprise 2 QBR and dry run.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Joined the SSS RISE briefing with the GSI team.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🎯</span><span class="ref-section-title">Focus for Next Week</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-focus">
+                    <li>Build greater confidence in supporting complex opportunities involving multiple stakeholders and partners.</li>
+                    <li>Set a session with local PBM to address concerns and queries on ways of working with AEs.</li>
+                    <li>Seek additional exposure to AI and transformation conversations with customers.</li>
+                    <li>Prepare and finalize Business KPI presentation and AI tools enablement session for PH team.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🤝</span><span class="ref-section-title">Support Needed</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-support">
+                    <li>Opportunity to co-create an account/close plan.</li>
+                    <li>Continued coaching on positioning customer value beyond implementation, particularly around adoption, AI, and long-term success.</li>
+                    <li>Additional exposure to partner management and complex enterprise deal strategy to better understand how cross-functional teams collaborate to win opportunities.</li>
+                    <li>Guidance in finding opportunities as candidates for the capstone project.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        `; },
+      },
       { id: 9,  label: 'Week 9',  title: 'The Sky Reaches',    subtitle: 'Week 9 · Sky',      icon: '☁️', env: 'w9',  terrain: 'Sky',      terrainIcon: '⚡', locked: true,  envBg: 'linear-gradient(160deg,#050810 0%,#0a1220 100%)', buildScene() { return ''; } },
       { id: 10, label: 'Week 10', title: 'The Iron Citadel',   subtitle: 'Week 10 · Citadel', icon: '🏰', env: 'w10', terrain: 'Citadel',  terrainIcon: '⚔️', locked: true,  envBg: 'linear-gradient(160deg,#050508 0%,#0a0a12 100%)', buildScene() { return ''; } },
     ];
@@ -6150,7 +6758,7 @@
       // Draw connection paths in the SVG path-layer group
       const pathLayer = document.getElementById('path-layer');
       // Current week index (0-based). Paths up to this are "traveled".
-      const CURRENT_IDX = 6; // Week 7 = index 6
+      const CURRENT_IDX = 7; // Week 8 = index 7
 
       weeks.forEach((week, i) => {
         if (i === 0) return;
@@ -6162,6 +6770,9 @@
 
         const traveled = i <= CURRENT_IDX;
         const unlocked = !weeks[i - 1].locked && !week.locked;
+
+        // W7→W8 segment drawn by curved override below — skip here
+        if (i === 7) return;
 
         if (traveled) {
           // Glow underlay — wider, softer
@@ -6238,7 +6849,7 @@
           btn.style.setProperty('--glow', t.nodeGlow + '66');
           btn.style.boxShadow   = `0 0 16px 4px ${t.nodeGlow}44, inset 0 1px 0 rgba(255,255,255,0.1)`;
           // Highlight current week (W3)
-          if (week.id === 7) {
+          if (week.id === 8) {
             btn.style.borderColor = '#ffcc44';
             btn.style.boxShadow   = `0 0 22px 6px rgba(255,200,40,0.5), inset 0 1px 0 rgba(255,255,255,0.1)`;
           }
@@ -6251,7 +6862,7 @@
         if (!week.locked) {
           const t = getTheme(week.env);
           badge.style.background  = t.nodeBg;
-          badge.style.borderColor = week.id === 7 ? '#ffcc44' : t.nodeGlow;
+          badge.style.borderColor = week.id === 8 ? '#ffcc44' : t.nodeGlow;
         } else {
           badge.style.background  = '#080d18';
           badge.style.borderColor = '#16213a';
@@ -6282,7 +6893,7 @@
         const caption = document.createElement('div');
         caption.className = 'node-caption';
         caption.textContent = week.locked ? week.terrain : week.title;
-        if (!week.locked) caption.style.color = week.id === 7 ? '#ffdd88' : getTheme(week.env).text;
+        if (!week.locked) caption.style.color = week.id === 8 ? '#ffdd88' : getTheme(week.env).text;
 
         wrap.appendChild(btn);
         wrap.appendChild(caption);
@@ -6297,7 +6908,7 @@
       });
 
       // ── Player avatar on Week 3 (current position) ──
-      const avatarPos  = NODE_POSITIONS[6]; // Week 7 — current position
+      const avatarPos  = NODE_POSITIONS[7]; // Week 8 — current position
       const avatarPct  = svgToPercent(avatarPos.x, avatarPos.y);
 
       const avatarWrap = document.createElement('div');
@@ -6320,6 +6931,40 @@
       `;
 
       container.appendChild(avatarWrap);
+
+      // ── Override W7→W8 path with a deeply curved S-route ──
+      (function() {
+        const pl = document.getElementById('path-layer');
+        // W7 SVG coords: ~(830,332), W8: ~(650,450)
+        // Draw a pronounced S-curve that loops wide before arriving
+        const d = 'M 830,332 C 870,340 880,390 855,415 C 830,440 790,425 760,440 C 730,455 720,468 690,458 C 670,450 655,447 650,450';
+
+        // Glow underlay
+        const glow = document.createElementNS('http://www.w3.org/2000/svg','path');
+        glow.setAttribute('d', d);
+        glow.setAttribute('fill', 'none');
+        glow.setAttribute('stroke', 'rgba(80,180,255,0.28)');
+        glow.setAttribute('stroke-width', '8');
+        glow.setAttribute('stroke-linecap', 'round');
+        pl.appendChild(glow);
+
+        // Main animated dashed path
+        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', 'rgba(100,190,255,0.72)');
+        path.setAttribute('stroke-width', '2.5');
+        path.setAttribute('stroke-dasharray', '7 5');
+        path.setAttribute('stroke-linecap', 'round');
+        const anim = document.createElementNS('http://www.w3.org/2000/svg','animate');
+        anim.setAttribute('attributeName','stroke-dashoffset');
+        anim.setAttribute('from','0');
+        anim.setAttribute('to','-24');
+        anim.setAttribute('dur','1.8s');
+        anim.setAttribute('repeatCount','indefinite');
+        path.appendChild(anim);
+        pl.appendChild(path);
+      })();
     }
 
     // ════════════════════════════════════════
