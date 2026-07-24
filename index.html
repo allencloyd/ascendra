@@ -168,7 +168,7 @@
 
     .xp-bar-fill {
       height: 100%;
-      width: 80%;
+      width: 90%;
       background: linear-gradient(90deg, #3a6ecc, #7fb3ff);
       border-radius: 4px;
       box-shadow: 0 0 6px #4f7fe8;
@@ -1688,6 +1688,162 @@
 
 
 
+
+    /* ══════════════════════════════════════
+       WEEK 9 — SKYREALM OF VISION
+    ══════════════════════════════════════ */
+
+    .scene-w9 .scene-sky {
+      background:
+        radial-gradient(ellipse 90% 50% at 75% 18%, rgba(255,240,160,0.30) 0%, transparent 52%),
+        radial-gradient(ellipse 80% 45% at 25% 15%, rgba(180,210,255,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 60% at 50% 0%,  rgba(140,190,255,0.20) 0%, transparent 65%),
+        linear-gradient(180deg, #0a1835 0%, #0f2248 18%, #1a3a70 38%, #2255a0 56%, #3a72c4 74%, #4e90d8 90%, #62a8e8 100%);
+    }
+
+    .scene-w9 .sky-glow {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 120% 40% at 50% 100%, rgba(100,180,255,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse  80% 30% at 15%  90%, rgba(140,200,255,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse  80% 30% at 88%  88%, rgba(140,200,255,0.12) 0%, transparent 50%);
+    }
+
+    /* Title */
+    .w9-sky-title {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 22; text-align: center; pointer-events: none; white-space: nowrap;
+    }
+    .w9-sky-main {
+      font-family: var(--ui-font);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-weight: 800; line-height: 1; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #ffffff 0%, #e8f4ff 45%, #a8d4ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(140,200,255,0.9)) drop-shadow(0 0 56px rgba(80,150,240,0.5));
+    }
+    .w9-sky-rule {
+      display: block; width: 100%; height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(180,220,255,0.55), transparent);
+      margin: 6px auto 0;
+    }
+    .w9-sky-sub {
+      font-family: var(--px-font); font-size: 0.3rem;
+      color: rgba(180,220,255,0.65); letter-spacing: 0.24em; margin-top: 5px;
+    }
+
+    /* Left: Sky Moments */
+    .w9-moment-col {
+      position: absolute; left: 3%; top: 0; bottom: 0; width: 22%; z-index: 15;
+      pointer-events: none; display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 68px; gap: 7px;
+    }
+    .w9-moment-entry { border-left: 2px solid rgba(180,220,255,0.45); padding: 5px 0 5px 10px; }
+    .w9-moment-num   { font-family:var(--px-font); font-size:0.24rem; color:rgba(180,220,255,0.75); letter-spacing:0.1em; margin-bottom:2px; }
+    .w9-moment-text  { font-size:0.72rem; font-weight:700; color:#ffffff; line-height:1.32; text-shadow:0 1px 5px rgba(0,0,80,0.6); }
+
+    /* Right top: Sky Insights (constellations) */
+    .w9-insight-col {
+      position: absolute; right: 3%; top: 0; width: 22%; z-index: 15;
+      pointer-events: none; display: flex; flex-direction: column;
+      padding-top: 68px; gap: 7px;
+    }
+    .w9-insight-header { font-family:var(--px-font); font-size:0.27rem; color:rgba(180,220,255,0.80); letter-spacing:0.14em; margin-bottom:5px; }
+    .w9-insight-item {
+      font-size:0.72rem; font-weight:700; color:#ffffff;
+      line-height:1.32; margin-bottom:5px;
+      display:flex; gap:6px; align-items:flex-start;
+      text-shadow:0 1px 5px rgba(0,0,80,0.6);
+    }
+    .w9-insight-item::before { content:'✨'; font-size:0.58rem; flex-shrink:0; margin-top:1px; }
+
+    /* Right lower: Celestial Progress */
+    .w9-progress-col {
+      position: absolute; right: 3%; bottom: 68px; width: 22%; z-index: 15; pointer-events: none;
+    }
+    .w9-progress-header { font-family:var(--px-font); font-size:0.27rem; color:rgba(180,220,255,0.80); letter-spacing:0.12em; margin-bottom:7px; }
+    .w9-progress-item {
+      font-size:0.72rem; font-weight:700; color:#ffffff;
+      line-height:1.32; margin-bottom:5px; display:flex; gap:5px; align-items:flex-start;
+      text-shadow:0 1px 5px rgba(0,0,80,0.6);
+    }
+    .w9-progress-item::before { content:'⭐'; flex-shrink:0; font-size:0.62rem; }
+
+    /* Bottom path strip */
+    .w9-path-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 62px; z-index: 16;
+      background: linear-gradient(to top, #0a1835 55%, transparent);
+      display: flex; align-items: center; padding: 0 22px; overflow: hidden;
+    }
+    .w9-path-strip::after {
+      content:''; position:absolute; left:0; right:0; top:36px; height:2px;
+      background: repeating-linear-gradient(90deg, transparent 0, transparent 22px, rgba(180,220,255,0.22) 22px, rgba(180,220,255,0.22) 40px);
+    }
+    .w9-path-lbl  { font-family:var(--px-font); font-size:0.24rem; color:rgba(180,220,255,0.55); letter-spacing:0.16em; white-space:nowrap; margin-right:14px; flex-shrink:0; z-index:1; }
+    .w9-path-node { display:flex; align-items:center; gap:5px; flex-shrink:0; z-index:1; }
+    .w9-path-dot  { width:6px; height:6px; border-radius:50%; background:rgba(140,190,255,0.40); }
+    .w9-path-dot.lit { background:#c8e8ff; box-shadow:0 0 8px #c8e8ff, 0 0 18px rgba(160,210,255,0.50); }
+    .w9-path-text { font-size:0.68rem; font-weight:700; color:rgba(255,255,255,0.45); white-space:nowrap; }
+    .w9-path-text.lit { color:#c8e8ff; }
+    .w9-path-arr  { color:rgba(255,255,255,0.22); font-size:0.65rem; margin:0 4px; flex-shrink:0; }
+
+    /* Page background */
+    .page-wrapper.env-w9 {
+      background: linear-gradient(180deg,
+        #62a8e8 0%, #4e90d8 6%, #3a72c4 14%, #2255a0 26%,
+        #1a3a70 40%, #122a58 55%, #0e2048 70%, #0a1838 85%, #081028 100%);
+      width: 100%;
+    }
+    .page-wrapper.env-w9 .page-content { background: transparent; }
+    .page-wrapper.env-w9 .reflection-wrap { background: transparent !important; }
+
+    /* Reflection cards — sky glass */
+    .refl-w9-wrap { background: transparent !important; }
+    .refl-w9-divider .ref-divider-line  { background: rgba(140,200,255,0.22); }
+    .refl-w9-divider .ref-divider-label { color: rgba(180,220,255,0.65); }
+
+    .refl-w9 .ref-section {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(180,220,255,0.20);
+      border-radius: 14px; overflow: hidden; margin-bottom: 14px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 24px rgba(0,0,80,0.20);
+    }
+    .refl-w9 .ref-section:last-child { margin-bottom: 0; }
+    .refl-w9 .ref-section-head {
+      background: rgba(100,170,255,0.12);
+      border-bottom: 1px solid rgba(140,200,255,0.14);
+      padding: 11px 18px; display: flex; align-items: center; gap: 8px;
+    }
+    .refl-w9 .ref-section-icon  { font-size: 0.9rem; }
+    .refl-w9 .ref-section-title { font-family:var(--px-font); font-size:0.38rem; color:#88ccff; letter-spacing:0.1em; }
+    .refl-w9 .ref-section-body  { padding: 16px 20px; }
+
+    .refl-w9 .ref-bullets li      { color:#e8f4ff; font-size:0.9rem; }
+    .refl-w9 .ref-bullets li::before { color:#66aaff; }
+    .refl-w9 .ref-learnings li    { color:#e0f0ff; }
+    .refl-w9 .ref-learnings li::before { color:#88ddff; }
+    .refl-w9 .ref-focus li        { color:#e8f4ff; }
+    .refl-w9 .ref-focus li::before { content:'→'; color:#66bbff; }
+    .refl-w9 .ref-support li      { color:#eedeff; }
+    .refl-w9 .ref-support li::before { content:'◈'; color:#aa88ff; }
+    .refl-w9 .progress-item-name  { color:#e8f4ff; font-size:0.84rem; font-weight:800; }
+    .refl-w9 .progress-item-note  { color:rgba(200,230,255,0.78); font-size:0.85rem; }
+    .refl-w9 .star.filled { color:#ffe840; }
+    .refl-w9 .star.empty  { color:rgba(255,255,255,0.18); }
+    .refl-w9 .completed-tasks      { border-top:1px solid rgba(140,200,255,0.14); }
+    .refl-w9 .completed-tasks-label { color:rgba(180,220,255,0.72); }
+    .refl-w9 .task-check { color:#88ddff; }
+    .refl-w9 .task-row   { color:rgba(210,235,255,0.85); }
+
+    /* Cloud drift animation */
+    @keyframes cloud-drift { from{transform:translateX(0);} to{transform:translateX(60px);} }
+    @keyframes cloud-drift-slow { from{transform:translateX(0);} to{transform:translateX(-40px);} }
+    @keyframes star-twinkle { 0%,100%{opacity:0.6;} 50%{opacity:1.0;} }
+    @keyframes beacon-pulse { 0%,100%{opacity:0.5; r:5;} 50%{opacity:0.9; r:7;} }
+    @keyframes citadel-glow { 0%,100%{filter:drop-shadow(0 0 8px rgba(255,220,80,0.5));} 50%{filter:drop-shadow(0 0 18px rgba(255,220,80,0.9));} }
+
     /* ══════════════════════════════════════
        WEEK 8 — FORGE OF MOMENTUM
     ══════════════════════════════════════ */
@@ -2540,11 +2696,12 @@
     }
 
     .ref-photo-caption {
-      font-size: 0.7rem;
-      color: #2a5a70;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.72);
       font-style: italic;
       text-align: center;
       margin-bottom: 8px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
     }
 
     /* Reflection divider */
@@ -2846,11 +3003,11 @@
           <div class="hud-name">Allen Cloyd Malayo</div>
           <div class="hud-role">CS Academy Associate</div>
           <div class="hud-level-row">
-            <span class="level-badge">LV 8</span>
+            <span class="level-badge">LV 9</span>
             <div class="xp-bar-wrap">
               <div class="xp-bar-fill"></div>
             </div>
-            <span class="xp-fraction">8/10</span>
+            <span class="xp-fraction">9/10</span>
           </div>
         </div>
       </div>
@@ -3161,7 +3318,7 @@
         <!-- W6 unlocked -->
         <!-- W7 unlocked -->
         <!-- W8 unlocked -->
-        <ellipse cx="384" cy="438" rx="94" ry="46" fill="url(#lock-fade)"/>
+        <!-- W9 unlocked -->
         <path d="M 28,468 C 24,440 38,414 62,402 C 86,390 114,388 140,396 C 166,404 188,422 196,446 C 204,470 196,496 176,510 C 156,524 126,528 98,520 C 68,510 44,492 32,472 C 28,470 28,470 28,468 Z" fill="url(#lock-fade)"/>
 
         <!-- ══ SEA ROUTES — static background guides (JS path-layer handles animation) ══ -->
@@ -3332,11 +3489,11 @@
     <div class="mod-section">
       <div class="mod-section-label">Character Core</div>
       <div class="char-level-row">
-        <span class="char-level-badge">LEVEL 8</span>
-        <span class="char-week-count">WEEK 8 OF 10</span>
+        <span class="char-level-badge">LEVEL 9</span>
+        <span class="char-week-count">WEEK 9 OF 10</span>
       </div>
-      <div class="char-xp-track"><div class="char-xp-fill" style="width:80%"></div></div>
-      <div class="char-xp-note">Journey 80% complete · 2 realms remaining</div>
+      <div class="char-xp-track"><div class="char-xp-fill" style="width:90%"></div></div>
+      <div class="char-xp-note">Journey 90% complete · 1 realm remaining</div>
     </div>
 
     <!-- INVENTORY -->
@@ -6688,7 +6845,483 @@
           </div>
         `; },
       },
-      { id: 9,  label: 'Week 9',  title: 'The Sky Reaches',    subtitle: 'Week 9 · Sky',      icon: '☁️', env: 'w9',  terrain: 'Sky',      terrainIcon: '⚡', locked: true,  envBg: 'linear-gradient(160deg,#050810 0%,#0a1220 100%)', buildScene() { return ''; } },
+      {
+        id: 9, label: 'Week 9', title: 'Skyrealm of Vision',
+        subtitle: 'FE1 Week 9 Reflection', icon: '☁️', env: 'w9',
+        terrain: 'Sky', terrainIcon: '⚡', locked: false,
+        envBg: 'linear-gradient(180deg,#62a8e8 0%,#3a72c4 20%,#1a3a70 50%,#0e2048 80%,#081028 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w9" style="min-height:calc(100vh - var(--nav-h));overflow:hidden;">
+            <div class="scene-sky"></div>
+            <div class="sky-glow"></div>
+            <div class="scan-line" style="background:linear-gradient(90deg,transparent,rgba(140,200,255,0.05) 50%,transparent);animation:scan 22s linear infinite;"></div>
+
+            <!-- ══ SKYREALM SVG — ELEVATED FLOATING WORLD ══ -->
+            <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:2"
+              viewBox="0 0 1000 580" preserveAspectRatio="xMidYMax meet"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bigCloudG" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.92"/>
+                  <stop offset="100%" stop-color="#d0e8ff" stop-opacity="0.65"/>
+                </linearGradient>
+                <linearGradient id="cloudG2" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#e8f4ff" stop-opacity="0.80"/>
+                  <stop offset="100%" stop-color="#b8d8ff" stop-opacity="0.50"/>
+                </linearGradient>
+                <!-- Stone platform gradient — grey-blue elevated rock -->
+                <linearGradient id="stoneG" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#c8ccd8"/>
+                  <stop offset="40%"  stop-color="#a0a8b8"/>
+                  <stop offset="100%" stop-color="#707888"/>
+                </linearGradient>
+                <!-- Stone side face (darker) -->
+                <linearGradient id="stoneSideG" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#606878"/>
+                  <stop offset="100%" stop-color="#404858"/>
+                </linearGradient>
+                <linearGradient id="goldPath" x1="0%"y1="0%"x2="100%"y2="100%">
+                  <stop offset="0%"   stop-color="#ffe880" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#ffcc22" stop-opacity="0.4"/>
+                </linearGradient>
+                <radialGradient id="citadelG" cx="50%"cy="50%"r="50%">
+                  <stop offset="0%"   stop-color="#fffce0"/>
+                  <stop offset="40%"  stop-color="#ffe880"/>
+                  <stop offset="100%" stop-color="#cc9900"/>
+                </radialGradient>
+                <filter id="sGlow"   x="-20%"y="-20%"width="140%"height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+                <filter id="sGlowS"  x="-10%"y="-10%"width="120%"height="120%"><feGaussianBlur stdDeviation="2.2"/></filter>
+                <filter id="sGlowXS" x="-5%" y="-5%" width="110%"height="110%"><feGaussianBlur stdDeviation="1.2"/></filter>
+                <filter id="cloudSoft" x="-5%"y="-5%"width="110%"height="110%"><feGaussianBlur stdDeviation="3"/></filter>
+              </defs>
+
+              <!-- ── SUN / WARM LIGHT SOURCE ── -->
+              <circle cx="760" cy="52" r="44" fill="#fffbe0" opacity="0.90" filter="url(#sGlow)"/>
+              <circle cx="760" cy="52" r="30" fill="#ffffff" opacity="0.98"/>
+              <g stroke="#ffe880" stroke-width="1.5" opacity="0.35" filter="url(#sGlowS)">
+                <line x1="760" y1="6"   x2="760" y2="-2"/>
+                <line x1="793" y1="18"  x2="803" y2="10"/>
+                <line x1="808" y1="50"  x2="820" y2="47"/>
+                <line x1="800" y1="82"  x2="812" y2="88"/>
+                <line x1="774" y1="97"  x2="780" y2="108"/>
+                <line x1="740" y1="97"  x2="736" y2="108"/>
+                <line x1="716" y1="80"  x2="706" y2="86"/>
+                <line x1="712" y1="50"  x2="700" y2="47"/>
+                <line x1="726" y1="20"  x2="716" y2="12"/>
+              </g>
+              <!-- Sunbeam shafts through clouds -->
+              <g fill="#fffbe0" opacity="0.06">
+                <polygon points="730,52 752,580 710,580"/>
+                <polygon points="760,52 788,580 755,580"/>
+                <polygon points="795,52 825,580 808,580"/>
+              </g>
+
+              <!-- ══ HEAVY CLOUD LAYER (base — thick, covering the ground view) ══ -->
+              <!-- Far background cloud mass -->
+              <g filter="url(#cloudSoft)" opacity="0.75">
+                <ellipse cx="500" cy="575" rx="600" ry="80" fill="url(#bigCloudG)"/>
+                <ellipse cx="500" cy="560" rx="550" ry="60" fill="#f0f8ff"/>
+                <ellipse cx="200" cy="565" rx="280" ry="55" fill="#ffffff" opacity="0.6"/>
+                <ellipse cx="800" cy="562" rx="260" ry="52" fill="#ffffff" opacity="0.6"/>
+              </g>
+
+              <!-- Mid-level dense cloud banks — left cluster -->
+              <g style="animation:cloud-drift 38s ease-in-out infinite alternate">
+                <ellipse cx="88"  cy="510" rx="155" ry="52" fill="url(#bigCloudG)" opacity="0.82"/>
+                <ellipse cx="65"  cy="495" rx="120" ry="40" fill="#f8fcff" opacity="0.70"/>
+                <ellipse cx="130" cy="520" rx="100" ry="38" fill="#ffffff"  opacity="0.55"/>
+                <ellipse cx="50"  cy="530" rx="80"  ry="30" fill="#e8f4ff" opacity="0.45"/>
+                <!-- Fluffy tops -->
+                <ellipse cx="82"  cy="488" rx="68"  ry="30" fill="#ffffff" opacity="0.65"/>
+                <ellipse cx="120" cy="480" rx="52"  ry="24" fill="#ffffff" opacity="0.55"/>
+              </g>
+              <!-- Mid-level dense cloud banks — centre -->
+              <g style="animation:cloud-drift-slow 48s ease-in-out infinite alternate">
+                <ellipse cx="500" cy="522" rx="230" ry="58" fill="url(#bigCloudG)" opacity="0.80"/>
+                <ellipse cx="480" cy="505" rx="185" ry="44" fill="#f8fcff"  opacity="0.68"/>
+                <ellipse cx="530" cy="530" rx="160" ry="40" fill="#ffffff"  opacity="0.52"/>
+                <ellipse cx="450" cy="535" rx="120" ry="32" fill="#e8f4ff" opacity="0.42"/>
+                <ellipse cx="495" cy="490" rx="100" ry="32" fill="#ffffff" opacity="0.62"/>
+                <ellipse cx="540" cy="484" rx="80"  ry="26" fill="#ffffff" opacity="0.52"/>
+              </g>
+              <!-- Mid-level dense cloud banks — right cluster -->
+              <g style="animation:cloud-drift 42s 6s ease-in-out infinite alternate">
+                <ellipse cx="912" cy="506" rx="148" ry="50" fill="url(#bigCloudG)" opacity="0.80"/>
+                <ellipse cx="940" cy="490" rx="112" ry="38" fill="#f8fcff"  opacity="0.68"/>
+                <ellipse cx="880" cy="518" rx="102" ry="35" fill="#ffffff"  opacity="0.52"/>
+                <ellipse cx="924" cy="480" rx="65"  ry="26" fill="#ffffff" opacity="0.60"/>
+                <ellipse cx="870" cy="492" rx="55"  ry="22" fill="#ffffff" opacity="0.50"/>
+              </g>
+
+              <!-- Upper mid clouds -->
+              <g style="animation:cloud-drift-slow 52s 4s ease-in-out infinite alternate" opacity="0.55">
+                <ellipse cx="290" cy="410" rx="145" ry="44" fill="url(#cloudG2)"/>
+                <ellipse cx="268" cy="396" rx="108" ry="32" fill="#f8fcff"/>
+                <ellipse cx="320" cy="402" rx="90"  ry="28" fill="#ffffff" opacity="0.55"/>
+              </g>
+              <g style="animation:cloud-drift 46s 10s ease-in-out infinite alternate" opacity="0.50">
+                <ellipse cx="712" cy="418" rx="138" ry="42" fill="url(#cloudG2)"/>
+                <ellipse cx="734" cy="404" rx="102" ry="30" fill="#f8fcff"/>
+                <ellipse cx="680" cy="426" rx="84"  ry="26" fill="#ffffff" opacity="0.50"/>
+              </g>
+
+              <!-- High wispy clouds -->
+              <g opacity="0.32">
+                <ellipse cx="155" cy="240" rx="88"  ry="22" fill="url(#cloudG2)" style="animation:cloud-drift-slow 60s ease-in-out infinite alternate"/>
+                <ellipse cx="600" cy="195" rx="72"  ry="18" fill="url(#cloudG2)" style="animation:cloud-drift 55s 8s ease-in-out infinite alternate"/>
+                <ellipse cx="855" cy="252" rx="68"  ry="20" fill="url(#cloudG2)" style="animation:cloud-drift-slow 58s 15s ease-in-out infinite alternate"/>
+                <ellipse cx="380" cy="160" rx="60"  ry="15" fill="#e8f4ff" opacity="0.7"/>
+                <ellipse cx="660" cy="145" rx="55"  ry="14" fill="#e8f4ff" opacity="0.65"/>
+              </g>
+
+              <!-- ══ MAIN OBSERVATORY ISLAND — ELEVATED STONE PLATFORM ══ -->
+              <!-- Stone block drop shadow -->
+              <ellipse cx="500" cy="398" rx="112" ry="20" fill="#2a3050" opacity="0.30" filter="url(#cloudSoft)"/>
+              <!-- Stone side face (depth — gives 3D elevation feel) -->
+              <path d="M 390,370 L 390,395 Q 440,408 500,408 Q 560,408 610,395 L 610,370 Z"
+                fill="url(#stoneSideG)" opacity="0.92"/>
+              <!-- Stone underside cracks/details -->
+              <g stroke="#505868" stroke-width="0.8" fill="none" opacity="0.35">
+                <line x1="420" y1="372" x2="418" y2="394"/>
+                <line x1="460" y1="370" x2="458" y2="398"/>
+                <line x1="500" y1="370" x2="498" y2="406"/>
+                <line x1="540" y1="370" x2="542" y2="398"/>
+                <line x1="580" y1="372" x2="582" y2="392"/>
+              </g>
+              <!-- Hanging stalactites / rock bits beneath -->
+              <g fill="#585f70" opacity="0.60">
+                <polygon points="430,394 436,412 424,412"/>
+                <polygon points="460,398 466,416 454,416"/>
+                <polygon points="500,406 506,424 494,424"/>
+                <polygon points="540,398 546,416 534,416"/>
+                <polygon points="570,394 576,410 564,410"/>
+              </g>
+              <!-- Top surface — light stone paving -->
+              <ellipse cx="500" cy="365" rx="108" ry="26" fill="url(#stoneG)"/>
+              <!-- Surface detail — stone tiles -->
+              <ellipse cx="500" cy="363" rx="96"  ry="20" fill="#b8c0cc" opacity="0.60"/>
+              <g stroke="#a0a8b8" stroke-width="0.8" fill="none" opacity="0.40">
+                <line x1="420" y1="362" x2="580" y2="362"/>
+                <line x1="430" y1="356" x2="570" y2="356"/>
+                <line x1="460" y1="348" x2="540" y2="348"/>
+                <line x1="448" y1="360" x2="448" y2="372"/>
+                <line x1="480" y1="352" x2="480" y2="374"/>
+                <line x1="520" y1="352" x2="520" y2="374"/>
+                <line x1="552" y1="360" x2="552" y2="372"/>
+              </g>
+              <!-- Edge glow (elevated rim light) -->
+              <ellipse cx="500" cy="352" rx="100" ry="15" fill="none" stroke="#d8e0f0" stroke-width="1.5" opacity="0.55"/>
+
+              <!-- Observatory tower on platform -->
+              <rect x="488" y="276" width="24" height="90" fill="#c8ccd8" opacity="0.95"/>
+              <rect x="486" y="274" width="28" height="4"  fill="#d8dce8" opacity="0.90"/>
+              <!-- Tower surface detail -->
+              <g stroke="#a0a8b8" stroke-width="0.6" fill="none" opacity="0.35">
+                <line x1="500" y1="278" x2="500" y2="364"/>
+                <line x1="492" y1="300" x2="508" y2="300"/>
+                <line x1="492" y1="325" x2="508" y2="325"/>
+              </g>
+              <!-- Dome -->
+              <path d="M 484,278 Q 500,252 516,278 Z" fill="#d8dce8" opacity="0.95"/>
+              <ellipse cx="500" cy="278" rx="18" ry="6" fill="#e4e8f4" opacity="0.92"/>
+              <!-- Telescope glow -->
+              <circle cx="500" cy="265" r="5" fill="#88ccff" opacity="0.78" filter="url(#sGlowS)"/>
+              <!-- Windows -->
+              <g fill="#88ccff" opacity="0.60">
+                <rect x="492" y="290" width="6" height="8" rx="1"/>
+                <rect x="502" y="290" width="6" height="8" rx="1"/>
+                <rect x="492" y="308" width="6" height="8" rx="1"/>
+                <rect x="502" y="308" width="6" height="8" rx="1"/>
+                <rect x="492" y="326" width="6" height="8" rx="1"/>
+                <rect x="502" y="326" width="6" height="8" rx="1"/>
+              </g>
+              <!-- Beacon -->
+              <circle cx="500" cy="254" r="5" fill="#ffe880" opacity="0.88" style="animation:beacon-pulse 2.5s ease-in-out infinite" filter="url(#sGlow)"/>
+
+              <!-- ══ LEFT FLOATING STONE ISLE ══ -->
+              <!-- Shadow -->
+              <ellipse cx="210" cy="404" rx="72" ry="14" fill="#2a3050" opacity="0.25" filter="url(#cloudSoft)"/>
+              <!-- Stone side face -->
+              <path d="M 150,382 L 150,400 Q 180,410 210,410 Q 240,410 270,400 L 270,382 Z"
+                fill="url(#stoneSideG)" opacity="0.90"/>
+              <!-- Stalactites -->
+              <g fill="#585f70" opacity="0.55">
+                <polygon points="170,400 175,414 165,414"/>
+                <polygon points="210,408 215,422 205,422"/>
+                <polygon points="250,400 255,413 245,413"/>
+              </g>
+              <!-- Top stone surface -->
+              <ellipse cx="210" cy="376" rx="66"  ry="18" fill="url(#stoneG)"/>
+              <ellipse cx="210" cy="374" rx="56"  ry="13" fill="#b8c0cc" opacity="0.55"/>
+              <!-- Crystal spire -->
+              <polygon points="206,360 210,336 214,360" fill="#c8e8ff" opacity="0.78"/>
+              <polygon points="208,360 210,342 212,360" fill="#e0f4ff" opacity="0.65"/>
+              <ellipse cx="210" cy="335" rx="5" ry="3" fill="#b8e8ff" opacity="0.70" filter="url(#sGlowS)"/>
+
+              <!-- ══ RIGHT FLOATING STONE ISLE ══ -->
+              <!-- Shadow -->
+              <ellipse cx="790" cy="376" rx="68" ry="13" fill="#2a3050" opacity="0.22" filter="url(#cloudSoft)"/>
+              <!-- Stone side -->
+              <path d="M 732,358 L 732,374 Q 760,383 790,383 Q 820,383 848,374 L 848,358 Z"
+                fill="url(#stoneSideG)" opacity="0.88"/>
+              <g fill="#585f70" opacity="0.52">
+                <polygon points="755,374 760,386 750,386"/>
+                <polygon points="790,381 795,393 785,393"/>
+                <polygon points="822,374 827,386 817,386"/>
+              </g>
+              <!-- Top surface -->
+              <ellipse cx="790" cy="352" rx="62"  ry="17" fill="url(#stoneG)"/>
+              <ellipse cx="790" cy="350" rx="52"  ry="12" fill="#b8c0cc" opacity="0.52"/>
+              <!-- Watchtower on stone -->
+              <rect x="786" y="318" width="8"  height="34" fill="#c0c8d4" opacity="0.92"/>
+              <polygon points="782,320 790,300 798,320" fill="#d0d8e4" opacity="0.92"/>
+              <circle cx="790" cy="300" r="4" fill="#ffe880" opacity="0.75" filter="url(#sGlowS)"/>
+              <g fill="#88ccff" opacity="0.50">
+                <rect x="787" y="328" width="5" height="6" rx="1"/>
+                <rect x="787" y="340" width="5" height="6" rx="1"/>
+              </g>
+
+              <!-- ══ SMALL DISTANT STONE ISLES ══ -->
+              <g opacity="0.55">
+                <path d="M 90,312 L 90,326 Q 100,330 120,330 Q 140,330 150,326 L 150,312 Z" fill="url(#stoneSideG)"/>
+                <ellipse cx="120" cy="308" rx="36"  ry="10" fill="url(#stoneG)"/>
+
+                <path d="M 848,324 L 848,338 Q 858,342 880,342 Q 902,342 912,338 L 912,324 Z" fill="url(#stoneSideG)"/>
+                <ellipse cx="880" cy="320" rx="38"  ry="10" fill="url(#stoneG)"/>
+              </g>
+
+              <!-- ══ DISTANT ASCENDANT CITADEL ══ -->
+              <g filter="url(#sGlow)" style="animation:citadel-glow 3s ease-in-out infinite" opacity="0.75">
+                <ellipse cx="880" cy="102" rx="58" ry="42" fill="#ffe880" opacity="0.16" filter="url(#sGlow)"/>
+                <!-- Stone platform for citadel -->
+                <path d="M 848,118 L 848,130 Q 864,135 880,135 Q 896,135 912,130 L 912,118 Z" fill="url(#stoneSideG)" opacity="0.80"/>
+                <ellipse cx="880" cy="116" rx="36" ry="9" fill="#c8ccd8" opacity="0.88"/>
+                <!-- Towers -->
+                <rect x="866" y="82"  width="28" height="38" fill="#ece8d8" opacity="0.90"/>
+                <rect x="854" y="96"  width="14" height="26" fill="#e4e0cc" opacity="0.85"/>
+                <rect x="892" y="96"  width="14" height="26" fill="#e4e0cc" opacity="0.85"/>
+                <g fill="#f8f4e4" opacity="0.90">
+                  <rect x="866" y="78" width="4" height="6"/><rect x="874" y="78" width="4" height="6"/>
+                  <rect x="882" y="78" width="4" height="6"/>
+                  <rect x="854" y="92" width="3" height="5"/><rect x="860" y="92" width="3" height="5"/>
+                  <rect x="892" y="92" width="3" height="5"/><rect x="898" y="92" width="3" height="5"/>
+                </g>
+                <circle cx="880" cy="76" r="7" fill="#ffe040" opacity="0.90" style="animation:beacon-pulse 2.5s ease-in-out infinite" filter="url(#sGlow)"/>
+                <text x="880" y="152" text-anchor="middle" font-family="Nunito,sans-serif" font-size="9" fill="#ffe880" font-weight="800" opacity="0.78" filter="url(#sGlowXS)">👑 Ascendant Citadel</text>
+              </g>
+
+              <!-- ══ GOLDEN CELESTIAL BRIDGES ══ -->
+              <path d="M 268,368 Q 314,352 368,358 Q 422,364 448,356"
+                stroke="url(#goldPath)" stroke-width="5" fill="none" opacity="0.55" stroke-linecap="round">
+                <animate attributeName="stroke-dashoffset" from="0" to="-40" dur="3s" repeatCount="indefinite"/>
+              </path>
+              <path d="M 268,368 Q 314,352 368,358 Q 422,364 448,356"
+                stroke="#ffe880" stroke-width="2" fill="none" opacity="0.38" stroke-linecap="round"/>
+              <path d="M 552,356 Q 602,346 654,350 Q 710,354 734,348"
+                stroke="url(#goldPath)" stroke-width="5" fill="none" opacity="0.50" stroke-linecap="round">
+                <animate attributeName="stroke-dashoffset" from="0" to="-40" dur="3.5s" repeatCount="indefinite"/>
+              </path>
+              <path d="M 552,356 Q 602,346 654,350 Q 710,354 734,348"
+                stroke="#ffe880" stroke-width="2" fill="none" opacity="0.35" stroke-linecap="round"/>
+
+              <!-- Rising golden path to Citadel -->
+              <path d="M 790,334 Q 820,296 836,256 Q 846,226 858,196 Q 867,172 873,152"
+                stroke="#ffcc22" stroke-width="3" fill="none" opacity="0.45" stroke-dasharray="8 6">
+                <animate attributeName="stroke-dashoffset" from="0" to="-28" dur="2.5s" repeatCount="indefinite"/>
+              </path>
+
+              <!-- ══ STARS & CONSTELLATIONS ══ -->
+              <g fill="#ffffff">
+                <circle cx="55"  cy="52"  r="1.5" opacity="0.70" style="animation:star-twinkle 3s 0.2s ease-in-out infinite"/>
+                <circle cx="138" cy="26"  r="1"   opacity="0.60" style="animation:star-twinkle 4s 0.8s ease-in-out infinite"/>
+                <circle cx="242" cy="46"  r="1.5" opacity="0.65" style="animation:star-twinkle 3.5s 1.2s ease-in-out infinite"/>
+                <circle cx="358" cy="20"  r="1"   opacity="0.55" style="animation:star-twinkle 4.5s 0.5s ease-in-out infinite"/>
+                <circle cx="452" cy="44"  r="1.5" opacity="0.60" style="animation:star-twinkle 3.2s 1.8s ease-in-out infinite"/>
+                <circle cx="548" cy="16"  r="1"   opacity="0.55" style="animation:star-twinkle 4.2s 0.3s ease-in-out infinite"/>
+                <circle cx="655" cy="36"  r="1.5" opacity="0.62" style="animation:star-twinkle 3.8s 1.5s ease-in-out infinite"/>
+                <circle cx="698" cy="68"  r="1"   opacity="0.55" style="animation:star-twinkle 4.8s 0.9s ease-in-out infinite"/>
+                <circle cx="312" cy="138" r="1.5" opacity="0.50" style="animation:star-twinkle 3.6s 2.1s ease-in-out infinite"/>
+                <circle cx="182" cy="168" r="1"   opacity="0.45" style="animation:star-twinkle 4.4s 1.6s ease-in-out infinite"/>
+              </g>
+              <g stroke="#88aaff" stroke-width="0.6" fill="none" opacity="0.20">
+                <line x1="55"  y1="52"  x2="138" y2="26"/>
+                <line x1="138" y1="26"  x2="242" y2="46"/>
+                <line x1="242" y1="46"  x2="358" y2="20"/>
+                <line x1="358" y1="20"  x2="452" y2="44"/>
+                <line x1="655" y1="36"  x2="698" y2="68"/>
+              </g>
+
+              <!-- ══ OBSERVATORY LIGHT BEAMS ══ -->
+              <g fill="#aaddff" opacity="0.06">
+                <polygon points="500,262 468,520 532,520"/>
+                <polygon points="500,262 455,520 478,520"/>
+                <polygon points="500,262 522,520 545,520"/>
+              </g>
+
+              <!-- ══ WIND CURRENTS ══ -->
+              <g stroke="#c8e4ff" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.18">
+                <path d="M 0,315 Q 100,303 200,313 Q 300,323 400,311 Q 500,299 600,311 Q 700,323 800,309 Q 900,297 1000,311">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-50" dur="6s" repeatCount="indefinite"/>
+                </path>
+                <path d="M 0,455 Q 120,443 240,453 Q 360,463 480,451 Q 600,439 720,451 Q 840,463 1000,449">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-50" dur="8s" repeatCount="indefinite"/>
+                </path>
+              </g>
+            </svg>
+
+            <!-- ══ TITLE ══ -->
+            <div class="w9-sky-title">
+              <span class="w9-sky-main">Skyrealm of Vision</span>
+              <span class="w9-sky-rule"></span>
+              <span class="w9-sky-sub">Week 9 &nbsp;·&nbsp; Jul 20–24, 2025 &nbsp;·&nbsp; FE1 Field Experience</span>
+            </div>
+
+            <!-- ══ LEFT: Sky Moments ══ -->
+            <div class="w9-moment-col">
+              <div style="font-family:var(--px-font);font-size:0.26rem;color:rgba(140,200,255,0.65);letter-spacing:0.16em;margin-bottom:5px;">— SKY MOMENTS —</div>
+              <div class="w9-moment-entry"><div class="w9-moment-num">01</div><div class="w9-moment-text">RRHI Finance Shared Services Session</div></div>
+              <div class="w9-moment-entry"><div class="w9-moment-num">02</div><div class="w9-moment-text">SMC Big Rocks Preparation</div></div>
+              <div class="w9-moment-entry"><div class="w9-moment-num">03</div><div class="w9-moment-text">Snowflake Partner Introduction</div></div>
+              <div class="w9-moment-entry"><div class="w9-moment-num">04</div><div class="w9-moment-text">FE1 KPI Presentation Delivered</div></div>
+              <div class="w9-moment-entry"><div class="w9-moment-num">05</div><div class="w9-moment-text">AI Tools Enablement Co-facilitated</div></div>
+            </div>
+
+            <!-- ══ RIGHT TOP: Constellation Insights ══ -->
+            <div class="w9-insight-col">
+              <div class="w9-insight-header">— CONSTELLATIONS —</div>
+              <div class="w9-insight-item">Technology is only transformative when people choose to adopt it</div>
+              <div class="w9-insight-item">Executive stories connect initiatives into a shared future vision</div>
+              <div class="w9-insight-item">Great partners expand influence, value, and opportunity creation</div>
+              <div class="w9-insight-item">Consistency compounds faster than short-term wins</div>
+              <div class="w9-insight-item">Learning becomes more meaningful when shared with others</div>
+            </div>
+
+            <!-- ══ RIGHT LOWER: Celestial Progress ══ -->
+            <div class="w9-progress-col">
+              <div class="w9-progress-header">— CELESTIAL PROGRESS —</div>
+              <div class="w9-progress-item">Executive Storytelling <span style="color:rgba(180,220,255,0.55);font-style:italic;margin-left:4px">→ Rising</span></div>
+              <div class="w9-progress-item">Partner Collaboration <span style="color:rgba(180,220,255,0.55);font-style:italic;margin-left:4px">→ Strong</span></div>
+              <div class="w9-progress-item">Knowledge Sharing <span style="color:rgba(180,220,255,0.55);font-style:italic;margin-left:4px">→ Emerging</span></div>
+              <div class="w9-progress-item">AI Transformation <span style="color:rgba(180,220,255,0.55);font-style:italic;margin-left:4px">→ Expanding</span></div>
+            </div>
+
+            <!-- ══ PATH STRIP ══ -->
+            <div class="w9-path-strip">
+              <span class="w9-path-lbl">PATH TO CITADEL</span>
+              <div class="w9-path-node"><div class="w9-path-dot lit"></div><span class="w9-path-text lit">Final Deliverables</span></div>
+              <span class="w9-path-arr">›</span>
+              <div class="w9-path-node"><div class="w9-path-dot"></div><span class="w9-path-text">Team QBR Support</span></div>
+              <span class="w9-path-arr">›</span>
+              <div class="w9-path-node"><div class="w9-path-dot"></div><span class="w9-path-text">Capstone Selection</span></div>
+              <span class="w9-path-arr">›</span>
+              <div class="w9-path-node"><div class="w9-path-dot"></div><span class="w9-path-text">CE2 Readiness</span></div>
+              <span class="w9-path-arr">›</span>
+              <div class="w9-path-node"><div class="w9-path-dot"></div><span class="w9-path-text">👑 Ascendant Citadel</span></div>
+            </div>
+          </div>
+
+          <!-- Detailed Reflection -->
+          <div class="reflection-wrap refl-w9-wrap" style="background:transparent">
+            <div class="ref-divider refl-w9-divider">
+              <div class="ref-divider-line"></div>
+              <span class="ref-divider-label">Reflection · Week 9 · Jul 20–24</span>
+              <div class="ref-divider-line"></div>
+            </div>
+            <div class="refl-w9">
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">⭐</span><span class="ref-section-title">Highlights</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets">
+                    <li>Attended the SAP Global Finance Shared Services experience sharing with Robinsons Retail Holdings Inc. It was insightful to hear SAP and RRHI finance leaders discuss AI, finance transformation, and the challenges around adoption and change management. What made the experience even more meaningful were the conversations I had over lunch with several of the finance heads. Hearing their perspectives firsthand gave me a better understanding of their priorities, concerns, and excitement around AI. It reminded me that while technology is important, transformation ultimately succeeds when people are ready to embrace the change.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_6744.jpeg" alt="SAP Global Finance Shared Services — RRHI"/>
+                    </div>
+                    <div class="ref-photo" style="margin-top:8px">
+                      <img src="IMG_0375.jpeg" alt="SAP Global Finance Shared Services group photo"/>
+                    </div>
+                    <p class="ref-photo-caption">SAP Global Finance Shared Services — Robinsons Retail Holdings Inc., Jul 24, 2026</p>
+                    <li>Participated in another Big Rocks preparation for San Miguel Corporation. I learned how executive messaging should unify multiple business units into one transformation story centered on shared priorities, business outcomes, and a co-created roadmap.</li>
+                    <li>Attended an introduction session and networking lunch with Snowflake and gained more exposure to SAP's partner ecosystem. It reinforced that partners are more than implementation providers. They help shape customer conversations, identify opportunities, and co-create value, making partner relationships just as important as customer relationships.</li>
+                    <li>Joined a Sales Peer2Peer session with Nick Cordner from Academy Batch 1 and presented my FE1 Business Impact &amp; KPI review to my RAD, FLL, and mentor. Nick's advice reassured me that consistency and patience matter more than expecting immediate wins, while presenting my FE1 journey became a meaningful milestone that allowed me to reflect on how much I've grown over the past eight weeks before returning to CE2.</li>
+                    <li>Co-facilitated the AI Tools enablement session with Beli for the SAP Philippines sales team. It was great to introduce some of the AI tools SAP is investing in and hear everyone's thoughts. One thing I realized is that AI adoption is really a learning journey. The more we experiment, understand its strengths and limitations, and use it in our day-to-day work, the more value we can get from it.</li>
+                    <div class="ref-photo">
+                      <img src="IMG_6749.jpeg" alt="AI Tools Enablement Session — SAP Philippines"/>
+                    </div>
+                    <p class="ref-photo-caption">Field-Ready AI Tools for Sales enablement session — SAP Philippines, Jul 23, 2026</p>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">💡</span><span class="ref-section-title">Key Learnings</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-learnings">
+                    <li>AI adoption is ultimately a people challenge. Helping customers embrace change is just as important as introducing new technology.</li>
+                    <li>Strong partner relationships expand SAP's ability to create customer value and influence strategic conversations.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">📈</span><span class="ref-section-title">Field Experience Progress</span></div>
+                <div class="ref-section-body">
+                  <div class="ref-progress-items">
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Executive Storytelling &amp; Strategic Messaging</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Preparing another Big Rocks presentation strengthened my understanding of how SAP positions multiple initiatives under one executive narrative focused on business outcomes rather than individual opportunities.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Partner &amp; Ecosystem Collaboration</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">The Snowflake session gave me a broader appreciation of how strategic partners contribute beyond implementation by helping create opportunities and deliver greater customer value.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Knowledge Sharing &amp; Enablement</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Supporting the AI Tools session reinforced that learning becomes more meaningful when you're able to share it with others. It challenged me to communicate new concepts clearly and make them relevant through practical examples.</div>
+                    </div>
+                    <div class="completed-tasks">
+                      <div class="completed-tasks-label">Activities</div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Co-facilitated the AI Tools enablement session for SAP Philippines.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended the SAP Global Finance Shared Services experience sharing with Robinsons Retail Holdings Inc.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Delivered my FE1 Business Impact and KPI presentation.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Participated in the San Miguel Corporation Big Rocks preparation.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended the Snowflake partner introduction and networking session.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Joined the Sales Peer2Peer session with Nick Cordner.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🎯</span><span class="ref-section-title">Focus for Next Week</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-focus">
+                    <li>Complete the remaining FE1 deliverables and handoffs.</li>
+                    <li>Help team with QBRs for BSP, Manila Water, and SMC.</li>
+                    <li>Continue strengthening executive storytelling and value-based messaging.</li>
+                    <li>Reflect on key learnings from FE1 and identify areas to further develop moving forward.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🤝</span><span class="ref-section-title">Support Needed</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-support">
+                    <li>Continued coaching on executive messaging and business value storytelling.</li>
+                    <li>Additional exposure to customer AI transformation conversations and change-management best practices.</li>
+                    <li>Guidance and validation for Capstone project selection.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `; },
+      },
       { id: 10, label: 'Week 10', title: 'The Iron Citadel',   subtitle: 'Week 10 · Citadel', icon: '🏰', env: 'w10', terrain: 'Citadel',  terrainIcon: '⚔️', locked: true,  envBg: 'linear-gradient(160deg,#050508 0%,#0a0a12 100%)', buildScene() { return ''; } },
     ];
 
@@ -6758,7 +7391,7 @@
       // Draw connection paths in the SVG path-layer group
       const pathLayer = document.getElementById('path-layer');
       // Current week index (0-based). Paths up to this are "traveled".
-      const CURRENT_IDX = 7; // Week 8 = index 7
+      const CURRENT_IDX = 8; // Week 9 = index 8
 
       weeks.forEach((week, i) => {
         if (i === 0) return;
@@ -6771,8 +7404,8 @@
         const traveled = i <= CURRENT_IDX;
         const unlocked = !weeks[i - 1].locked && !week.locked;
 
-        // W7→W8 segment drawn by curved override below — skip here
-        if (i === 7) return;
+        // W7→W8 and W8→W9 drawn by curved overrides below — skip here
+        if (i === 7 || i === 8) return;
 
         if (traveled) {
           // Glow underlay — wider, softer
@@ -6849,7 +7482,7 @@
           btn.style.setProperty('--glow', t.nodeGlow + '66');
           btn.style.boxShadow   = `0 0 16px 4px ${t.nodeGlow}44, inset 0 1px 0 rgba(255,255,255,0.1)`;
           // Highlight current week (W3)
-          if (week.id === 8) {
+          if (week.id === 9) {
             btn.style.borderColor = '#ffcc44';
             btn.style.boxShadow   = `0 0 22px 6px rgba(255,200,40,0.5), inset 0 1px 0 rgba(255,255,255,0.1)`;
           }
@@ -6862,7 +7495,7 @@
         if (!week.locked) {
           const t = getTheme(week.env);
           badge.style.background  = t.nodeBg;
-          badge.style.borderColor = week.id === 8 ? '#ffcc44' : t.nodeGlow;
+          badge.style.borderColor = week.id === 9 ? '#ffcc44' : t.nodeGlow;
         } else {
           badge.style.background  = '#080d18';
           badge.style.borderColor = '#16213a';
@@ -6893,7 +7526,7 @@
         const caption = document.createElement('div');
         caption.className = 'node-caption';
         caption.textContent = week.locked ? week.terrain : week.title;
-        if (!week.locked) caption.style.color = week.id === 8 ? '#ffdd88' : getTheme(week.env).text;
+        if (!week.locked) caption.style.color = week.id === 9 ? '#ffdd88' : getTheme(week.env).text;
 
         wrap.appendChild(btn);
         wrap.appendChild(caption);
@@ -6908,7 +7541,7 @@
       });
 
       // ── Player avatar on Week 3 (current position) ──
-      const avatarPos  = NODE_POSITIONS[7]; // Week 8 — current position
+      const avatarPos  = NODE_POSITIONS[8]; // Week 9 — current position
       const avatarPct  = svgToPercent(avatarPos.x, avatarPos.y);
 
       const avatarWrap = document.createElement('div');
@@ -6931,6 +7564,25 @@
       `;
 
       container.appendChild(avatarWrap);
+
+      // ── Override W8→W9 path with a spiraling rising route ──
+      (function() {
+        const pl = document.getElementById('path-layer');
+        // W8 at ~(650,450) W9 at ~(386,455) — rises and spirals left through sky
+        const d = 'M 650,450 C 640,420 600,400 560,412 C 520,424 490,415 460,420 C 430,425 410,435 390,450 C 385,453 386,455 386,455';
+        const glow = document.createElementNS('http://www.w3.org/2000/svg','path');
+        glow.setAttribute('d', d); glow.setAttribute('fill','none');
+        glow.setAttribute('stroke','rgba(80,180,255,0.28)'); glow.setAttribute('stroke-width','8');
+        glow.setAttribute('stroke-linecap','round'); pl.appendChild(glow);
+        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('d', d); path.setAttribute('fill','none');
+        path.setAttribute('stroke','rgba(100,190,255,0.72)'); path.setAttribute('stroke-width','2.5');
+        path.setAttribute('stroke-dasharray','7 5'); path.setAttribute('stroke-linecap','round');
+        const anim = document.createElementNS('http://www.w3.org/2000/svg','animate');
+        anim.setAttribute('attributeName','stroke-dashoffset'); anim.setAttribute('from','0');
+        anim.setAttribute('to','-24'); anim.setAttribute('dur','1.8s'); anim.setAttribute('repeatCount','indefinite');
+        path.appendChild(anim); pl.appendChild(path);
+      })();
 
       // ── Override W7→W8 path with a deeply curved S-route ──
       (function() {
