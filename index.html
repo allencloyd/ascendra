@@ -168,7 +168,7 @@
 
     .xp-bar-fill {
       height: 100%;
-      width: 90%;
+      width: 100%;
       background: linear-gradient(90deg, #3a6ecc, #7fb3ff);
       border-radius: 4px;
       box-shadow: 0 0 6px #4f7fe8;
@@ -768,6 +768,21 @@
     .cdot.t-off-k { background: #050c07; border: 1px solid #0a1210; }
     .cdot.t-on-r  { background: rgba(238,136,64,0.4); border: 1px solid rgba(238,136,64,0.55); }
     .cdot.t-off-r { background: #0e0805; border: 1px solid #180f06; }
+    /* Half-filled dot (for x.5 values) */
+    .cdot.half-f  { background: linear-gradient(90deg, #3a78cc 50%, #0e1e34 50%); border: 1px solid #2a5aaa; }
+    .cdot.half-k  { background: linear-gradient(90deg, #4aaa66 50%, #0a180e 50%); border: 1px solid #2a7840; }
+    .cdot.half-r  { background: linear-gradient(90deg, #ee8840 50%, #1a0e06 50%); border: 1px solid #aa6028; }
+    .cdot.t-half-f { background: linear-gradient(90deg, rgba(74,136,238,0.45) 50%, #060e1a 50%); border: 1px solid rgba(74,136,238,0.6); }
+    .cdot.t-half-k { background: linear-gradient(90deg, rgba(74,170,102,0.42) 50%, #050c07 50%); border: 1px solid rgba(74,170,102,0.58); }
+    .cdot.t-half-r { background: linear-gradient(90deg, rgba(238,136,64,0.4) 50%, #0e0805 50%); border: 1px solid rgba(238,136,64,0.55); }
+    /* Skill increment badge */
+    .skill-delta {
+      font-family: var(--px-font); font-size: 0.30rem;
+      padding: 2px 6px; border-radius: 4px; flex-shrink: 0;
+      letter-spacing: 0.04em; align-self: center; font-weight:700;
+    }
+    .skill-delta.pos { color: #44ee88; background: rgba(40,160,80,0.15); border: 1px solid rgba(60,200,100,0.3); margin-left:auto; }
+    .skill-delta.neu { color: #aaaaaa; background: rgba(100,100,100,0.10); border: 1px solid rgba(140,140,140,0.2); margin-left:auto; }
 
     /* ════════════════════════════════
        ALLIED NETWORK PANEL — radial layout
@@ -888,10 +903,10 @@
       transition: border-color 0.15s;
     }
     .fb-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
-    .fb-date { font-family: var(--px-font); font-size: 0.26rem; color: #3a5878; letter-spacing: 0.08em; }
+    .fb-date { font-family: var(--px-font); font-size: 0.34rem; color: #3a5878; letter-spacing: 0.08em; }
     .fb-theme {
-      font-family: var(--px-font); font-size: 0.24rem;
-      padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em;
+      font-family: var(--px-font); font-size: 0.30rem;
+      padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em;
     }
     .fb-giver { font-size: 0.72rem; font-weight: 800; color: #c0d4f0; margin-bottom: 4px; line-height: 1.2; }
     .fb-summary { font-size: 0.72rem; font-style: italic; color: #8aaace; line-height: 1.45; margin-bottom: 5px; }
@@ -1146,6 +1161,51 @@
     }
 
     .screenshot-toggle:hover { color: #aac4ff; border-color: #4466aa; }
+
+    /* ── Mission Complete Banner ── */
+    /* .mission-complete positioning handled inline inside world-container */
+    /* MC inside world-container — always centred, no scroll drift */
+    .mc-frame {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(4,8,22,0.82) 0%, rgba(6,12,28,0.86) 100%);
+      border: 1.5px solid rgba(255,200,40,0.75);
+      border-radius: 10px;
+      padding: 7px 24px 9px;
+      box-shadow:
+        0 0 28px rgba(255,200,40,0.35),
+        0 0 60px rgba(100,150,255,0.08),
+        0 4px 20px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,220,80,0.10);
+      backdrop-filter: blur(8px);
+    }
+    .mc-eyebrow {
+      font-family: var(--px-font);
+      font-size: 0.30rem;
+      color: rgba(255,200,40,0.65);
+      letter-spacing: 0.22em;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .mc-title {
+      font-family: var(--ui-font);
+      font-size: clamp(1.2rem, 3.5vw, 2.0rem);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe8a0 35%, #ffcc44 70%, #cc9900 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 18px rgba(255,200,40,0.8));
+      line-height: 1;
+      display: block;
+    }
+    .mc-sub {
+      font-family: var(--px-font);
+      font-size: 0.27rem;
+      color: rgba(255,200,80,0.55);
+      letter-spacing: 0.14em;
+      margin-top: 5px;
+      display: block;
+    }
+    body.screenshot-mode .mission-complete { opacity: 0; pointer-events: none; }
 
     /* Screenshot mode: hide ALL UI chrome */
     body.screenshot-mode .screenshot-toggle,
@@ -1688,6 +1748,168 @@
 
 
 
+
+
+    /* ══════════════════════════════════════
+       WEEK 10 — ASCENDANT CITADEL
+    ══════════════════════════════════════ */
+
+    .scene-w10 .scene-sky {
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 30%,  rgba(255,230,120,0.45) 0%, transparent 60%),
+        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(180,130,60,0.30)  0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 20% 20%,  rgba(200,180,100,0.20) 0%, transparent 50%),
+        linear-gradient(180deg, #3a2808 0%, #2e2008 18%, #241808 38%, #1c1206 58%, #140e04 80%, #0e0a03 100%);
+    }
+
+    .scene-w10 .citadel-glow {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 40%, rgba(255,200,80,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 35% at 50% 100%, rgba(200,150,40,0.14) 0%, transparent 55%);
+    }
+
+    /* Light beam overlay */
+    .scene-w10 .light-beams {
+      position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      background:
+        repeating-linear-gradient(
+          -8deg,
+          transparent 0%, transparent 12%,
+          rgba(255,220,100,0.025) 13%, rgba(255,220,100,0.025) 14%,
+          transparent 15%
+        );
+      animation: beam-sweep 12s ease-in-out infinite;
+    }
+    @keyframes beam-sweep { 0%,100%{opacity:0.6;} 50%{opacity:1.0;} }
+
+    /* Title */
+    .w10-citadel-title {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 22; text-align: center; pointer-events: none; white-space: nowrap;
+    }
+    .w10-citadel-crown {
+      font-size: 2rem; display: block; margin-bottom: 4px;
+      filter: drop-shadow(0 0 12px rgba(200,150,0,0.8)) drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+      animation: beacon-pulse 2.5s ease-in-out infinite;
+    }
+    .w10-citadel-main {
+      font-family: var(--ui-font);
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800; line-height: 1; letter-spacing: 0.04em;
+      /* Original gold gradient + strong dark shadow for readability on bright sky */
+      background: linear-gradient(180deg, #ffffff 0%, #ffe8a0 35%, #ffcc44 70%, #cc9900 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter:
+        drop-shadow(0 2px 3px rgba(0,0,0,0.85))
+        drop-shadow(0 0 2px rgba(0,0,0,0.70))
+        drop-shadow(0 0 20px rgba(255,200,40,0.6));
+    }
+    .w10-citadel-rule {
+      display: block; width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,200,40,0.7), transparent);
+      margin: 8px auto 0;
+    }
+    .w10-citadel-sub {
+      font-family: var(--px-font); font-size: 0.34rem;
+      color: rgba(255,210,80,0.85); letter-spacing: 0.26em; margin-top: 7px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.80), 0 2px 6px rgba(0,0,0,0.60);
+    }
+
+    /* Left: Hall entries */
+    .w10-hall-col {
+      position: absolute; left: 3%; top: 0; bottom: 0; width: 22%; z-index: 15;
+      pointer-events: none; display: flex; flex-direction: column;
+      justify-content: flex-start; padding-top: 68px; gap: 7px;
+    }
+    .w10-hall-entry { border-left: 2px solid rgba(255,200,40,0.45); padding: 5px 0 5px 10px; }
+    .w10-hall-realm { font-family:var(--px-font); font-size:0.24rem; color:rgba(255,200,40,0.72); letter-spacing:0.1em; margin-bottom:2px; }
+    .w10-hall-text  { font-size:0.72rem; font-weight:700; color:#ffffff; line-height:1.32; text-shadow:0 1px 5px rgba(0,0,0,0.75); }
+
+    /* Right: Inscription & Mirror */
+    .w10-mirror-col {
+      position: absolute; right: 3%; top: 0; width: 22%; z-index: 15;
+      pointer-events: none; display: flex; flex-direction: column;
+      padding-top: 68px; gap: 9px;
+    }
+    .w10-mirror-header { font-family:var(--px-font); font-size:0.27rem; color:rgba(255,200,40,0.80); letter-spacing:0.14em; margin-bottom:5px; }
+    .w10-mirror-stat {
+      font-size:0.72rem; font-weight:700; color:#ffffff;
+      line-height:1.35; margin-bottom:6px;
+      display:flex; gap:7px; align-items:flex-start;
+      text-shadow:0 1px 5px rgba(0,0,0,0.75);
+    }
+    .w10-mirror-stat::before { content:'◆'; font-size:0.55rem; flex-shrink:0; margin-top:2px; color:#ffcc44; }
+
+    /* Bottom inscription strip */
+    .w10-inscription {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 16;
+      background: linear-gradient(to top, rgba(10,8,2,0.92) 60%, transparent);
+      padding: 22px 60px 18px;
+      text-align: center;
+      pointer-events: none;
+    }
+    .w10-inscription-text {
+      font-family: var(--ui-font);
+      font-size: clamp(0.72rem, 1.8vw, 0.9rem);
+      font-style: italic; font-weight: 600;
+      color: rgba(255,220,120,0.85);
+      line-height: 1.7;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+    }
+
+    /* Page background */
+    .page-wrapper.env-w10 {
+      /* Warm golden-amber continuous gradient — no dark seam */
+      background: linear-gradient(180deg,
+        #3a2808 0%, #321e06 7%, #281808 16%, #201205 28%,
+        #180e04 42%, #120c04 58%, #0e0a03 74%, #080703 88%, #060502 100%);
+      width: 100%;
+    }
+    .page-wrapper.env-w10 .page-content { background: transparent; }
+    .page-wrapper.env-w10 .reflection-wrap { background: transparent !important; }
+
+    /* Reflection cards — ancient gold glass */
+    .refl-w10-wrap { background: transparent !important; }
+    .refl-w10-divider .ref-divider-line  { background: rgba(255,200,40,0.22); }
+    .refl-w10-divider .ref-divider-label { color: rgba(255,210,80,0.65); }
+
+    .refl-w10 .ref-section {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,200,40,0.18);
+      border-radius: 14px; overflow: hidden; margin-bottom: 14px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.35);
+    }
+    .refl-w10 .ref-section:last-child { margin-bottom: 0; }
+    .refl-w10 .ref-section-head {
+      background: rgba(200,150,20,0.10);
+      border-bottom: 1px solid rgba(255,200,40,0.14);
+      padding: 11px 18px; display: flex; align-items: center; gap: 8px;
+    }
+    .refl-w10 .ref-section-icon  { font-size: 0.9rem; }
+    .refl-w10 .ref-section-title { font-family:var(--px-font); font-size:0.38rem; color:#ffcc44; letter-spacing:0.1em; }
+    .refl-w10 .ref-section-body  { padding: 16px 20px; }
+    .refl-w10 .ref-bullets li      { color:#fff8e0; font-size:0.9rem; }
+    .refl-w10 .ref-bullets li::before { color:#ffcc44; }
+    .refl-w10 .ref-focus li        { color:#fff0d0; }
+    .refl-w10 .ref-focus li::before { content:'→'; color:#ffaa22; }
+    .refl-w10 .ref-support li      { color:#ffe8cc; }
+    .refl-w10 .ref-support li::before { content:'◈'; color:#cc8800; }
+    .refl-w10 .progress-item-name  { color:#fff8e0; font-size:0.84rem; font-weight:800; }
+    .refl-w10 .progress-item-note  { color:rgba(255,230,180,0.75); font-size:0.85rem; }
+    .refl-w10 .star.filled { color:#ffcc44; }
+    .refl-w10 .star.empty  { color:rgba(255,255,255,0.18); }
+    .refl-w10 .completed-tasks      { border-top:1px solid rgba(255,200,40,0.14); }
+    .refl-w10 .completed-tasks-label { color:rgba(255,210,80,0.70); }
+    .refl-w10 .task-check { color:#ffcc44; }
+    .refl-w10 .task-row   { color:rgba(255,240,200,0.84); }
+
+    /* Gold particle animation */
+    @keyframes gold-rise { from{transform:translateY(0) scale(1);opacity:0.6;} to{transform:translateY(-160px) scale(0.4);opacity:0;} }
+    @keyframes banner-sway { 0%,100%{transform:rotate(-3deg);} 50%{transform:rotate(3deg);} }
+    @keyframes gold-shimmer { 0%,100%{opacity:0.7;} 50%{opacity:1.0;} }
 
     /* ══════════════════════════════════════
        WEEK 9 — SKYREALM OF VISION
@@ -3003,11 +3225,11 @@
           <div class="hud-name">Allen Cloyd Malayo</div>
           <div class="hud-role">CS Academy Associate</div>
           <div class="hud-level-row">
-            <span class="level-badge">LV 9</span>
+            <span class="level-badge">LV 10</span>
             <div class="xp-bar-wrap">
               <div class="xp-bar-fill"></div>
             </div>
-            <span class="xp-fraction">9/10</span>
+            <span class="xp-fraction">10/10</span>
           </div>
         </div>
       </div>
@@ -3319,7 +3541,7 @@
         <!-- W7 unlocked -->
         <!-- W8 unlocked -->
         <!-- W9 unlocked -->
-        <path d="M 28,468 C 24,440 38,414 62,402 C 86,390 114,388 140,396 C 166,404 188,422 196,446 C 204,470 196,496 176,510 C 156,524 126,528 98,520 C 68,510 44,492 32,472 C 28,470 28,470 28,468 Z" fill="url(#lock-fade)"/>
+        <!-- W10 unlocked — Ascendant Citadel -->
 
         <!-- ══ SEA ROUTES — static background guides (JS path-layer handles animation) ══ -->
         <path d="M 148,286 Q 168,272 188,262" stroke="#1a3a6a" stroke-width="1.5" fill="none" opacity="0.25" stroke-dasharray="5 6"/>
@@ -3330,7 +3552,7 @@
         <path d="M 754,216 Q 800,256 832,302" stroke="#1a3060" stroke-width="1.5" fill="none" opacity="0.16" stroke-dasharray="4 7"/>
         <!-- W7→W8 static guide removed — curved override handles this segment -->
         <path d="M 606,432 Q 510,434 450,436" stroke="#1a3060" stroke-width="1.4" fill="none" opacity="0.14" stroke-dasharray="4 7"/>
-        <path d="M 320,450 Q 230,458 156,462" stroke="#1a3060" stroke-width="1.4" fill="none" opacity="0.13" stroke-dasharray="4 7"/>
+        <!-- W9→W10 static guide removed — override handles this -->
 
         <!-- ══ TERRITORY LABELS ══ -->
         <g font-family="Nunito, sans-serif" font-weight="800" text-anchor="middle">
@@ -3440,6 +3662,7 @@
       </svg>
 
       <!-- Node HTML overlays positioned absolutely over SVG -->
+
     </div>
 
   </div>
@@ -3489,11 +3712,11 @@
     <div class="mod-section">
       <div class="mod-section-label">Character Core</div>
       <div class="char-level-row">
-        <span class="char-level-badge">LEVEL 9</span>
-        <span class="char-week-count">WEEK 9 OF 10</span>
+        <span class="char-level-badge">LEVEL 10</span>
+        <span class="char-week-count">WEEK 10 OF 10</span>
       </div>
-      <div class="char-xp-track"><div class="char-xp-fill" style="width:90%"></div></div>
-      <div class="char-xp-note">Journey 90% complete · 1 realm remaining</div>
+      <div class="char-xp-track"><div class="char-xp-fill" style="width:100%"></div></div>
+      <div class="char-xp-note">Journey 100% complete · The Final Ascent</div>
     </div>
 
     <!-- INVENTORY -->
@@ -3607,7 +3830,7 @@
   <!-- ══════════════════════════════════════
        MODULE 1b: CAPABILITIES PANEL
   ══════════════════════════════════════ -->
-  <div class="mod-panel" id="panel-capabilities" style="width:420px">
+  <div class="mod-panel" id="panel-capabilities" style="width:380px">
     <div class="mod-panel-head">
       <div class="mod-panel-title">
         <div class="mod-panel-eyebrow">Ascendra · Character System</div>
@@ -3615,307 +3838,339 @@
       </div>
       <button class="mod-close-btn" id="close-capabilities">✕</button>
     </div>
-
     <div class="mod-section">
       <div class="mod-section-label">🧱 Foundational</div>
       <div class="cap-cluster">
-        <div class="cap-row">
-          <span class="cap-name">Effective Communications</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:5px 8px;background:rgba(60,100,180,0.12);border-radius:7px;border:1px solid rgba(80,120,220,0.18)">
+          <div style="font-family:var(--px-font);font-size:0.34rem;color:#7aacee;letter-spacing:0.10em">FOUNDATIONAL</div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <span style="font-size:0.76rem;color:#5a7a9a;font-weight:700">2.86</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <span style="font-size:0.76rem;color:#b0d0f8;font-weight:800">3.50</span>
+            <span style="font-size:0.76rem;font-weight:800;color:#44ee88;background:rgba(40,160,80,0.15);border:1px solid rgba(60,200,100,0.28);border-radius:4px;padding:1px 6px">+0.64</span>
           </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Business Acumen</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        </div>        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Effective Communications</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta neu">—</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Value Management</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Overcoming Objections</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Business Acumen</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-half-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Resilience</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Accountability</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Value Management</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-half-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Competitive Positioning</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Influencing</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Overcoming Objections</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+1</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Complex Problem Solving</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Collaboration & X-Teaming</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Resilience</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+1</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Customer Focus</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Adaptability to Feedback</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Accountability</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta neu">—</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Selling Techniques</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Competitive Positioning</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta neu">—</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Stakeholder Management</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
-            <span class="cap-score-lbl">Today</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Influencing</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+1</span>
           </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Complex Problem Solving</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta neu">—</span>
+          </div>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Collaboration & X-Teaming</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+1</span>
+          </div>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Customer Focus</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-half-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
+          </div>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Adaptability to Feedback</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+1</span>
+          </div>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Selling Techniques</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-off-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta neu">—</span>
+          </div>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Stakeholder Management</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot on-f"></span><span class="cdot off-f"></span><span class="cdot off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-on-f"></span><span class="cdot t-half-f"></span><span class="cdot t-off-f"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
         </div>
       </div>
     </div>
-
     <div class="mod-section">
       <div class="mod-section-label">🧠 Knowledge Domain</div>
       <div class="cap-cluster">
-        <div class="cap-row">
-          <span class="cap-name">SAP Solutions Knowledge</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
-            <span class="cap-score-lbl">Today</span>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:5px 8px;background:rgba(60,100,180,0.12);border-radius:7px;border:1px solid rgba(80,120,220,0.18)">
+          <div style="font-family:var(--px-font);font-size:0.34rem;color:#7aacee;letter-spacing:0.10em">KNOWLEDGE DOMAIN</div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <span style="font-size:0.76rem;color:#5a7a9a;font-weight:700">2.50</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <span style="font-size:0.76rem;color:#b0d0f8;font-weight:800">3.25</span>
+            <span style="font-size:0.76rem;font-weight:800;color:#44ee88;background:rgba(40,160,80,0.15);border:1px solid rgba(60,200,100,0.28);border-radius:4px;padding:1px 6px">+0.75</span>
           </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Cloud Strategy</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        </div>        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">SAP Solutions Knowledge</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+1</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Go-to-Market Strategy</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">AI & Innovation Enablement</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span><span class="cdot t-off-k"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Cloud Strategy</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-half-k"></span><span class="cdot t-off-k"></span><span class="cdot t-off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Financial Acumen</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Industry Knowledge</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Go-to-Market Strategy</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-half-k"></span><span class="cdot t-off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Customer Value Journey</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">AI & Innovation Enablement</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-half-k"></span><span class="cdot t-off-k"></span><span class="cdot t-off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Coaching</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
-            <span class="cap-score-lbl">Today</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Financial Acumen</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-half-k"></span><span class="cdot t-off-k"></span><span class="cdot t-off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Industry Knowledge</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-half-k"></span><span class="cdot t-off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
+          </div>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Customer Value Journey</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-half-k"></span><span class="cdot t-off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+1.5</span>
+          </div>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Coaching</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-k"></span><span class="cdot on-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span><span class="cdot off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-on-k"></span><span class="cdot t-off-k"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+2</span>
           </div>
         </div>
       </div>
     </div>
-
     <div class="mod-section">
       <div class="mod-section-label">🎯 Role-Specific</div>
       <div class="cap-cluster">
-        <div class="cap-row">
-          <span class="cap-name">Solution Selling</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span></div>
-            <span class="cap-score-lbl">Today</span>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:5px 8px;background:rgba(60,100,180,0.12);border-radius:7px;border:1px solid rgba(80,120,220,0.18)">
+          <div style="font-family:var(--px-font);font-size:0.34rem;color:#7aacee;letter-spacing:0.10em">ROLE-SPECIFIC</div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <span style="font-size:0.76rem;color:#5a7a9a;font-weight:700">2.75</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <span style="font-size:0.76rem;color:#b0d0f8;font-weight:800">3.75</span>
+            <span style="font-size:0.76rem;font-weight:800;color:#44ee88;background:rgba(40,160,80,0.15);border:1px solid rgba(60,200,100,0.28);border-radius:4px;padding:1px 6px">+1.00</span>
           </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-off-r"></span></div>
-            <span class="cap-score-lbl">Target</span>
-          </div>
-        </div>
-        <div class="cap-row">
-          <span class="cap-name">Customer Relationship Mng.</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-off-r"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        </div>        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Solution Selling</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-half-r"></span><span class="cdot t-off-r"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Demand Generation</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span></div>
-            <span class="cap-score-lbl">Today</span>
-          </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-off-r"></span><span class="cdot t-off-r"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Customer Relationship Mng.</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-off-r"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+1</span>
           </div>
         </div>
-        <div class="cap-row">
-          <span class="cap-name">Customer Value Proposition</span>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span></div>
-            <span class="cap-score-lbl">Today</span>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Demand Generation</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-off-r"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+2</span>
           </div>
-          <div class="cap-score-group">
-            <div class="cap-dots"><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-off-r"></span></div>
-            <span class="cap-score-lbl">Target</span>
+        </div>
+        <div class="cap-row" style="align-items:flex-start;flex-direction:column;gap:2px;margin-bottom:5px">
+          <span class="cap-name" style="font-size:0.78rem;color:#d0e0f8;font-weight:700">Customer Value Proposition</span>
+          <div style="display:flex;align-items:center;gap:8px;width:100%">
+            <div style="display:flex;gap:3px"><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot on-r"></span><span class="cdot off-r"></span><span class="cdot off-r"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Initial</span>
+            <span style="font-size:0.72rem;color:#2a4060">→</span>
+            <div style="display:flex;gap:3px"><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-on-r"></span><span class="cdot t-half-r"></span><span class="cdot t-off-r"></span></div>
+            <span style="font-size:0.72rem;color:#3a5070;font-weight:700">Final</span>
+            <span class="skill-delta pos">+0.5</span>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="mod-section" style="background:rgba(60,100,180,0.08);border-radius:10px;margin:0 4px 4px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0">
+        <div style="font-family:var(--px-font);font-size:0.3rem;color:#7aacee;letter-spacing:0.1em">OVERALL FE1</div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <span style="font-size:0.76rem;color:#5a7a9a;font-weight:700">2.73</span>
+          <span style="font-size:0.72rem;color:#2a4060">→</span>
+          <span style="font-size:0.68rem;color:#e8f4ff;font-weight:800">3.46</span>
+          <span style="font-size:0.76rem;font-weight:800;color:#44ee88;background:rgba(40,160,80,0.15);border:1px solid rgba(60,200,100,0.28);border-radius:4px;padding:1px 6px">+0.73</span>
         </div>
       </div>
     </div>
@@ -4041,6 +4296,18 @@
       <div class="mod-section-label">Feedback Entries</div>
       <div class="feedback-list">
 
+        <!-- JUL 31 — Week 10 — Hazelyn Grey -->
+        <div class="feedback-card" style="border-left-color:#D4AA30;box-shadow:0 0 14px rgba(212,170,48,0.12)">
+          <div class="fb-header">
+            <div class="fb-date" style="color:#D4AA30">JUL 31 · WEEK 10</div>
+            <div class="fb-theme" style="color:#D4AA30;background:rgba(212,170,48,0.10);border:1px solid rgba(212,170,48,0.30)">TEAMWORK · OWNERSHIP · EXECUTION</div>
+          </div>
+          <div class="fb-giver" style="color:#e8d080">Hazelyn Grey &nbsp;·&nbsp; Account Executive · Enterprise 2</div>
+          <div class="fb-summary">"Allen is a team player who is always willing to assist. Whether in supplier accreditation, account planning, or customer communications, he approaches each task with the same energy and attention to detail — organized, well thought out, and meticulous. A valuable addition to Team E2."</div>
+          <div class="fb-action"><strong>Action Taken:</strong> Continue taking ownership beyond assigned responsibilities while developing stronger strategic account management capabilities and customer-facing experience.</div>
+        </div>
+
+        <!-- JUL 2 — Week 6 — Kirs Yamoyam -->
         <div class="feedback-card" style="border-left-color:#6699ff">
           <div class="fb-header">
             <div class="fb-date">JUL 2 · WEEK 6</div>
@@ -4051,6 +4318,7 @@
           <div class="fb-action"><strong>Action Taken:</strong> Continue shadowing customer engagements and account discussions to better understand how experienced sellers navigate objections, challenges, and stakeholder dynamics.</div>
         </div>
 
+        <!-- AUG 30 — Week 5 — Tommie Claravall -->
         <div class="feedback-card" style="border-left-color:#ffcc44">
           <div class="fb-header">
             <div class="fb-date">AUG 30 · WEEK 5</div>
@@ -4061,6 +4329,7 @@
           <div class="fb-action"><strong>Action Taken:</strong> Continue proactive account discovery, relationship-building, and outreach efforts while increasing visibility through strategic internal and external engagement.</div>
         </div>
 
+        <!-- JUN 8 — Week 3 — Hedda Samia & Rees Colayco -->
         <div class="feedback-card" style="border-left-color:#4aaa77">
           <div class="fb-header">
             <div class="fb-date">JUN 8 · WEEK 3</div>
@@ -4071,7 +4340,7 @@
           <div class="fb-action"><strong>Action Taken:</strong> Continued structured reflections, debriefs, and feedback loops to drive development.</div>
         </div>
 
-      </div>
+      </div>      </div>
     </div>
   </div>
 
@@ -7322,7 +7591,567 @@
           </div>
         `; },
       },
-      { id: 10, label: 'Week 10', title: 'The Iron Citadel',   subtitle: 'Week 10 · Citadel', icon: '🏰', env: 'w10', terrain: 'Citadel',  terrainIcon: '⚔️', locked: true,  envBg: 'linear-gradient(160deg,#050508 0%,#0a0a12 100%)', buildScene() { return ''; } },
+      {
+        id: 10, label: 'Week 10', title: 'Ascendant Citadel',
+        subtitle: 'The Final Ascent', icon: '🏰', env: 'w10',
+        terrain: 'Citadel', terrainIcon: '⚔️', locked: false,
+        envBg: 'linear-gradient(180deg,#3a2808 0%,#1c1206 30%,#100c04 60%,#050502 100%)',
+        buildScene() { return `
+          <div class="scene-wrap scene-w10" style="min-height:calc(100vh - var(--nav-h));overflow:hidden;">
+            <div class="scene-sky"></div>
+            <div class="citadel-glow"></div>
+            <div class="light-beams"></div>
+
+            <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:2"
+              viewBox="0 0 1000 580" preserveAspectRatio="xMidYMax meet"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="whiteStone" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#f8f2e0"/>
+                  <stop offset="60%"  stop-color="#e0d8c0"/>
+                  <stop offset="100%" stop-color="#c0b898"/>
+                </linearGradient>
+                <linearGradient id="whiteStoneS" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#a89870"/>
+                  <stop offset="100%" stop-color="#786850"/>
+                </linearGradient>
+                <linearGradient id="mirrorG" x1="0%"y1="0%"x2="100%"y2="100%">
+                  <stop offset="0%"   stop-color="#88ccff" stop-opacity="0.7"/>
+                  <stop offset="40%"  stop-color="#ffffff"  stop-opacity="0.9"/>
+                  <stop offset="70%"  stop-color="#ffe8a0"  stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#88aaff"  stop-opacity="0.5"/>
+                </linearGradient>
+                <linearGradient id="hallFloor" x1="0%"y1="0%"x2="0%"y2="100%">
+                  <stop offset="0%"   stop-color="#d8c898"/>
+                  <stop offset="100%" stop-color="#908060"/>
+                </linearGradient>
+                <radialGradient id="sunG10" cx="50%"cy="15%"r="40%">
+                  <stop offset="0%"   stop-color="#fffbe0" stop-opacity="0.95"/>
+                  <stop offset="50%"  stop-color="#ffdd80" stop-opacity="0.38"/>
+                  <stop offset="100%" stop-color="#cc9900"  stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="innerGlow" cx="50%"cy="60%"r="50%">
+                  <stop offset="0%"   stop-color="#ffe880" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#cc9900"  stop-opacity="0"/>
+                </radialGradient>
+                <filter id="cG"  x="-20%"y="-20%"width="140%"height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+                <filter id="cGs" x="-10%"y="-10%"width="120%"height="120%"><feGaussianBlur stdDeviation="2.5"/></filter>
+                <filter id="mirrorBlur" x="-5%"y="-5%"width="110%"height="110%"><feGaussianBlur stdDeviation="1.5"/></filter>
+              </defs>
+
+              <!-- ── DIVINE SUN ── -->
+              <circle cx="500" cy="55" r="65" fill="url(#sunG10)" opacity="0.82" filter="url(#cG)"/>
+              <circle cx="500" cy="55" r="40" fill="#fffbe0" opacity="0.95"/>
+              <circle cx="500" cy="55" r="22" fill="#ffffff"  opacity="1.0"/>
+              <g stroke="#ffe880" stroke-width="2.2" opacity="0.40" filter="url(#cGs)">
+                <line x1="500" y1="8"   x2="500" y2="-2"/>
+                <line x1="548" y1="26"  x2="558" y2="17"/>
+                <line x1="564" y1="68"  x2="577" y2="65"/>
+                <line x1="545" y1="98"  x2="556" y2="107"/>
+                <line x1="508" y1="116" x2="514" y2="128"/>
+                <line x1="492" y1="116" x2="486" y2="128"/>
+                <line x1="455" y1="98"  x2="444" y2="107"/>
+                <line x1="436" y1="68"  x2="423" y2="65"/>
+                <line x1="452" y1="26"  x2="442" y2="17"/>
+              </g>
+              <!-- Grand light beams -->
+              <g fill="#fffbe0" opacity="0.065">
+                <polygon points="440,55 280,580 440,580"/>
+                <polygon points="470,55 350,580 500,580"/>
+                <polygon points="500,55 450,580 550,580"/>
+                <polygon points="530,55 500,580 650,580"/>
+                <polygon points="560,55 560,580 720,580"/>
+              </g>
+
+              <!-- ── BACKGROUND MOUNTAINS ── -->
+              <g fill="#281c08" opacity="0.72">
+                <polygon points="0,580 55,370 110,580"/>
+                <polygon points="45,580 120,318 195,580"/>
+                <polygon points="140,580 225,278 310,580"/>
+                <polygon points="690,580 775,282 860,580"/>
+                <polygon points="795,580 878,325 961,580"/>
+                <polygon points="890,580 958,380 1000,580"/>
+              </g>
+              <g fill="#e8e0c0" opacity="0.30">
+                <polygon points="49,382 55,370 61,382"/>
+                <polygon points="114,330 120,318 126,330"/>
+                <polygon points="219,288 225,278 231,288"/>
+                <polygon points="769,292 775,282 781,292"/>
+                <polygon points="872,336 878,325 884,336"/>
+                <polygon points="952,390 958,380 964,390"/>
+              </g>
+
+              <!-- ── CEREMONIAL APPROACH ── -->
+              <polygon points="330,575 670,575 545,420 455,420" fill="#c8b880" opacity="0.28"/>
+              <!-- Pathway tiles -->
+              <g stroke="#a89868" stroke-width="0.7" fill="none" opacity="0.22">
+                <line x1="455" y1="420" x2="330" y2="575"/>
+                <line x1="545" y1="420" x2="670" y2="575"/>
+                <line x1="468" y1="440" x2="355" y2="555"/><line x1="532" y1="440" x2="645" y2="555"/>
+                <line x1="478" y1="460" x2="375" y2="545"/><line x1="522" y1="460" x2="625" y2="545"/>
+                <line x1="488" y1="480" x2="395" y2="540"/><line x1="512" y1="480" x2="605" y2="540"/>
+              </g>
+              <!-- Torch pairs -->
+              <g filter="url(#cGs)">
+                <line x1="336" y1="570" x2="336" y2="535" stroke="#988038" stroke-width="3.5"/>
+                <ellipse cx="336" cy="531" rx="9" ry="7" fill="#ff8800" opacity="0.78"/>
+                <ellipse cx="336" cy="527" rx="5" ry="4" fill="#ffcc22" opacity="0.85"/>
+                <line x1="664" y1="570" x2="664" y2="535" stroke="#988038" stroke-width="3.5"/>
+                <ellipse cx="664" cy="531" rx="9" ry="7" fill="#ff8800" opacity="0.78"/>
+                <ellipse cx="664" cy="527" rx="5" ry="4" fill="#ffcc22" opacity="0.85"/>
+                <line x1="375" y1="528" x2="375" y2="498" stroke="#988038" stroke-width="3"/>
+                <ellipse cx="375" cy="494" rx="7" ry="5" fill="#ff8800" opacity="0.72"/>
+                <line x1="625" y1="528" x2="625" y2="498" stroke="#988038" stroke-width="3"/>
+                <ellipse cx="625" cy="494" rx="7" ry="5" fill="#ff8800" opacity="0.72"/>
+                <line x1="415" y1="472" x2="415" y2="450" stroke="#988038" stroke-width="2.5"/>
+                <ellipse cx="415" cy="446" rx="6" ry="4" fill="#ffaa22" opacity="0.65"/>
+                <line x1="585" y1="472" x2="585" y2="450" stroke="#988038" stroke-width="2.5"/>
+                <ellipse cx="585" cy="446" rx="6" ry="4" fill="#ffaa22" opacity="0.65"/>
+              </g>
+
+              <!-- ══ THE GRAND CITADEL (curved, massive) ══ -->
+
+              <!-- Foundation platform with thick depth -->
+              <path d="M 320,415 Q 500,408 680,415 L 690,430 Q 500,424 310,430 Z" fill="url(#whiteStoneS)" opacity="0.95"/>
+              <path d="M 318,413 Q 500,406 682,413" fill="none" stroke="#f0e8d0" stroke-width="3" opacity="0.60"/>
+
+              <!-- LEFT OUTER TOWER -->
+              <!-- Tower body — curved top via arch -->
+              <path d="M 325,415 L 325,268 Q 325,252 342,248 L 410,248 Q 427,252 427,268 L 427,415 Z"
+                fill="url(#whiteStone)" opacity="0.97"/>
+              <!-- Tower side shadow -->
+              <path d="M 427,268 L 427,415 L 437,420 L 437,272 Q 436,254 427,250 Z"
+                fill="url(#whiteStoneS)" opacity="0.85"/>
+              <!-- Tower cap dome -->
+              <path d="M 320,268 Q 376,226 432,268" fill="url(#whiteStone)" opacity="0.96"/>
+              <path d="M 330,264 Q 376,232 422,264" fill="#f0e8d0" opacity="0.55"/>
+              <!-- Tower spire -->
+              <polygon points="370,225 376,168 382,225" fill="#f0e8d0" opacity="0.98"/>
+              <polygon points="372,225 376,172 380,225" fill="#ffffff" opacity="0.65"/>
+              <!-- Spire gold tip -->
+              <circle cx="376" cy="165" r="7" fill="#ffcc44" opacity="0.92" style="animation:gold-shimmer 2.5s ease-in-out infinite" filter="url(#cGs)"/>
+              <!-- Battlements left tower -->
+              <g fill="#e8e0c0" opacity="0.96">
+                <rect x="327" y="247" width="8" height="7" rx="1"/><rect x="339" y="247" width="8" height="7" rx="1"/>
+                <rect x="351" y="247" width="8" height="7" rx="1"/><rect x="363" y="247" width="8" height="7" rx="1"/>
+                <rect x="375" y="247" width="8" height="7" rx="1"/><rect x="387" y="247" width="8" height="7" rx="1"/>
+                <rect x="399" y="247" width="8" height="7" rx="1"/><rect x="411" y="247" width="8" height="7" rx="1"/>
+              </g>
+              <!-- Flags on left tower -->
+              <line x1="380" y1="228" x2="380" y2="200" stroke="#c09030" stroke-width="2.5"/>
+              <path d="M 380,200 Q 405,208 380,216" fill="#cc2200" opacity="0.82" style="transform-origin:380px 200px;animation:banner-sway 4s ease-in-out infinite"/>
+              <!-- Windows left tower -->
+              <g fill="#ffcc44" opacity="0.40">
+                <path d="M 344,285 Q 352,272 360,285 L 360,308 L 344,308 Z"/>
+                <path d="M 366,285 Q 374,272 382,285 L 382,308 L 366,308 Z"/>
+                <path d="M 344,320 Q 352,308 360,320 L 360,342 L 344,342 Z"/>
+                <path d="M 366,320 Q 374,308 382,320 L 382,342 L 366,342 Z"/>
+                <path d="M 344,354 Q 352,342 360,354 L 360,376 L 344,376 Z"/>
+                <path d="M 366,354 Q 374,342 382,354 L 382,376 L 366,376 Z"/>
+              </g>
+
+              <!-- RIGHT OUTER TOWER (mirror of left) -->
+              <path d="M 573,415 L 573,268 Q 573,252 590,248 L 675,248 Q 692,252 692,268 L 692,415 Z"
+                fill="url(#whiteStone)" opacity="0.97"/>
+              <path d="M 573,268 L 573,415 L 563,420 L 563,272 Q 564,254 573,250 Z"
+                fill="url(#whiteStoneS)" opacity="0.85"/>
+              <path d="M 568,268 Q 624,226 680,268" fill="url(#whiteStone)" opacity="0.96"/>
+              <path d="M 578,264 Q 624,232 670,264" fill="#f0e8d0" opacity="0.55"/>
+              <polygon points="618,225 624,168 630,225" fill="#f0e8d0" opacity="0.98"/>
+              <polygon points="620,225 624,172 628,225" fill="#ffffff" opacity="0.65"/>
+              <circle cx="624" cy="165" r="7" fill="#ffcc44" opacity="0.92" style="animation:gold-shimmer 2.5s 0.6s ease-in-out infinite" filter="url(#cGs)"/>
+              <g fill="#e8e0c0" opacity="0.96">
+                <rect x="575" y="247" width="8" height="7" rx="1"/><rect x="587" y="247" width="8" height="7" rx="1"/>
+                <rect x="599" y="247" width="8" height="7" rx="1"/><rect x="611" y="247" width="8" height="7" rx="1"/>
+                <rect x="623" y="247" width="8" height="7" rx="1"/><rect x="635" y="247" width="8" height="7" rx="1"/>
+                <rect x="647" y="247" width="8" height="7" rx="1"/><rect x="659" y="247" width="8" height="7" rx="1"/>
+              </g>
+              <!-- Flag right tower -->
+              <line x1="620" y1="228" x2="620" y2="200" stroke="#c09030" stroke-width="2.5"/>
+              <path d="M 620,200 Q 595,208 620,216" fill="#cc2200" opacity="0.82" style="transform-origin:620px 200px;animation:banner-sway 4.3s 0.4s ease-in-out infinite"/>
+              <g fill="#ffcc44" opacity="0.40">
+                <path d="M 596,285 Q 604,272 612,285 L 612,308 L 596,308 Z"/>
+                <path d="M 618,285 Q 626,272 634,285 L 634,308 L 618,308 Z"/>
+                <path d="M 596,320 Q 604,308 612,320 L 612,342 L 596,342 Z"/>
+                <path d="M 618,320 Q 626,308 634,320 L 634,342 L 618,342 Z"/>
+                <path d="M 596,354 Q 604,342 612,354 L 612,376 L 596,376 Z"/>
+                <path d="M 618,354 Q 626,342 634,354 L 634,376 L 618,376 Z"/>
+              </g>
+
+              <!-- GRAND CENTRE KEEP — curved walls, much taller -->
+              <path d="M 420,415 L 420,195 Q 420,178 436,174 L 564,174 Q 580,178 580,195 L 580,415 Z"
+                fill="url(#whiteStone)" opacity="0.98"/>
+              <!-- Keep side face -->
+              <path d="M 580,195 L 580,415 L 592,420 L 592,198 Q 590,180 580,176 Z"
+                fill="url(#whiteStoneS)" opacity="0.88"/>
+              <!-- Curved buttresses on keep -->
+              <path d="M 424,300 Q 408,320 408,380 L 420,380 Q 420,330 428,310 Z" fill="#d8d0b0" opacity="0.65"/>
+              <path d="M 576,300 Q 592,320 592,380 L 580,380 Q 580,330 572,310 Z" fill="#c8c0a0" opacity="0.55"/>
+              <!-- Keep battlements — grand, detailed -->
+              <g fill="#f0e8d0" opacity="0.98">
+                <rect x="422" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="438" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="454" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="470" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="486" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="502" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="518" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="534" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="550" y="166" width="11" height="10" rx="1.5"/>
+                <rect x="566" y="166" width="11" height="10" rx="1.5"/>
+              </g>
+              <!-- Keep windows — tall Gothic arches with gold glow -->
+              <g fill="#ffcc44" opacity="0.50">
+                <path d="M 443,215 Q 455,198 467,215 L 467,252 L 443,252 Z"/>
+                <path d="M 476,215 Q 488,198 500,215 L 500,252 L 476,252 Z"/>
+                <path d="M 509,215 Q 521,198 533,215 L 533,252 L 509,252 Z"/>
+                <path d="M 443,265 Q 455,248 467,265 L 467,302 L 443,302 Z"/>
+                <path d="M 509,265 Q 521,248 533,265 L 533,302 L 509,302 Z"/>
+                <path d="M 443,315 Q 455,298 467,315 L 467,352 L 443,352 Z"/>
+                <path d="M 509,315 Q 521,298 533,315 L 533,352 L 509,352 Z"/>
+                <!-- Central tall Hall window -->
+                <path d="M 470,308 Q 490,285 510,308 L 510,360 L 470,360 Z"/>
+              </g>
+              <!-- Keep roof / curved transition to spire -->
+              <path d="M 420,178 Q 500,152 580,178" fill="#e8e0c0" opacity="0.88"/>
+              <!-- Centre grand spire — connected to keep! -->
+              <polygon points="492,174 500,100 508,174" fill="#f0e8d0" opacity="0.98"/>
+              <polygon points="495,174 500,105 505,174" fill="#ffffff" opacity="0.70"/>
+              <!-- Gold crown on spire -->
+              <circle cx="500" cy="97" r="10" fill="#ffcc44" opacity="0.95" style="animation:gold-shimmer 2s ease-in-out infinite" filter="url(#cG)"/>
+              <circle cx="500" cy="97" r="5"  fill="#ffffff"  opacity="0.92"/>
+              <!-- Double halo -->
+              <circle cx="500" cy="97" r="18" fill="none" stroke="#ffe880" stroke-width="1.5" opacity="0.50"/>
+              <circle cx="500" cy="97" r="28" fill="none" stroke="#ffcc44" stroke-width="0.8" opacity="0.30"/>
+              <!-- Centre flags on keep -->
+              <line x1="432" y1="178" x2="432" y2="148" stroke="#c09030" stroke-width="2"/>
+              <path d="M 432,148 Q 458,158 432,168" fill="#ffcc44" opacity="0.72" style="transform-origin:432px 148px;animation:banner-sway 3.8s 1s ease-in-out infinite"/>
+              <line x1="568" y1="178" x2="568" y2="148" stroke="#c09030" stroke-width="2"/>
+              <path d="M 568,148 Q 542,158 568,168" fill="#ffcc44" opacity="0.72" style="transform-origin:568px 148px;animation:banner-sway 4.1s 0.8s ease-in-out infinite"/>
+
+              <!-- Grand entrance archway — curved and tall -->
+              <path d="M 452,415 Q 452,382 468,372 Q 484,362 500,360 Q 516,362 532,372 Q 548,382 548,415 Z"
+                fill="#806840" opacity="0.95"/>
+              <path d="M 458,415 Q 458,386 472,377 Q 486,368 500,366 Q 514,368 528,377 Q 542,386 542,415 Z"
+                fill="#ccb870" opacity="0.85"/>
+              <!-- Gate glow from inside -->
+              <ellipse cx="500" cy="395" rx="40" ry="30" fill="url(#innerGlow)" opacity="0.55" filter="url(#cG)"/>
+
+              <!-- ══ THE HALLS — actual corridor perspective ══ -->
+              <!-- Hall perspective on left side of keep -->
+              <g opacity="0.72">
+                <!-- Left hall floor (perspective) -->
+                <polygon points="210,540 326,540 370,430 280,430" fill="url(#hallFloor)" opacity="0.55"/>
+                <!-- Left hall walls -->
+                <polygon points="210,432 210,545 218,545 218,436" fill="#c0b090" opacity="0.50"/>
+                <polygon points="280,428 280,432 324,432 322,428" fill="#d8c8a0" opacity="0.60"/>
+                <!-- Hall arches -->
+                <path d="M 226,434 Q 242,420 258,434" fill="none" stroke="#d0c090" stroke-width="2" opacity="0.55"/>
+                <path d="M 246,432 Q 262,418 278,432" fill="none" stroke="#d0c090" stroke-width="1.5" opacity="0.45"/>
+                <!-- Hall torches -->
+                <line x1="220" y1="438" x2="220" y2="418" stroke="#887028" stroke-width="2"/>
+                <ellipse cx="220" cy="415" rx="5" ry="3.5" fill="#ff8800" opacity="0.65"/>
+                <line x1="240" y1="436" x2="240" y2="418" stroke="#887028" stroke-width="2"/>
+                <ellipse cx="240" cy="415" rx="5" ry="3.5" fill="#ffaa22" opacity="0.60"/>
+                <text x="268" y="500" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" fill="#c8a860" opacity="0.70" transform="rotate(-12,268,500)">The Halls</text>
+              </g>
+              <!-- Right hall corridor -->
+              <g opacity="0.68">
+                <polygon points="674,428 720,428 790,540 674,540" fill="url(#hallFloor)" opacity="0.52"/>
+                <polygon points="788,432 788,545 780,545 780,436" fill="#c0b090" opacity="0.48"/>
+                <polygon points="674,428 676,432 720,432 722,428" fill="#d8c8a0" opacity="0.58"/>
+                <path d="M 696,432 Q 712,418 728,432" fill="none" stroke="#d0c090" stroke-width="2" opacity="0.52"/>
+                <path d="M 716,432 Q 732,418 748,432" fill="none" stroke="#d0c090" stroke-width="1.5" opacity="0.42"/>
+                <line x1="784" y1="438" x2="784" y2="418" stroke="#887028" stroke-width="2"/>
+                <ellipse cx="784" cy="415" rx="5" ry="3.5" fill="#ff8800" opacity="0.62"/>
+                <line x1="764" y1="436" x2="764" y2="418" stroke="#887028" stroke-width="2"/>
+                <ellipse cx="764" cy="415" rx="5" ry="3.5" fill="#ffaa22" opacity="0.58"/>
+              </g>
+
+              <!-- ══ MIRROR OF GROWTH — actual reflective surface ══ -->
+              <!-- Mirror frame — ornate gold -->
+              <ellipse cx="500" cy="312" rx="42" ry="58" fill="#cc9900" opacity="0.80" filter="url(#cGs)"/>
+              <ellipse cx="500" cy="312" rx="36" ry="50" fill="#ffe880" opacity="0.65"/>
+              <!-- Mirror glass surface -->
+              <ellipse cx="500" cy="312" rx="28" ry="42" fill="url(#mirrorG)" opacity="0.82"/>
+              <!-- Mirror reflection shimmer -->
+              <ellipse cx="490" cy="295" rx="12" ry="18" fill="#ffffff" opacity="0.30" filter="url(#mirrorBlur)"/>
+              <!-- Mirror frame decorative top -->
+              <path d="M 464,262 Q 500,244 536,262" fill="#ffcc44" opacity="0.65"/>
+              <circle cx="500" cy="250" r="6" fill="#ffcc44" opacity="0.80" filter="url(#cGs)"/>
+              <!-- Mirror frame decorative bottom -->
+              <path d="M 464,362 Q 500,376 536,362" fill="#ffcc44" opacity="0.60"/>
+              <!-- Mirror text hint -->
+              <text x="500" y="315" text-anchor="middle" font-family="Nunito,sans-serif" font-size="6.5" fill="#ffe8a0" opacity="0.55">Mirror of Growth</text>
+
+              <!-- ══ THE TRAVELER standing at the entrance ══ -->
+              <g filter="url(#cGs)">
+                <!-- Shadow -->
+                <ellipse cx="500" cy="422" rx="16" ry="5" fill="#1a0800" opacity="0.45"/>
+                <!-- Legs -->
+                <rect x="493" y="400" width="6"  height="20" rx="2" fill="#2a1808"/>
+                <rect x="501" y="400" width="6"  height="20" rx="2" fill="#2a1808"/>
+                <!-- Cloak/body -->
+                <path d="M 487,380 Q 490,370 500,368 Q 510,370 513,380 L 516,400 L 484,400 Z"
+                  fill="#3a2810" opacity="0.95"/>
+                <!-- Cape flowing behind -->
+                <path d="M 487,385 Q 478,395 476,408 L 484,406 Q 484,396 490,388 Z"
+                  fill="#2a1808" opacity="0.75"/>
+                <!-- Arms -->
+                <line x1="487" y1="383" x2="478" y2="393" stroke="#2a1808" stroke-width="4" stroke-linecap="round"/>
+                <line x1="513" y1="383" x2="522" y2="393" stroke="#2a1808" stroke-width="4" stroke-linecap="round"/>
+                <!-- Head -->
+                <circle cx="500" cy="364" r="10" fill="#d4a870" opacity="0.95"/>
+                <!-- Hair -->
+                <path d="M 490,358 Q 500,352 510,358 Q 508,355 500,353 Q 492,355 490,358 Z"
+                  fill="#1a0c04" opacity="0.90"/>
+                <!-- Satchel / map pack -->
+                <rect x="478" y="387" width="9" height="11" rx="2" fill="#4a3018" opacity="0.88"/>
+                <!-- Glow around traveler (divine light) -->
+                <ellipse cx="500" cy="385" rx="24" ry="28" fill="#ffe880" opacity="0.08" filter="url(#cG)"/>
+              </g>
+
+              <!-- ══ GOLD PARTICLES ══ -->
+              <g fill="#ffcc44">
+                <circle cx="380" cy="340" r="2"   opacity="0.65" style="animation:gold-rise 4.2s 0s ease-in infinite"/>
+                <circle cx="435" cy="295" r="1.5" opacity="0.55" style="animation:gold-rise 5.1s 0.8s ease-in infinite"/>
+                <circle cx="472" cy="255" r="2"   opacity="0.60" style="animation:gold-rise 4.6s 0.4s ease-in infinite"/>
+                <circle cx="528" cy="268" r="1.5" opacity="0.55" style="animation:gold-rise 5.5s 1.2s ease-in infinite"/>
+                <circle cx="565" cy="310" r="2"   opacity="0.62" style="animation:gold-rise 4.3s 0.7s ease-in infinite"/>
+                <circle cx="618" cy="355" r="1.5" opacity="0.50" style="animation:gold-rise 5.8s 1.8s ease-in infinite"/>
+                <circle cx="500" cy="220" r="2.5" opacity="0.70" style="animation:gold-rise 3.8s 0.2s ease-in infinite"/>
+                <circle cx="455" cy="370" r="1.5" opacity="0.50" style="animation:gold-rise 6s 2.4s ease-in infinite"/>
+              </g>
+
+              <!-- Flanking building silhouettes (no labels) -->
+              <g fill="#c8b880" opacity="0.48">
+                <!-- Left cluster of buildings -->
+                <rect x="122" y="470" width="16" height="60"/>
+                <rect x="140" y="460" width="22" height="70"/>
+                <rect x="164" y="475" width="14" height="55"/>
+                <rect x="180" y="452" width="18" height="78"/>
+                <rect x="200" y="468" width="12" height="62"/>
+                <rect x="214" y="458" width="20" height="72"/>
+                <rect x="236" y="465" width="14" height="65"/>
+                <!-- Left building tops (varied) -->
+                <rect x="122" y="466" width="16" height="5"/>
+                <polygon points="140,456 151,442 162,456"/>
+                <rect x="164" y="471" width="14" height="5"/>
+                <polygon points="180,448 189,434 198,448"/>
+                <rect x="200" y="464" width="12" height="5"/>
+                <polygon points="214,454 224,440 234,454"/>
+                <!-- Right cluster of buildings -->
+                <rect x="748" y="466" width="14" height="64"/>
+                <rect x="764" y="455" width="20" height="75"/>
+                <rect x="786" y="470" width="16" height="60"/>
+                <rect x="804" y="448" width="22" height="82"/>
+                <rect x="828" y="462" width="14" height="68"/>
+                <rect x="844" y="455" width="18" height="75"/>
+                <rect x="864" y="470" width="12" height="60"/>
+                <!-- Right building tops (varied) -->
+                <rect x="748" y="462" width="14" height="5"/>
+                <polygon points="764,451 774,437 784,451"/>
+                <rect x="786" y="466" width="16" height="5"/>
+                <polygon points="804,444 815,430 826,444"/>
+                <rect x="828" y="458" width="14" height="5"/>
+                <polygon points="844,451 853,438 862,451"/>
+                <!-- Window glints -->
+                <g fill="#ffe8a0" opacity="0.35">
+                  <rect x="145" y="464" width="4" height="5"/><rect x="152" y="464" width="4" height="5"/>
+                  <rect x="184" y="456" width="4" height="5"/><rect x="191" y="456" width="4" height="5"/>
+                  <rect x="217" y="462" width="4" height="5"/><rect x="224" y="462" width="4" height="5"/>
+                  <rect x="768" y="460" width="4" height="5"/><rect x="775" y="460" width="4" height="5"/>
+                  <rect x="808" y="452" width="4" height="5"/><rect x="815" y="452" width="4" height="5"/>
+                  <rect x="847" y="460" width="4" height="5"/><rect x="854" y="460" width="4" height="5"/>
+                </g>
+              </g>
+            </svg>
+
+            <!-- ══ TITLE ══ -->
+            <div class="w10-citadel-title">
+              <span class="w10-citadel-crown">👑</span>
+              <span class="w10-citadel-main">Ascendant Citadel</span>
+              <span class="w10-citadel-rule"></span>
+              <span class="w10-citadel-sub">The Final Ascent &nbsp;·&nbsp; Week 10 &nbsp;·&nbsp; FE1 Field Experience</span>
+            </div>
+
+            <!-- ══ LEFT: The Halls ══ -->
+            <div class="w10-hall-col">
+              <div style="font-family:var(--px-font);font-size:0.26rem;color:rgba(255,200,40,0.65);letter-spacing:0.16em;margin-bottom:5px;">— THE HALLS —</div>
+              <div class="w10-hall-entry"><div class="w10-hall-realm">HALL I</div><div class="w10-hall-text">City of Insight — Observation</div></div>
+              <div class="w10-hall-entry"><div class="w10-hall-realm">HALL II</div><div class="w10-hall-text">Forest of Practice — Growth</div></div>
+              <div class="w10-hall-entry"><div class="w10-hall-realm">HALL III</div><div class="w10-hall-text">Mountain of Challenge — Ownership</div></div>
+              <div class="w10-hall-entry"><div class="w10-hall-realm">HALL IV</div><div class="w10-hall-text">Capital of Connections — Execution</div></div>
+              <div class="w10-hall-entry"><div class="w10-hall-realm">HALL V</div><div class="w10-hall-text">Ocean of Influence — Relationships</div></div>
+              <div class="w10-hall-entry"><div class="w10-hall-realm">HALL VI</div><div class="w10-hall-text">Forge of Momentum — Refinement</div></div>
+              <div class="w10-hall-entry"><div class="w10-hall-realm">HALL VII</div><div class="w10-hall-text">Skyrealm of Vision — Perspective</div></div>
+            </div>
+
+            <!-- ══ RIGHT: The Mirror of Growth ══ -->
+            <div class="w10-mirror-col">
+              <div class="w10-mirror-header">— MIRROR OF GROWTH —</div>
+              <div class="w10-mirror-stat">Pipeline: €1.615M identified</div>
+              <div class="w10-mirror-stat">9 Opportunities · 5 Industries</div>
+              <div class="w10-mirror-stat">Role-Specific: 2.75 → 3.75</div>
+              <div class="w10-mirror-stat">Knowledge Domain: 2.50 → 3.25</div>
+              <div class="w10-mirror-stat">From observing → contributing</div>
+              <div class="w10-mirror-stat">From learning → creating</div>
+            </div>
+
+            <!-- ══ INSCRIPTION ══ -->
+            <div class="w10-inscription">
+              <div class="w10-inscription-text">
+                "The greatest challenge in Ascendra was never the forest, the mountain, the ocean, or the forge.<br>
+                It was becoming someone capable of navigating them."
+              </div>
+            </div>
+          </div>
+
+          <!-- Detailed Reflection -->
+          <div class="reflection-wrap refl-w10-wrap" style="background:transparent">
+            <div class="ref-divider refl-w10-divider">
+              <div class="ref-divider-line"></div>
+              <span class="ref-divider-label">Reflection · Week 10 · The Final Ascent</span>
+              <div class="ref-divider-line"></div>
+            </div>
+            <div class="refl-w10">
+              <!-- ══ THE FINAL CHRONICLE ══ -->
+              <div class="ref-section" style="border-color:rgba(255,200,40,0.30);background:rgba(255,255,255,0.06)">
+                <div class="ref-section-head" style="background:rgba(200,150,20,0.16)">
+                  <span class="ref-section-icon">📜</span>
+                  <span class="ref-section-title" style="color:#ffdd88">The Final Chronicle — Week 10</span>
+                </div>
+                <div class="ref-section-body">
+                  <p style="font-size:0.78rem;font-style:italic;color:rgba(255,220,140,0.70);line-height:1.65;margin-bottom:10px">"At the beginning of the journey, the traveler looked for answers. At the Ascendant Citadel, they leave with better questions, broader perspective, and the confidence to continue exploring. The greatest reward was never reaching the Citadel itself, but becoming someone capable of continuing the journey beyond it."</p>
+                </div>
+              </div>
+
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">⭐</span><span class="ref-section-title">Highlights</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets">
+                    <li>Hosted the 2026 Philippine Partner Executive Connect with over 50 partner executives and SAP leaders. The event brought together many of the recurring themes from my field experience: AI, customer value, executive engagement, and partnerships. More importantly, it reinforced that SAP succeeds through its ecosystem. Partners help shape opportunities, influence customer strategy, and help customers realize value long after implementation. Looking back, I couldn't think of a better way to conclude FE1.</li>
+                    <div class="ref-photo"><img src="IMG_6816.jpeg" alt="2026 Philippines Partner Executive Forum"/></div>
+                    <p class="ref-photo-caption">2026 Philippine Partner Executive Connect — Jul 28, 2026</p>
+                    <li>Spearheaded the creation of the Q2 Business Review decks for Manila Water, Bangko Sentral ng Pilipinas, and San Miguel Corporation, coordinating closely with the AE, SSE, AA, and SCMs. It felt like a fitting way to close FE1. During my first few weeks, I was observing customer meetings and learning account strategy. By my final week, I was helping prepare executive-level business reviews, giving me a better appreciation of how all the pieces fit together across the customer lifecycle.</li>
+                    <li>Started planning the FSM Heat Map Initiative endorsed by SAP Philippines and SEA leadership. The project aims to build an interactive dashboard that surfaces whitespace opportunities, competitor presence, and AI-generated insights across enterprise accounts. It was exciting to contribute to an initiative that could support strategic account planning at scale.</li>
+                    <li>Attended San Miguel Corporation's Big Rocks presentation with Liher. I saw how executive conversations are anchored not only on vision, but also on a realistic roadmap, clear stakeholder strategy, and a shared definition of success. It reinforced that transformation stories need to be both aspirational and executable.</li>
+                    <li>Created a stakeholder map for First Philippine Holdings and its 11 subsidiaries. Mapping the organization highlighted how influence often extends across multiple companies through the same executives and board members. It reminded me that understanding relationships can be just as valuable as understanding the technology.</li>
+                    <div class="ref-photo"><img src="fph.jpeg" alt="First Philippine Holdings stakeholder map"/></div>
+                    <p class="ref-photo-caption">First Philippine Holdings — Group Structure &amp; Stakeholder Map</p>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">💡</span><span class="ref-section-title">Key Learnings</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-learnings">
+                    <li>Strong account management is built through consistent execution across the entire customer journey, from discovery and planning to executive reviews and value realization.</li>
+                    <li>Partner ecosystems and stakeholder networks multiply SAP's ability to create customer value and unlock new opportunities.</li>
+                    <li>The best transformation strategies combine a clear long-term vision with practical execution, stakeholder alignment, and measurable business outcomes.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">📈</span><span class="ref-section-title">Field Experience Progress</span></div>
+                <div class="ref-section-body">
+                  <div class="ref-progress-items">
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Executive Business Reviews</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Supporting multiple QBRs helped me better understand how executive messaging brings together account progress, customer priorities, and next steps into one cohesive story.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Strategic Stakeholder Management</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Building stakeholder maps and observing executive discussions reinforced the importance of understanding influence networks beyond formal organizational structures.</div>
+                    </div>
+                    <div>
+                      <div class="progress-item-head">
+                        <div class="progress-item-name">Strategic Planning &amp; Innovation</div>
+                        <div class="star-row"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+                      </div>
+                      <div class="progress-item-note">Planning the FSM Heat Map initiative gave me exposure to creating scalable tools that can support opportunity identification and account planning across the sales organization.</div>
+                    </div>
+                    <div class="completed-tasks">
+                      <div class="completed-tasks-label">Activities</div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Hosted the 2026 Philippine Partner Executive Connect.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Led creation of three Q2 Business Review decks (MWC, BSP, SMC).</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended SMC Big Rocks presentation with Liher.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Created the First Philippine Holdings stakeholder map (11 subsidiaries).</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Started planning the FSM Heat Map Initiative.</span></div>
+                      <div class="task-row"><span class="task-check">✓</span><span>Attended EvolveWays Partner introduction.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🎯</span><span class="ref-section-title">Focus for Next Phase</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-focus">
+                    <li>Reflect on key lessons from FE1 and share learnings with the cohort.</li>
+                    <li>Bring field experience insights into the next Classroom Experience.</li>
+                    <li>Finalize capstone opportunity selection.</li>
+                    <li>Continue supporting key opportunities where relevant.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="ref-section">
+                <div class="ref-section-head"><span class="ref-section-icon">🤝</span><span class="ref-section-title">Support Needed</span></div>
+                <div class="ref-section-body">
+                  <ul class="ref-bullets ref-support">
+                    <li>Guidance on capstone opportunity validation.</li>
+                    <li>More exposure to strategic account planning.</li>
+                    <li>More executive-level engagement opportunities.</li>
+                    <li>Additional exposure to AI transformation and change management discussions.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- ══ MIRROR OF GROWTH — Week 3 vs Week 10 ══ -->
+              <div class="ref-section" style="border-color:rgba(180,160,80,0.28)">
+                <div class="ref-section-head" style="background:rgba(180,140,20,0.12)">
+                  <span class="ref-section-icon">🪞</span>
+                  <span class="ref-section-title" style="color:#ffd88a">Mirror of Growth — Week 3 vs Week 10</span>
+                </div>
+                <div class="ref-section-body">
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                    <div style="border:1px solid rgba(255,200,40,0.18);border-radius:10px;padding:12px 14px;background:rgba(40,30,10,0.4)">
+                      <div style="font-family:var(--px-font);font-size:0.3rem;color:rgba(255,180,60,0.60);letter-spacing:0.12em;margin-bottom:8px">WEEK 3 · FIRST STEPS</div>
+                      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px">
+                        <li style="font-size:0.78rem;color:rgba(255,230,180,0.60);padding-left:10px;border-left:2px solid rgba(255,200,40,0.25)">Observing customer meetings</li>
+                        <li style="font-size:0.78rem;color:rgba(255,230,180,0.60);padding-left:10px;border-left:2px solid rgba(255,200,40,0.25)">Learning how opportunities are created</li>
+                        <li style="font-size:0.78rem;color:rgba(255,230,180,0.60);padding-left:10px;border-left:2px solid rgba(255,200,40,0.25)">Following account discussions</li>
+                        <li style="font-size:0.78rem;color:rgba(255,230,180,0.60);padding-left:10px;border-left:2px solid rgba(255,200,40,0.25)">Building foundational knowledge</li>
+                      </ul>
+                    </div>
+                    <div style="border:1px solid rgba(255,200,40,0.35);border-radius:10px;padding:12px 14px;background:rgba(60,40,5,0.45)">
+                      <div style="font-family:var(--px-font);font-size:0.3rem;color:rgba(255,200,40,0.80);letter-spacing:0.12em;margin-bottom:8px">WEEK 10 · ASCENDANT</div>
+                      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px">
+                        <li style="font-size:0.78rem;color:#ffe8b0;padding-left:10px;border-left:2px solid rgba(255,200,40,0.55)">Hosting partner executive events</li>
+                        <li style="font-size:0.78rem;color:#ffe8b0;padding-left:10px;border-left:2px solid rgba(255,200,40,0.55)">Preparing executive QBRs</li>
+                        <li style="font-size:0.78rem;color:#ffe8b0;padding-left:10px;border-left:2px solid rgba(255,200,40,0.55)">Planning cross-SEA initiatives</li>
+                        <li style="font-size:0.78rem;color:#ffe8b0;padding-left:10px;border-left:2px solid rgba(255,200,40,0.55)">Supporting strategic account discussions</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+        `; },
+      },
+
     ];
 
     function getTheme(env) {
@@ -7391,10 +8220,12 @@
       // Draw connection paths in the SVG path-layer group
       const pathLayer = document.getElementById('path-layer');
       // Current week index (0-based). Paths up to this are "traveled".
-      const CURRENT_IDX = 8; // Week 9 = index 8
+      const CURRENT_IDX = 9; // Week 10 = index 9
 
       weeks.forEach((week, i) => {
         if (i === 0) return;
+        // W7/W8/W9/W10→W10 drawn by curved overrides — skip here
+        if (i === 7 || i === 8 || i === 9) return;
         const p1 = NODE_POSITIONS[i - 1];
         const p2 = NODE_POSITIONS[i];
         const cx = (p1.x + p2.x) / 2 + (i % 2 === 0 ? -30 : 30);
@@ -7468,7 +8299,7 @@
 
         // Tighten node size on Origin Isle (weeks 1–3 are close together)
         const isOrigin = week.id <= 3;
-        const nodeSize = isOrigin ? '52px' : '60px';
+        const nodeSize = week.id === 10 ? '80px' : (isOrigin ? '52px' : '60px');
 
         const btn = document.createElement('div');
         btn.className = 'node-btn ' + (week.locked ? 'locked' : 'unlocked');
@@ -7482,7 +8313,7 @@
           btn.style.setProperty('--glow', t.nodeGlow + '66');
           btn.style.boxShadow   = `0 0 16px 4px ${t.nodeGlow}44, inset 0 1px 0 rgba(255,255,255,0.1)`;
           // Highlight current week (W3)
-          if (week.id === 9) {
+          if (week.id === 10) {
             btn.style.borderColor = '#ffcc44';
             btn.style.boxShadow   = `0 0 22px 6px rgba(255,200,40,0.5), inset 0 1px 0 rgba(255,255,255,0.1)`;
           }
@@ -7495,7 +8326,7 @@
         if (!week.locked) {
           const t = getTheme(week.env);
           badge.style.background  = t.nodeBg;
-          badge.style.borderColor = week.id === 9 ? '#ffcc44' : t.nodeGlow;
+          badge.style.borderColor = week.id === 10 ? '#ffcc44' : t.nodeGlow;
         } else {
           badge.style.background  = '#080d18';
           badge.style.borderColor = '#16213a';
@@ -7526,7 +8357,7 @@
         const caption = document.createElement('div');
         caption.className = 'node-caption';
         caption.textContent = week.locked ? week.terrain : week.title;
-        if (!week.locked) caption.style.color = week.id === 9 ? '#ffdd88' : getTheme(week.env).text;
+        if (!week.locked) caption.style.color = week.id === 10 ? '#ffdd88' : getTheme(week.env).text;
 
         wrap.appendChild(btn);
         wrap.appendChild(caption);
@@ -7541,7 +8372,7 @@
       });
 
       // ── Player avatar on Week 3 (current position) ──
-      const avatarPos  = NODE_POSITIONS[8]; // Week 9 — current position
+      const avatarPos  = NODE_POSITIONS[9]; // Week 10 — current position
       const avatarPct  = svgToPercent(avatarPos.x, avatarPos.y);
 
       const avatarWrap = document.createElement('div');
@@ -7564,6 +8395,24 @@
       `;
 
       container.appendChild(avatarWrap);
+
+      // ── Override W9→W10 gold ceremonial path ──
+      (function() {
+        const pl = document.getElementById('path-layer');
+        const d = 'M 386,455 C 360,448 320,442 280,456 C 248,468 200,480 155,485';
+        const glow = document.createElementNS('http://www.w3.org/2000/svg','path');
+        glow.setAttribute('d',d); glow.setAttribute('fill','none');
+        glow.setAttribute('stroke','rgba(255,200,40,0.35)'); glow.setAttribute('stroke-width','10');
+        glow.setAttribute('stroke-linecap','round'); pl.appendChild(glow);
+        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('d',d); path.setAttribute('fill','none');
+        path.setAttribute('stroke','rgba(255,220,80,0.75)'); path.setAttribute('stroke-width','2.5');
+        path.setAttribute('stroke-dasharray','7 5'); path.setAttribute('stroke-linecap','round');
+        const anim = document.createElementNS('http://www.w3.org/2000/svg','animate');
+        anim.setAttribute('attributeName','stroke-dashoffset'); anim.setAttribute('from','0');
+        anim.setAttribute('to','-24'); anim.setAttribute('dur','1.8s'); anim.setAttribute('repeatCount','indefinite');
+        path.appendChild(anim); pl.appendChild(path);
+      })();
 
       // ── Override W8→W9 path with a spiraling rising route ──
       (function() {
